@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1079416608906",
+    "project_id": "doormatt-f7c7e",
+    "storage_bucket": "doormatt-f7c7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079416608906:android:1c12da19ca193d3990b573",
+        "android_client_info": {
+          "package_name": "com.example.doormatt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1079416608906-fhhqhkfce1gckkuq1va1geijnp3pop0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnxYbmsXnxH8cpDOJUqfvKayOQf_ysy0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1079416608906-fhhqhkfce1gckkuq1va1geijnp3pop0m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

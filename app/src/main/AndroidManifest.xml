@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoorMatt">
+        <activity android:name=".VisitorsPanelActivity"></activity>
+
+        <activity android:name=".NewResidenceActivity" />
+        <activity android:name=".WelcomeActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
