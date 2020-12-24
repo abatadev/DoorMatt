@@ -57,11 +57,11 @@
                         android:scaleType="centerCrop"
                         android:layout_gravity="start"
                         android:layout_marginBottom="8dp"
-                        android:src="@drawable/ic_baseline_photo_camera_24" />
+                        android:src="@drawable/sample_avatar" />
 
                     <Button
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:text="Edit Picture"
@@ -72,7 +72,7 @@
                         android:drawablePadding="4dp"
                         android:textColor="@color/white"
                         android:background="@drawable/rounded_corners_custom_button"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="8dp"
                         android:layout_gravity="center_vertical"
                         />
 

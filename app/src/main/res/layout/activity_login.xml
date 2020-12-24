@@ -69,6 +69,32 @@
             android:textColor="@color/white"
             />
 
+        <TextView
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Others"
+            android:textSize="16sp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/login_sign_up_admin_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign In for Guard"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/login_sign_in_admin_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign In for Admin"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:textAlignment="center"/>
+
     </LinearLayout>
 
 </LinearLayout>
