@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
-    android:background="@drawable/gradient_white_grey">
+    tools:context=".SignUpAdminActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,83 +25,63 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign In"
+            android:text="Sign Up Admin"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/ColorSecondary"
             android:fontFamily="sans-serif-condensed"
             android:layout_marginBottom="16dp"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_username_editText"
+        <EditText
+            android:id="@+id/admin_sign_up_login_email_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:layout_marginBottom="8dp"
             android:textColor="@color/grey"
             android:background="@drawable/rounded_corners_text_input"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:autofillHints="Email" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_password_editText"
+        <EditText
+            android:id="@+id/admin_sign_up_login_password_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_corners_text_input"
+            android:hint="@string/password"
+            android:layout_marginBottom="8dp"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:textColor="@color/grey"
+            android:autofillHints="Password" />
+
+        <EditText
+            android:id="@+id/admin_sign_up_login_confirm_password_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             android:textColor="@color/grey"
             android:background="@drawable/rounded_corners_text_input"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:autofillHints="Confirm Password" />
 
         <Button
-            android:id="@+id/login_submit_button"
+            android:id="@+id/admin_sign_up_login_submit_button"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:textSize="18dp"
+            android:layout_height="54dp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:text="Login"
+            android:text="@string/sign_up"
             android:textAllCaps="true"
             android:background="@drawable/rounded_corners_button"
             android:textColor="@color/white"
             />
 
-        <TextView
-            android:layout_marginTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Others"
-            android:textSize="16sp"
-            android:textAlignment="center"/>
-
-        <TextView
-            android:id="@+id/login_sign_in_guard_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign In for Guard"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp"
-            android:textAlignment="center"/>
-
-        <TextView
-            android:id="@+id/login_sign_in_admin_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign In for Admin"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp"
-            android:textAlignment="center"/>
-
-        <TextView
-            android:id="@+id/login_sign_up_admin_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign Up for Admin"
-            android:textSize="16sp"
-            android:layout_marginTop="24dp"
-            android:textAlignment="center"/>
-
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

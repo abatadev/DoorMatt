@@ -1,0 +1,129 @@
+package com.example.doormatt;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.doormatt.admin.AdminActivity;
+import com.example.doormatt.model.AdminModel;
+import com.example.doormatt.common.Common;
+import com.example.doormatt.common.ValidateInput;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+public class SignUpAdminActivity extends AppCompatActivity {
+
+    ValidateInput validateInput;
+    AdminModel adminModel;
+
+    EditText adminEmailEditText, adminPasswordEditText, adminConfirmPasswordEditText;
+    Button adminSignUpButton;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference adminRef;
+
+    String userId, email, password, confirmPassword;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        String TAG = "onCreate";
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sign_up_admin);
+
+        adminEmailEditText = findViewById(R.id.admin_sign_up_login_email_editText);
+        adminPasswordEditText = findViewById(R.id.admin_sign_up_login_password_editText);
+        adminConfirmPasswordEditText = findViewById(R.id.admin_sign_up_login_confirm_password_editText);
+        adminSignUpButton = findViewById(R.id.admin_sign_up_login_submit_button);
+
+        mDatabase = FirebaseDatabase.getInstance();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mAuth = FirebaseAuth.getInstance();
+        adminRef = mDatabase.getReference(Common.ADMIN_REF);
+        Log.d(TAG, "Admin Ref: " + adminRef.getParent());
+
+        validateInput = new ValidateInput(
+                SignUpAdminActivity.this, adminEmailEditText,
+                adminPasswordEditText
+        );
+
+        adminSignUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Admin Ref: " + adminRef.getParent());
+                registerNewAdmin();
+            }
+        });
+    }
+
+    private void registerNewAdmin() {
+        String TAG = "registerNewAdmin()";
+
+        boolean emailVerified = validateInput.validateUsername();
+        boolean passwordVerified = validateInput.validatePassword();
+//        boolean confirmPasswordVerified = validateInput.validateConfirmPassword();
+
+        if(emailVerified && passwordVerified) {
+            email = adminEmailEditText.getText().toString().trim();
+            password = adminPasswordEditText.getText().toString().trim();
+
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            mUser  = FirebaseAuth.getInstance().getCurrentUser();
+                            String userId = mUser.getUid().toString();
+
+                            AdminModel adminModel = new AdminModel();
+
+                            adminModel.setUserId(userId);
+                            adminModel.setEmail(email);
+                            adminModel.setPassword(password);
+
+                            adminRef.child(userId).setValue(adminModel);
+
+                            Log.d(TAG, "DB Ref: " + mDatabase.getReference().toString());
+
+                            if(task.isSuccessful()) {
+                                // Redirect to Admin Panel
+                                Log.d(TAG, "Sign Up Success!");
+
+                                Intent intent = new Intent(SignUpAdminActivity.this, AdminActivity.class);
+                                startActivity(intent);
+
+                            } else {
+                                Log.d(TAG, "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(SignUpAdminActivity.this, "Sign Up Failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(SignUpAdminActivity.this, "Register failed", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Error: " + e.getMessage());
+                }
+            });
+        } else {
+            Log.d("SignUpActivity", "Error: Verified failed." );
+        }
+    }
+
+
+}

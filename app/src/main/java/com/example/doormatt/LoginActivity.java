@@ -7,9 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.doormatt.Common.ValidateInput;
+import com.example.doormatt.common.ValidateInput;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
     TextInputEditText usernameEditText;
     TextInputEditText passwordEditText;
+    TextView signInAdminTextView, signUpAdminTextView, signInGuardTextView;
 
     Button submitButton;
 
@@ -38,9 +40,13 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        usernameEditText = findViewById(R.id.login_username);
-        passwordEditText = findViewById(R.id.login_password);
-        submitButton = findViewById(R.id.login_submit);
+        usernameEditText = findViewById(R.id.login_username_editText);
+        passwordEditText = findViewById(R.id.login_password_editText);
+        submitButton = findViewById(R.id.login_submit_button);
+
+        signInAdminTextView = findViewById(R.id.login_sign_in_admin_textView);
+        signUpAdminTextView = findViewById(R.id.login_sign_up_admin_textView);
+        signInGuardTextView = findViewById(R.id.login_sign_in_guard_textView);
 
         //validateInput
         validateInput = new ValidateInput(
@@ -56,6 +62,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signInUser();
+            }
+        });
+
+        signUpAdminTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignUpAdminActivity.class);
+                startActivity(intent);
             }
         });
     }
