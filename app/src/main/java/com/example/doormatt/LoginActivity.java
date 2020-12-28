@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.doormatt.common.ValidateInput;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -21,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
 
     TextInputEditText usernameEditText;
     TextInputEditText passwordEditText;
-    TextView signInAdminTextView, signUpAdminTextView, signInGuardTextView;
+    TextView signUpAdminTextView;
 
     Button submitButton;
 
@@ -42,11 +44,9 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameEditText = findViewById(R.id.login_username_editText);
         passwordEditText = findViewById(R.id.login_password_editText);
-        submitButton = findViewById(R.id.login_submit_button);
+        submitButton = findViewById(R.id.login_button);
 
-        signInAdminTextView = findViewById(R.id.login_sign_in_admin_textView);
         signUpAdminTextView = findViewById(R.id.login_sign_up_admin_textView);
-        signInGuardTextView = findViewById(R.id.login_sign_in_guard_textView);
 
         //validateInput
         validateInput = new ValidateInput(
@@ -90,19 +90,21 @@ public class LoginActivity extends AppCompatActivity {
             password = passwordEditText.getText().toString().trim();
 
             mAuth.signInWithEmailAndPassword(username, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()) {
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Sign In Failed", Toast.LENGTH_SHORT).show();
-                            }
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()) {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }
-                    });
+                    })
+            .addOnFailureListener(e -> {
+                Log.e("signInUser", "Error: " + e.getMessage());
+                Toast.makeText(this, "[E]" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
+        } else {
+            Toast.makeText(this, "Incorrect password.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 
 }

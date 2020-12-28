@@ -3,8 +3,8 @@
     package="com.example.doormatt">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoorMatt">
-        <activity android:name=".admin.AdminActivity"/>
+        <activity android:name=".guard.GuardActivity"></activity>
+        <activity android:name=".admin.AdminActivity" />
         <activity android:name=".SignUpAdminActivity" />
         <activity android:name=".VisitorsPanelActivity" />
         <activity android:name=".NewResidenceActivity" />
@@ -25,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

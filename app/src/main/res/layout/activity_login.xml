@@ -58,7 +58,7 @@
             android:padding="8dp"/>
 
         <Button
-            android:id="@+id/login_submit_button"
+            android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="18dp"
@@ -67,33 +67,9 @@
             android:textAllCaps="true"
             android:background="@drawable/rounded_corners_button"
             android:textColor="@color/white"
+            android:layout_marginTop="8dp"
             />
 
-        <TextView
-            android:layout_marginTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Others"
-            android:textSize="16sp"
-            android:textAlignment="center"/>
-
-        <TextView
-            android:id="@+id/login_sign_in_guard_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign In for Guard"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp"
-            android:textAlignment="center"/>
-
-        <TextView
-            android:id="@+id/login_sign_in_admin_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign In for Admin"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp"
-            android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/login_sign_up_admin_textView"

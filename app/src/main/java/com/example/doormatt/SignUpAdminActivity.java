@@ -55,7 +55,7 @@ public class SignUpAdminActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mAuth = FirebaseAuth.getInstance();
-        adminRef = mDatabase.getReference(Common.ADMIN_REF);
+        adminRef = mDatabase.getReference(Common.USER_REF);
         Log.d(TAG, "Admin Ref: " + adminRef.getParent());
 
         validateInput = new ValidateInput(
@@ -95,6 +95,8 @@ public class SignUpAdminActivity extends AppCompatActivity {
                             adminModel.setUserId(userId);
                             adminModel.setEmail(email);
                             adminModel.setPassword(password);
+                            adminModel.setAdmin(true);
+                            adminModel.setGuard(false);
 
                             adminRef.child(userId).setValue(adminModel);
 
@@ -106,9 +108,8 @@ public class SignUpAdminActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(SignUpAdminActivity.this, AdminActivity.class);
                                 startActivity(intent);
-
                             } else {
-                                Log.d(TAG, "createUserWithEmail:failure", task.getException());
+                                Log.e(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(SignUpAdminActivity.this, "Sign Up Failed", Toast.LENGTH_SHORT).show();
                             }
                         }
