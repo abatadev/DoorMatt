@@ -1,0 +1,53 @@
+package com.example.doormatt.common;
+
+import android.content.Context;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class ValidateResidentDetails {
+    Context context;
+    EditText firstName, lastName, roomNumber;
+    String firstNameInput, lastNameInput, roomNumberInput;
+
+    public ValidateResidentDetails(Context myContext, EditText myFirstName, EditText myLastName, EditText myRoomNumber) {
+        context = myContext;
+        firstName = myFirstName;
+        lastName = myLastName;
+        roomNumber = myRoomNumber;
+    }
+
+    public boolean validateFirstName() {
+        firstNameInput = firstName.getText().toString().trim();
+
+        if(firstNameInput.isEmpty()) {
+            Toast.makeText(context, "First name is empty.", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validateLastName() {
+        lastNameInput = lastName.getText().toString().trim();
+
+        if(lastNameInput.isEmpty()) {
+            Toast.makeText(context, "Last name is empty.", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validateRoomNumber() {
+        roomNumberInput = roomNumber.getText().toString().trim();
+
+        if(roomNumberInput.isEmpty()) {
+            Toast.makeText(context, "Room number is empty.", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+}

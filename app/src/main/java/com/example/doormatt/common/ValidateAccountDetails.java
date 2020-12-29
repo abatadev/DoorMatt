@@ -4,10 +4,11 @@ import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ValidateInput {
+import com.example.doormatt.NewResidentActivity;
+
+public class ValidateAccountDetails {
     Context context;
     EditText email, password, confirmPassword;
-
     String emailInput, passwordInput, confirmPasswordInput;
 
     /**
@@ -16,20 +17,21 @@ public class ValidateInput {
      * @param myEmail
      * @param myPassword
      */
-    public ValidateInput(Context myContext, EditText myEmail, EditText myPassword) {
+
+    public ValidateAccountDetails(Context myContext, EditText myEmail, EditText myPassword) {
         context = myContext;
         email = myEmail;
         password = myPassword;
     }
 
-    public ValidateInput(Context myContext, EditText myEmail, EditText myPassword, EditText myConfirmPassword) {
+
+    public ValidateAccountDetails(Context myContext, EditText myEmail, EditText myPassword, EditText myConfirmPassword) {
         context = myContext;
         email = myEmail;
         password = myPassword;
         confirmPassword = myConfirmPassword;
+
     }
-
-
 
     public boolean validateUsername() {
         emailInput = email.getText().toString().trim();
@@ -63,5 +65,38 @@ public class ValidateInput {
             return true;
         }
     }
+//
+//    public boolean validateFirstName() {
+//        firstNameInput = firstName.getText().toString().trim();
+//
+//        if(firstNameInput.isEmpty()) {
+//            Toast.makeText(context, "First name cannot be empty.", Toast.LENGTH_SHORT).show();
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
+//
+//    public boolean validateLastName() {
+//        lastNameInput = lastName.getText().toString().trim();
+//
+//        if(firstNameInput.isEmpty()) {
+//            Toast.makeText(context, "Last name cannot be empty.", Toast.LENGTH_SHORT).show();
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
+//
+//    public boolean validateRoomNumber() {
+//        roomNumberInput = roomNumber.getText().toString().trim();
+//
+//        if(roomNumberInput.isEmpty()) {
+//            Toast.makeText(context, "Room number cannot be empty.", Toast.LENGTH_SHORT).show();
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
 
 }
