@@ -16,6 +16,10 @@ public class ValidateResidentDetails {
         roomNumber = myRoomNumber;
     }
 
+    /**
+     * Validates first name.
+     * @return
+     */
     public boolean validateFirstName() {
         firstNameInput = firstName.getText().toString().trim();
 
@@ -27,6 +31,10 @@ public class ValidateResidentDetails {
         }
     }
 
+    /**
+     * Validates last name.
+     * @return
+     */
     public boolean validateLastName() {
         lastNameInput = lastName.getText().toString().trim();
 
@@ -38,6 +46,10 @@ public class ValidateResidentDetails {
         }
     }
 
+    /**
+     * Validates room number of USER
+     * @return
+     */
     public boolean validateRoomNumber() {
         roomNumberInput = roomNumber.getText().toString().trim();
 
