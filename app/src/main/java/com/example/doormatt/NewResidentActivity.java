@@ -42,7 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NewResidentActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private static final int CAMERA_REQUEST_CODE = 1;
-    private static final int PICK_IMAGE_REQUEST = 2;
+    private static final int PICK_IMAGE_REQUEST = 1234;
 
     private EditText firstNameEditText, lastNameEditText, roomNumberEditText;
     private TextView dateOfBirthTextView, showDateOfBirthTextView;
@@ -55,7 +55,8 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
 
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
-    private StorageReference mStorageRef;
+    private StorageReference avatarStorageRef;
+    private StorageReference qrStorageRef;
 
     AlertDialog alertDialog;
 
@@ -69,7 +70,8 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         setContentView(R.layout.activity_new_residence);
 
         // Initialize Firebase
-        mStorageRef = FirebaseStorage.getInstance().getReference().child(Common.AVATAR_IMAGES);
+        avatarStorageRef = FirebaseStorage.getInstance().getReference().child(Common.AVATAR_IMAGES);
+        qrStorageRef = FirebaseStorage.getInstance().getReference().child(Common.QR_IMAGES);
         mReference = FirebaseDatabase.getInstance().getReference().child(Common.RESIDENT_REF);
 
         firstNameEditText = findViewById(R.id.firstNameEditText);
@@ -102,7 +104,8 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         addPictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialogOption();
+//                openDialogOption();
+                openGallery();
             }
         });
 
@@ -171,12 +174,14 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
             firstName = firstNameEditText.getText().toString().trim();
             lastName = lastNameEditText.getText().toString().trim();
             roomNumber = roomNumberEditText.getText().toString().trim();
+            dateOfBirth = dateOfBirthTextView.getText().toString().trim();
 
             residentModel.setResidentId(residentId);
             residentModel.setFirstName(firstName);
             residentModel.setLastName(lastName);
-    //            residentModel.setDateOfBirth();
+            residentModel.setDateOfBirth(dateOfBirth);
             residentModel.setRoomNumber(roomNumber);
+            residentModel.setResidentAvatar(downloadImageUrl);
 
             mReference.child(residentId).setValue(residentModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -208,7 +213,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         Intent galleryIntent = new Intent();
         galleryIntent.setType("image/*");
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(galleryIntent, "Select picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Select picture"), Common.PICK_IMAGE_REQUEST);
     }
 
     @Override
@@ -227,7 +232,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         String unique_name = "avatar_" + UUID.randomUUID().toString();
 
         try {
-            final StorageReference filePath = mStorageRef.child(imageUri.getLastPathSegment()+ unique_name);
+            final StorageReference filePath = avatarStorageRef.child(imageUri.getLastPathSegment()+ unique_name);
             final UploadTask uploadTask = filePath.putFile(imageUri);
 
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -248,7 +253,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
                         public void onComplete(@NonNull Task<Uri> task) {
                             if(task.isSuccessful()) {
                                 downloadImageUrl = task.getResult().toString();
-                                residentModel.setResidentAvatar(downloadImageUrl);
+//                                residentModel.setResidentAvatar(downloadImageUrl);
                                 submitNewResidentToFirebase();
                                 //TODO Submit values.
                             }
