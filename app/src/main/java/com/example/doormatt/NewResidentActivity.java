@@ -91,8 +91,6 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
                 roomNumberEditText
         );
 
-        //TODO Add view ID.
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
