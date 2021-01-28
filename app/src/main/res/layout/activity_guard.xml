@@ -1,103 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".guard.GuardActivity">
+    android:layout_margin="8dp">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="16dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/door_mat"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:textColor="@color/ColorPrimary"
-            android:textAllCaps="true"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/rounded_corners_text_input"
-            android:fontFamily="sans-serif-black"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/new_guard"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/ColorSecondary"
-            android:fontFamily="sans-serif-condensed"
-            android:background="@drawable/rounded_corners_text_input"
-            android:layout_marginBottom="8dp"/>
-
-        <EditText
-            android:id="@+id/guardEmailEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/guard_email"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/grey"
-            android:background="@drawable/rounded_corners_text_input"
-            android:padding="8dp"
-            android:autofillHints="" />
-
-        <EditText
-            android:id="@+id/guardNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/guard_name"
-            android:inputType="textCapSentences"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/grey"
-            android:background="@drawable/rounded_corners_text_input"
-            android:padding="8dp"
-            android:autofillHints="" />
-
-        <EditText
-            android:id="@+id/guardPasswordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/grey"
-            android:background="@drawable/rounded_corners_text_input"
-            android:padding="8dp"
-            android:autofillHints="" />
-
-        <EditText
-            android:id="@+id/guardConfirmPasswordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/confirm_password"
-            android:inputType="textPassword"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/grey"
-            android:background="@drawable/rounded_corners_text_input"
-            android:padding="8dp"
-            android:autofillHints="" />
-
+        android:weightSum="2">
 
         <Button
-            android:id="@+id/saveGuardButton"
-            android:layout_width="wrap_content"
+            android:id="@+id/guard_open_camera_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Save"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:drawableStart="@drawable/ic_baseline_check_24"
-            android:drawableTint="@color/white"
-            android:textColor="@color/white"
-            android:background="@drawable/rounded_corners_button"
-            android:padding="8dp"
-            android:layout_gravity="right"/>
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:text="Open Camera"/>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/guard_qr_image_view"
+        android:layout_width="320dp"
+        android:layout_height="320dp" />
+
 
 </LinearLayout>

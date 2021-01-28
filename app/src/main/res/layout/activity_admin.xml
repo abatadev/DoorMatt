@@ -74,6 +74,12 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/read_qr_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Read QR"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

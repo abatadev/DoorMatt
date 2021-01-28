@@ -3,7 +3,6 @@ package com.example.doormatt.admin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,20 +11,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.doormatt.R;
-import com.example.doormatt.SignUpAdminActivity;
 import com.example.doormatt.common.Common;
-import com.example.doormatt.model.AdminModel;
 import com.example.doormatt.model.GuardModel;
 import com.example.doormatt.validation.ValidateGuardInput;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.jetbrains.annotations.NotNull;
 
 public class NewGuardActivity extends AppCompatActivity {
     private final String TAG = NewGuardActivity.class.getSimpleName();
@@ -44,7 +42,7 @@ public class NewGuardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guard);
+        setContentView(R.layout.activity_new_guard);
 
         guardEmailEditText = findViewById(R.id.guardEmailEditText);
         guardNameEditText = findViewById(R.id.guardNameEditText);
@@ -59,14 +57,10 @@ public class NewGuardActivity extends AppCompatActivity {
         saveGuardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerToUsers();
+//                registerToUsers();
                 submitToFirebase();
             }
         });
-    }
-
-    private void registerToUsers() {
-
     }
 
     private void submitToFirebase() {
@@ -85,44 +79,41 @@ public class NewGuardActivity extends AppCompatActivity {
 
         if (guardNameVerified && guardEmailVerified && guardPasswordVerified && guardConfirmPasswordVerified) {
             final String guardId = guardReference.push().getKey();
+            Log.d(TAG, "Guard ID: " + guardId);
 
             try {
                 mAuth.createUserWithEmailAndPassword(guardEmail, guardPassword)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                mUser = FirebaseAuth.getInstance().getCurrentUser();
-                                String userId = mUser.getUid().toString();
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            guardModel.setGuardUserId(guardId);
+                            guardModel.setGuardFullName(guardName);
+                            guardModel.setGuardEmail(guardEmail);
+                            guardModel.setGuardPassword(guardPassword);
+                            guardModel.isAdmin(false);
+                            guardModel.isGuard(true);
+//                                Log.d(TAG, "DB Ref: " + guardReference.toString());
 
-                                guardModel.setGuardUserId(guardId);
-                                guardModel.setGuardFullName(guardName);
-                                guardModel.setGuardEmail(guardEmail);
-                                guardModel.setGuardPassword(guardPassword);
-                                guardModel.isAdmin(false);
-                                guardModel.isGuard(true);
-
-                                guardReference.child(userId).setValue(guardModel);
-
-                                Log.d(TAG, "DB Ref: " + mDatabase.getReference().toString());
-
-                                if (task.isSuccessful()) {
-                                    // Redirect to Admin Panel
-                                    Log.d(TAG, "Added Guard Success!");
-                                    saveGuardButton.setText("Submitted");
-                                    Log.d(TAG, "Registered guard to database");
-                                    saveGuardButton.setEnabled(false);
-                                    Toast.makeText(NewGuardActivity.this, "Submitted to Database.", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Log.e(TAG, "createUserWithEmail:failure", task.getException());
-                                }
+                            if (task.isSuccessful()) {
+                                // Redirect to Admin Panel
+                                guardReference.child(guardId).setValue(guardModel)
+                                        .addOnFailureListener(e -> Log.d(TAG, "Error: " + e.getMessage()));
+                                Log.d(TAG, "Added Guard Success!");
+                                saveGuardButton.setText("Submitted");
+                                Log.d(TAG, "Registered guard to database");
+                                saveGuardButton.setEnabled(false);
+                                Toast.makeText(NewGuardActivity.this, "Submitted to Database.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.e(TAG, "createUserWithEmail:failure", task.getException());
                             }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "Error: " + e.getMessage());
-                            }
-                        });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "Error: " + e.getMessage());
+                        }
+                    });
             } catch (NullPointerException e) {
                 Log.d(TAG, e.getMessage());
             }
