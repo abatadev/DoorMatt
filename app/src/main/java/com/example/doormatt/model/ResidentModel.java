@@ -1,7 +1,7 @@
 package com.example.doormatt.model;
 
 public class ResidentModel {
-    String residentId, firstName, lastName, dateOfBirth, roomNumber, residentAvatar;
+    String residentId, firstName, lastName, dateOfBirth, roomNumber, residentAvatar, qrCode;
 
     public ResidentModel() {
     }
@@ -61,5 +61,13 @@ public class ResidentModel {
 
     public void setResidentAvatar(String residentAvatar) {
         this.residentAvatar = residentAvatar;
+    }
+
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
     }
 }

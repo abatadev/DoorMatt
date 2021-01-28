@@ -143,6 +143,11 @@
                     android:background="@drawable/rounded_corners_text_input"
                     android:padding="8dp"/>
 
+                <ImageView
+                    android:id="@+id/qrCodeImageView"
+                    android:layout_width="320dp"
+                    android:layout_height="320dp"/>
+
                 <Button
                     android:id="@+id/saveResidenceButton"
                     android:layout_width="wrap_content"

@@ -65,7 +65,7 @@
                         android:layout_height="40dp"
                         android:textAllCaps="true"
                         android:textStyle="bold"
-                        android:text="Edit Picture"
+                        android:text="@string/edit_picture"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:drawableStart="@drawable/ic_baseline_photo_camera_24"
@@ -100,12 +100,12 @@
                     android:textColor="@color/grey"
                     android:background="@drawable/rounded_corners_text_input"
                     android:padding="8dp"/>
-                
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="5">
 
                     <TextView
                         android:id="@+id/dateOfBirthTextView"
@@ -118,20 +118,17 @@
                         android:padding="8dp"
                         android:layout_weight="1" />
 
-                    <TextView
-                        android:id="@+id/showDateOfBirthTextView"
+                    <ImageView
+                        android:id="@+id/showDateofBirthImageView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/blank_date"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
-                        android:textColor="@color/grey"
-                        android:background="@drawable/rounded_corners_text_input"
-                        android:padding="8dp"
-                        android:layout_weight="1" />
-                    
-                    
-                    
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_baseline_calendar_today_24"
+                        android:paddingTop="8dp"
+                        android:backgroundTint="@color/ColorPrimary"
+                        android:layout_weight="4"/>
+
+
+
                 </LinearLayout>
 
 
@@ -146,6 +143,11 @@
                     android:textColor="@color/grey"
                     android:background="@drawable/rounded_corners_text_input"
                     android:padding="8dp"/>
+
+                <ImageView
+                    android:id="@+id/qrCodeImageView"
+                    android:layout_width="320dp"
+                    android:layout_height="320dp"/>
 
                 <Button
                     android:id="@+id/saveResidenceButton"

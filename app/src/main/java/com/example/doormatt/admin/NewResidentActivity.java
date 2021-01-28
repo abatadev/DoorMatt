@@ -3,19 +3,31 @@ package com.example.doormatt.admin;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,24 +46,41 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.UUID;
 
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
+import androidmads.library.qrgenearator.QRGSaver;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NewResidentActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    final String TAG = NewResidentActivity.class.getSimpleName();
 
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int PICK_IMAGE_REQUEST = 1234;
 
+    private QRGEncoder qrgEncoder;
+
     private EditText firstNameEditText, lastNameEditText, roomNumberEditText;
-    private TextView dateOfBirthTextView, showDateOfBirthTextView;
+    private TextView dateOfBirthTextView;
     private Button addPictureButton, saveResidenceButton;
+    private ImageView qrImage, showDateOfBirthTextView;
     private CircleImageView avatarResidenceCircleImageView;
 
     private String firstName, lastName, dateOfBirth, roomNumber;
-    String downloadImageUrl;
+    private String downloadImageUrl;
+    private String downloadQRImageUrl;
+    private String qrCodeValue;
+    private String savePath = Environment.getExternalStorageDirectory().getPath() + "/QRCode/";
+
+    private Bitmap bitmap;
+
     private Uri imageUri = null;
+    private Uri qrImageUri = null;
 
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
@@ -65,6 +94,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_new_residence);
@@ -79,10 +109,12 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         roomNumberEditText = findViewById(R.id.roomNumberEditText);
 
         dateOfBirthTextView = findViewById(R.id.dateOfBirthTextView);
-        showDateOfBirthTextView = findViewById(R.id.showDateOfBirthTextView);
+        showDateOfBirthTextView = findViewById(R.id.showDateofBirthImageView);
 
         addPictureButton = findViewById(R.id.editPictureButton);
         saveResidenceButton = findViewById(R.id.saveResidenceButton);
+
+        qrImage = findViewById(R.id.qrCodeImageView);
 
         validateResidentDetails = new ValidateResidentInput(
                 NewResidentActivity.this,
@@ -96,7 +128,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         }
 
         saveResidenceButton.setOnClickListener(v -> {
-            uploadImageToFirebase();
+            uploadProfileImageToFirebase();
         });
 
         addPictureButton.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +175,6 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         builder.show();
     }
 
-
     public void showDatePickerDialog() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
@@ -159,6 +190,75 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         dateOfBirth = month + "/" + dayOfMonth + "/" + year;
         dateOfBirthTextView.setText(dateOfBirth);
     }
+
+    private void generateQRCode() {
+        qrCodeValue = residentModel.getResidentId();
+        Log.d(TAG, "QR Code: " + qrCodeValue);
+
+        if(qrCodeValue.length() > 0) {
+            WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+            Display display = windowManager.getDefaultDisplay();
+            Point point = new Point();
+            display.getSize(point);
+            int width = point.x;
+            int height = point.y;
+            int smallerDimension = width < height ? width : height;
+            smallerDimension = smallerDimension * 3 / 4;
+
+            qrgEncoder = new QRGEncoder(
+                    qrCodeValue, null,
+                    QRGContents.Type.TEXT,
+                    smallerDimension);
+            qrgEncoder.setColorBlack(Color.BLACK);
+            qrgEncoder.setColorWhite(Color.WHITE);
+
+            try {
+                bitmap = qrgEncoder.getBitmap();
+                qrImage.setImageBitmap(bitmap);
+
+                saveQrCode();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+//            edtValue.setError(getResources().getString(R.string.value_required));
+        }
+
+        Bitmap onSetQRBitmap = ((BitmapDrawable) qrImage.getDrawable()).getBitmap();
+        ByteArrayOutputStream boas = new ByteArrayOutputStream();
+        onSetQRBitmap.compress(Bitmap.CompressFormat.JPEG, 100, boas);
+        byte[] data = boas.toByteArray();
+
+//        final StorageReference filePath = avatarStorageRef.child(imageUri.getLastPathSegment()+ unique_name);
+        UploadTask uploadTask = qrStorageRef.child(qrCodeValue).putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Log.e(TAG, "Error: " + e.getMessage());
+            }
+        })
+        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d(TAG, "SUCCESS");
+            }
+        });
+    }
+
+    private void saveQrCode() {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                boolean save = new QRGSaver().save(savePath, qrCodeValue, bitmap, QRGContents.ImageType.IMAGE_JPEG);
+                String result = save ? "Image Saved" : "Image Not Saved";
+                Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
+    }
+
 
     private void submitNewResidentToFirebase() {
         boolean firstNameVerified = validateResidentDetails.validateFirstName();
@@ -180,6 +280,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
             residentModel.setDateOfBirth(dateOfBirth);
             residentModel.setRoomNumber(roomNumber);
             residentModel.setResidentAvatar(downloadImageUrl);
+            residentModel.setQrCode(qrCodeValue);
 
             mReference.child(residentId).setValue(residentModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -222,7 +323,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         }
     }
 
-    private void uploadImageToFirebase() {
+    private void uploadProfileImageToFirebase() {
         if(imageUri == null) {
             Toast.makeText(this, "Please upload an image.", Toast.LENGTH_SHORT).show();
         }
@@ -251,8 +352,8 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
                         public void onComplete(@NonNull Task<Uri> task) {
                             if(task.isSuccessful()) {
                                 downloadImageUrl = task.getResult().toString();
-//                                residentModel.setResidentAvatar(downloadImageUrl);
                                 submitNewResidentToFirebase();
+                                generateQRCode();
                                 //TODO Submit values.
                             }
                         }
