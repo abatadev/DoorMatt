@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.doormatt.admin.AdminActivity;
 import com.example.doormatt.common.Common;
@@ -18,6 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.security.Guard;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,18 +33,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_residence);
+        mAuth = FirebaseAuth.getInstance();
 
+        listenForUser();
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-
-        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        listenForUser();
     }
 
     private void listenForUser() {
@@ -77,15 +77,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        userRef.child(userId).child("guard").addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.child(userId).child("guard").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     boolean isGuard = snapshot.getValue(boolean.class);
 
                     if(isGuard == true) {
-                        Intent intent   = new Intent(MainActivity.this, GuardActivity.class);
-                        startActivity(intent);
+                        startActivity(new Intent(MainActivity.this, GuardActivity.class));
                     }
                 }
             }

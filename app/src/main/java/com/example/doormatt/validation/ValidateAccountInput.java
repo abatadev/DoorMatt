@@ -1,12 +1,10 @@
-package com.example.doormatt.common;
+package com.example.doormatt.validation;
 
 import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.doormatt.NewResidentActivity;
-
-public class ValidateAccountDetails {
+public class ValidateAccountInput {
     Context context;
     EditText email, password, confirmPassword;
     String emailInput, passwordInput, confirmPasswordInput;
@@ -18,14 +16,14 @@ public class ValidateAccountDetails {
      * @param myPassword
      */
 
-    public ValidateAccountDetails(Context myContext, EditText myEmail, EditText myPassword) {
+    public ValidateAccountInput(Context myContext, EditText myEmail, EditText myPassword) {
         context = myContext;
         email = myEmail;
         password = myPassword;
     }
 
 
-    public ValidateAccountDetails(Context myContext, EditText myEmail, EditText myPassword, EditText myConfirmPassword) {
+    public ValidateAccountInput(Context myContext, EditText myEmail, EditText myPassword, EditText myConfirmPassword) {
         context = myContext;
         email = myEmail;
         password = myPassword;

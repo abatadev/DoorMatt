@@ -1,13 +1,13 @@
-package com.example.doormatt.common;
+package com.example.doormatt.model;
 
-public class User {
+public class UserModel {
     private String userId, email, password;
 
-    public User() {
+    public UserModel() {
 
     }
 
-    public User(String userId, String email, String password) {
+    public UserModel(String userId, String email, String password) {
         this.userId = userId;
         this.email = email;
         this.password = password;

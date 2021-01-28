@@ -13,11 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoorMatt">
-        <activity android:name=".guard.GuardActivity"/>
+        <activity android:name=".admin.NewGuardActivity"></activity>
+        <activity android:name=".guard.GuardActivity" />
         <activity android:name=".admin.AdminActivity" />
         <activity android:name=".SignUpAdminActivity" />
         <activity android:name=".VisitorsPanelActivity" />
-        <activity android:name=".NewResidentActivity" />
+        <activity android:name=".admin.NewResidentActivity" />
         <activity android:name=".WelcomeActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

@@ -1,15 +1,15 @@
-package com.example.doormatt.common;
+package com.example.doormatt.validation;
 
 import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ValidateResidentDetails {
+public class ValidateResidentInput {
     Context context;
     EditText firstName, lastName, roomNumber;
     String firstNameInput, lastNameInput, roomNumberInput;
 
-    public ValidateResidentDetails(Context myContext, EditText myFirstName, EditText myLastName, EditText myRoomNumber) {
+    public ValidateResidentInput(Context myContext, EditText myFirstName, EditText myLastName, EditText myRoomNumber) {
         context = myContext;
         firstName = myFirstName;
         lastName = myLastName;

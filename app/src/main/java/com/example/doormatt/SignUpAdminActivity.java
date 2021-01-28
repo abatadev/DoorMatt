@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.doormatt.admin.AdminActivity;
 import com.example.doormatt.model.AdminModel;
 import com.example.doormatt.common.Common;
-import com.example.doormatt.common.ValidateAccountDetails;
+import com.example.doormatt.validation.ValidateAccountInput;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -26,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpAdminActivity extends AppCompatActivity {
 
-    ValidateAccountDetails validateInput;
+    ValidateAccountInput validateInput;
     AdminModel adminModel;
 
     EditText adminEmailEditText, adminPasswordEditText, adminConfirmPasswordEditText;
@@ -113,6 +113,7 @@ public class SignUpAdminActivity extends AppCompatActivity {
                     Toast.makeText(SignUpAdminActivity.this, "Register failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Error: " + e.getMessage());
         }
+
         });
     }
 

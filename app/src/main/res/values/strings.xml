@@ -12,4 +12,8 @@
     <string name="first_name">First Name</string>
     <string name="edit_picture">Edit Picture</string>
     <string name="new_resident">New Resident</string>
+    <string name="guard_name">Guard Name</string>
+    <string name="guard_password">Guard Password</string>
+    <string name="new_guard">New Guard</string>
+    <string name="guard_email">Guard Email</string>
 </resources>

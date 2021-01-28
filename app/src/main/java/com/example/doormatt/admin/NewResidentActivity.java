@@ -1,4 +1,4 @@
-package com.example.doormatt;
+package com.example.doormatt.admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,9 +19,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.doormatt.R;
 import com.example.doormatt.common.Common;
-import com.example.doormatt.common.ValidateAccountDetails;
-import com.example.doormatt.common.ValidateResidentDetails;
+import com.example.doormatt.validation.ValidateResidentInput;
 import com.example.doormatt.model.ResidentModel;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -60,7 +60,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
 
     AlertDialog alertDialog;
 
-    ValidateResidentDetails validateResidentDetails;
+    ValidateResidentInput validateResidentDetails;
     ResidentModel residentModel;
 
     @Override
@@ -84,7 +84,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         addPictureButton = findViewById(R.id.editPictureButton);
         saveResidenceButton = findViewById(R.id.saveResidenceButton);
 
-        validateResidentDetails = new ValidateResidentDetails(
+        validateResidentDetails = new ValidateResidentInput(
                 NewResidentActivity.this,
                 firstNameEditText,
                 lastNameEditText,

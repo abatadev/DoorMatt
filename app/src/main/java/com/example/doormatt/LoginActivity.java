@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.doormatt.common.ValidateAccountDetails;
+import com.example.doormatt.validation.ValidateAccountInput;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String username, password;
 
-    ValidateAccountDetails validateAccountDetails;
+    ValidateAccountInput validateAccountDetails;
 
     private FirebaseAuth mAuth;
 
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         signUpAdminTextView = findViewById(R.id.login_sign_up_admin_textView);
 
         //validateInput
-        validateAccountDetails = new ValidateAccountDetails(
+        validateAccountDetails = new ValidateAccountInput(
                 LoginActivity.this,
                 usernameEditText,
                 passwordEditText
