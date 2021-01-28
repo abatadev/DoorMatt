@@ -2,6 +2,7 @@ package com.example.doormatt.qrcode;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
@@ -11,15 +12,20 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.doormatt.R;
@@ -47,6 +53,7 @@ public class QRCodeActivity extends AppCompatActivity {
     private DatabaseReference residentRef;
     private Button qrCodeFoundButton;
     private String qrCode;
+    private String residentId, firstName, lastName, residentAvatar, roomNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +99,7 @@ public class QRCodeActivity extends AppCompatActivity {
                     Log.d(TAG, "Resident Avatar Path: " + residentAvatar);
                     Log.d(TAG, "Room Number: " + roomNumber);
 
+                    showResidentDialog(residentId, firstName, lastName, residentAvatar, roomNumber);
                 }
             }
 
@@ -100,18 +108,37 @@ public class QRCodeActivity extends AppCompatActivity {
 
             }
         });
-//        userRef.child(qrCode).nerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                final String residentId = snapshot.child("residentId").getValue().toString();
-//                Log.d(TAG, "User ID: " + residentId);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-//
-//            }
-//        });
+    }
+
+    private void showResidentDialog(String residentId, String firstName, String lastName, String residentAvatar, String roomNumber) {
+        AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+
+        builder.setTitle("Resident").create();
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_show_resident_details, null);
+
+        TextView residentIdTextView = view.findViewById(R.id.dialog_qr_resident_id);
+        TextView residentNameTextView = view.findViewById(R.id.dialog_qr_first_name);
+        TextView residentRoomNumberTextView = view.findViewById(R.id.dialog_room_number);
+
+        residentIdTextView.setText("Resident ID: " + residentId);
+        residentNameTextView.setText("Name: " + firstName + " " + lastName);
+        residentRoomNumberTextView.setText("Room Number: "+ roomNumber);
+
+        builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Time In
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setView(view).show();
     }
 
     private void requestCamera() {

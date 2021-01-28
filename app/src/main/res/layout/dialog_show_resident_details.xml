@@ -8,21 +8,34 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="84dp"
         android:layout_height="84dp"
-        android:src="@drawable/sample_avatar"/>
+        android:src="@drawable/sample_avatar"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="center"/>
 
     <TextView
+        android:id="@+id/dialog_qr_resident_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="18sp"
         android:text="Resident ID" />
 
     <TextView
+        android:id="@+id/dialog_qr_first_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="18sp"
         android:text="Resident First Name" />
 
     <TextView
+        android:id="@+id/dialog_room_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="18sp"
         android:text="Room Number"/>
 
 </LinearLayout>
