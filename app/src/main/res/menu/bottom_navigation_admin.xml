@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/admin_nav_resident"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Resident" />
+    <item
+        android:id="@+id/admin_nav_guard"
+        android:icon="@drawable/ic_baseline_security_24"
+        android:title="Guard" />
+    <item
+        android:id="@+id/admin_nav_qr_scanner"
+        android:icon="@drawable/ic_baseline_qr_code_scanner_24"
+        android:title="Scan QR Code" />
+    <item
+        android:id="@+id/admin_nav_logout"
+        android:icon="@drawable/ic_baseline_power_settings_new_24"
+        android:title="Log Out" />
+</menu>

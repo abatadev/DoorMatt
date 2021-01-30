@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.role.RoleManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 
 import com.example.doormatt.R;
 import com.example.doormatt.common.Common;
+import com.example.doormatt.model.RolesModel;
 import com.example.doormatt.validation.ValidateResidentInput;
 import com.example.doormatt.model.ResidentModel;
 import com.google.android.gms.tasks.Continuation;
@@ -83,7 +85,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
     private Uri qrImageUri = null;
 
     private FirebaseDatabase mDatabase;
-    private DatabaseReference mReference;
+    private DatabaseReference residentRef, roleRef;
     private StorageReference avatarStorageRef;
     private StorageReference qrStorageRef;
 
@@ -91,6 +93,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
 
     ValidateResidentInput validateResidentDetails;
     ResidentModel residentModel;
+    RolesModel rolesModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +105,8 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         // Initialize Firebase
         avatarStorageRef = FirebaseStorage.getInstance().getReference().child(Common.AVATAR_IMAGES);
         qrStorageRef = FirebaseStorage.getInstance().getReference().child(Common.QR_IMAGES);
-        mReference = FirebaseDatabase.getInstance().getReference().child(Common.RESIDENT_REF);
+        residentRef = FirebaseDatabase.getInstance().getReference().child(Common.RESIDENT_REF);
+        roleRef = FirebaseDatabase.getInstance().getReference().child(Common.ROLE_REF);
 
         firstNameEditText = findViewById(R.id.firstNameEditText);
         lastNameEditText = findViewById(R.id.lastNameEditText);
@@ -268,7 +272,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         if(firstNameVerified && lastNameVerified && roomNumberVerified) {
             residentModel = new ResidentModel();
 
-            final String residentId = mReference.push().getKey();
+            final String residentId = residentRef.push().getKey();
             firstName = firstNameEditText.getText().toString().trim();
             lastName = lastNameEditText.getText().toString().trim();
             roomNumber = roomNumberEditText.getText().toString().trim();
@@ -282,10 +286,21 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
             residentModel.setResidentAvatar(downloadImageUrl);
             residentModel.setQrCode(qrCodeValue);
 
-            mReference.child(residentId).setValue(residentModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+            residentRef.child(residentId).setValue(residentModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Toast.makeText(NewResidentActivity.this, "New resident added!", Toast.LENGTH_SHORT).show();
+                    saveResidenceButton.setText("Submitted");
+                    saveResidenceButton.setEnabled(false);
+
+                    rolesModel = new RolesModel(residentId, 3);
+                    roleRef.child(residentId).setValue(rolesModel).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull @NotNull Exception e) {
+                            Log.d(TAG, "Error Role: " + e.getMessage());
+                        }
+                    });
+
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

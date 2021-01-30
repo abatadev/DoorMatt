@@ -1,2 +1,6 @@
-package com.example.doormatt.admin;public class AdminRecyclerView {
+package com.example.doormatt.admin;
+
+public class AdminRecyclerView {
+
+
 }

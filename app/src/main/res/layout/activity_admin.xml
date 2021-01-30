@@ -74,18 +74,37 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/read_qr_button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Read QR"/>
+        android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        <Button
+            android:id="@+id/read_qr_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Read QR"/>
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <EditText
+            android:id="@+id/admin_resident_search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:textSize="14sp"
+            android:layout_marginBottom="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/admin_resident_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
 
 </LinearLayout>

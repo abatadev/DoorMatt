@@ -52,6 +52,11 @@ public class LoginActivity extends AppCompatActivity {
 
         //Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() == null) {
+
+        } else {
+
+        }
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
