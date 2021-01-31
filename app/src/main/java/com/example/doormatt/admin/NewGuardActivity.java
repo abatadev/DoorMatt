@@ -3,6 +3,7 @@ package com.example.doormatt.admin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.role.RoleManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.example.doormatt.R;
 import com.example.doormatt.common.Common;
 import com.example.doormatt.model.GuardModel;
+import com.example.doormatt.model.RolesModel;
 import com.example.doormatt.validation.ValidateGuardInput;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,11 +34,12 @@ public class NewGuardActivity extends AppCompatActivity {
     private Button saveGuardButton;
 
     private FirebaseDatabase mDatabase;
-    private DatabaseReference guardReference;
+    private DatabaseReference guardReference, roleReference;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
     GuardModel guardModel = new GuardModel();
+    RolesModel rolesModel;
     ValidateGuardInput validateGuardInput;
 
     @Override
@@ -66,6 +69,7 @@ public class NewGuardActivity extends AppCompatActivity {
     private void submitToFirebase() {
         String guardName, guardEmail, guardPassword;
         guardReference = FirebaseDatabase.getInstance().getReference(Common.GUARD_REF);
+        roleReference = FirebaseDatabase.getInstance().getReference(Common.ROLE_REF);
         mAuth = FirebaseAuth.getInstance();
 
         boolean guardNameVerified = validateGuardInput.validateGuardName();
@@ -92,17 +96,20 @@ public class NewGuardActivity extends AppCompatActivity {
                             guardModel.setGuardPassword(guardPassword);
                             guardModel.isAdmin(false);
                             guardModel.isGuard(true);
-//                                Log.d(TAG, "DB Ref: " + guardReference.toString());
 
+                            rolesModel = new RolesModel(guardId, 2);
                             if (task.isSuccessful()) {
                                 // Redirect to Admin Panel
                                 guardReference.child(guardId).setValue(guardModel)
                                         .addOnFailureListener(e -> Log.d(TAG, "Error: " + e.getMessage()));
                                 Log.d(TAG, "Added Guard Success!");
+                                Toast.makeText(NewGuardActivity.this, "Registered to Database.", Toast.LENGTH_SHORT).show();
                                 saveGuardButton.setText("Submitted");
                                 Log.d(TAG, "Registered guard to database");
                                 saveGuardButton.setEnabled(false);
                                 Toast.makeText(NewGuardActivity.this, "Submitted to Database.", Toast.LENGTH_SHORT).show();
+
+                                roleReference.child(guardId).setValue(rolesModel);
                             } else {
                                 Log.e(TAG, "createUserWithEmail:failure", task.getException());
                             }

@@ -1,4 +1,4 @@
-package com.example.doormatt.admin.ui.resident;
+package com.example.doormatt.admin.ui.guard;
 
 import android.os.Bundle;
 

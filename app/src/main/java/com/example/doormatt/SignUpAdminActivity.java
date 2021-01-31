@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.doormatt.admin.AdminActivity;
 import com.example.doormatt.model.AdminModel;
 import com.example.doormatt.common.Common;
+import com.example.doormatt.model.RolesModel;
 import com.example.doormatt.validation.ValidateAccountInput;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,6 +29,7 @@ public class SignUpAdminActivity extends AppCompatActivity {
 
     ValidateAccountInput validateInput;
     AdminModel adminModel;
+    RolesModel rolesModel;
 
     EditText adminEmailEditText, adminPasswordEditText, adminConfirmPasswordEditText;
     Button adminSignUpButton;
@@ -35,7 +37,7 @@ public class SignUpAdminActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseDatabase mDatabase;
-    private DatabaseReference adminRef;
+    private DatabaseReference adminRef, rolesRef;
 
     String userId, email, password, confirmPassword;
 
@@ -55,6 +57,8 @@ public class SignUpAdminActivity extends AppCompatActivity {
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mAuth = FirebaseAuth.getInstance();
         adminRef = mDatabase.getReference(Common.USER_REF);
+        rolesRef = mDatabase.getReference(Common.ROLE_REF);
+
         Log.d(TAG, "Admin Ref: " + adminRef.getParent());
 
         adminSignUpButton.setOnClickListener(new View.OnClickListener() {
@@ -69,8 +73,8 @@ public class SignUpAdminActivity extends AppCompatActivity {
     private void registerNewAdmin() {
         String TAG = "registerNewAdmin()";
 
-        boolean emailVerified = validateInput.validateUsername();
-        boolean passwordVerified = validateInput.validatePassword();
+//        boolean emailVerified = validateInput.validateUsername();
+//        boolean passwordVerified = validateInput.validatePassword();
 //        boolean confirmPasswordVerified = validateInput.validateConfirmPassword();
 
         email = adminEmailEditText.getText().toString().trim();
@@ -101,6 +105,9 @@ public class SignUpAdminActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(SignUpAdminActivity.this, AdminActivity.class);
                         startActivity(intent);
+
+                        rolesModel = new RolesModel(userId, 1);
+                        rolesRef.child(userId).setValue(rolesModel);
                     } else {
                         Log.e(TAG, "createUserWithEmail:failure", task.getException());
                         Toast.makeText(SignUpAdminActivity.this, "Sign Up Failed", Toast.LENGTH_SHORT).show();

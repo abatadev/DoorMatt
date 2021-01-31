@@ -292,7 +292,6 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
                     Toast.makeText(NewResidentActivity.this, "New resident added!", Toast.LENGTH_SHORT).show();
                     saveResidenceButton.setText("Submitted");
                     saveResidenceButton.setEnabled(false);
-
                     rolesModel = new RolesModel(residentId, 3);
                     roleRef.child(residentId).setValue(rolesModel).addOnFailureListener(new OnFailureListener() {
                         @Override

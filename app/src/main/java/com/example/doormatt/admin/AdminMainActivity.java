@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.doormatt.R;
-import com.example.doormatt.admin.ui.resident.AdminGuardFragment;
+import com.example.doormatt.admin.ui.guard.AdminGuardFragment;
 import com.example.doormatt.admin.ui.resident.AdminResidentFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
