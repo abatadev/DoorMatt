@@ -23,12 +23,12 @@
             android:name=".resident.ResidentActivity"
             android:label="@string/title_activity_resident"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name=".admin.NewGuardActivity" />
+        <activity android:name=".admin.ui.guard.NewGuardActivity" />
         <activity android:name=".guard.GuardActivity" />
         <activity android:name=".admin.AdminActivity" />
         <activity android:name=".SignUpAdminActivity" />
         <activity android:name=".VisitorsPanelActivity" />
-        <activity android:name=".admin.NewResidentActivity" />
+        <activity android:name=".admin.ui.resident.NewResidentActivity" />
         <activity android:name=".WelcomeActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

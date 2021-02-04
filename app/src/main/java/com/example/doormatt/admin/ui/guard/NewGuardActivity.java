@@ -1,9 +1,8 @@
-package com.example.doormatt.admin;
+package com.example.doormatt.admin.ui.guard;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.role.RoleManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,8 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.jetbrains.annotations.NotNull;
 
 public class NewGuardActivity extends AppCompatActivity {
     private final String TAG = NewGuardActivity.class.getSimpleName();

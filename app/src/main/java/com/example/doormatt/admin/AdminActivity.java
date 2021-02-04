@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.doormatt.R;
+import com.example.doormatt.admin.ui.guard.NewGuardActivity;
+import com.example.doormatt.admin.ui.resident.NewResidentActivity;
 import com.example.doormatt.common.Common;
 import com.example.doormatt.model.ResidentModel;
 import com.example.doormatt.qrcode.QRCodeActivity;

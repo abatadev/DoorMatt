@@ -92,7 +92,8 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()) {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, LandingPageActivity.class);
+                        intent.putExtra("userId", mAuth.getUid());
                         startActivity(intent);
                     }
                 })

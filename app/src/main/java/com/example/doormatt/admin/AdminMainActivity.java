@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.example.doormatt.R;
 import com.example.doormatt.admin.ui.guard.AdminGuardFragment;
+import com.example.doormatt.admin.ui.qr.AdminQRFragment;
 import com.example.doormatt.admin.ui.resident.AdminResidentFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -28,27 +29,27 @@ public class AdminMainActivity extends AppCompatActivity {
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-                    switch (item.getItemId()) {
-                        case R.id.admin_nav_resident:
-                            selectedFragment = new AdminResidentFragment();
-                            break;
-                        case R.id.admin_nav_guard:
-                            selectedFragment = new AdminGuardFragment();
-                            break;
-                        case R.id.admin_nav_qr_scanner:
+        new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment selectedFragment = null;
+            switch (item.getItemId()) {
+                case R.id.admin_nav_resident:
+                    selectedFragment = new AdminResidentFragment();
+                    break;
+                case R.id.admin_nav_guard:
+                    selectedFragment = new AdminGuardFragment();
+                    break;
+                case R.id.admin_nav_qr_scanner:
+                    selectedFragment = new AdminQRFragment();
+                    break;
+                case R.id.admin_nav_logout:
 //                            selectedFragment = new SearchFragment();
-                            break;
-                        case R.id.admin_nav_logout:
-//                            selectedFragment = new SearchFragment();
-                            break;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.admin_fragment_container,
-                            selectedFragment).commit();
-                    return true;
-                }
-            };
+                    break;
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_fragment_container,
+                    selectedFragment).commit();
+            return true;
+        }
+    };
 }
