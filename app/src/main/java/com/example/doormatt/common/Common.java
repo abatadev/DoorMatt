@@ -7,7 +7,12 @@ public class Common {
     public static final String USER_REF = "User";
     public static final String GUARD_REF = "Guard";
     public static final String ROLE_REF = "Role";
+    public static final String LOGS_REF = "Logs";
     public static final String NAME_PATTERN = "^[A-Za-z]+$";
+
+    //Status Code
+    public static final int CHECKED_OUT = 1;
+    public static final int CHECKED_IN = 1;
 
     // Firebase Storage References
     public static final String AVATAR_IMAGES = "avatar_images";

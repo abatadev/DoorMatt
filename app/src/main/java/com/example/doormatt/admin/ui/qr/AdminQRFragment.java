@@ -29,19 +29,29 @@ import android.widget.Toast;
 
 import com.example.doormatt.R;
 import com.example.doormatt.common.Common;
+import com.example.doormatt.model.LogsModel;
 import com.example.doormatt.model.ResidentModel;
 import com.example.doormatt.qrcode.QRCodeActivity;
 import com.example.doormatt.qrcode.QRCodeFoundListener;
 import com.example.doormatt.qrcode.QRCodeImageAnalyzer;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class AdminQRFragment extends Fragment {
@@ -53,10 +63,11 @@ public class AdminQRFragment extends Fragment {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
 
     private FirebaseDatabase mDatabase;
-    private DatabaseReference residentRef;
+    private DatabaseReference residentRef, logsRef;
     private Button qrCodeFoundButton;
     private String qrCode;
     private String residentId, firstName, lastName, residentAvatar, roomNumber;
+    LogsModel logsModel = new LogsModel();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,6 +95,7 @@ public class AdminQRFragment extends Fragment {
     private void retrieveQRCodeData(String qrCode) {
         mDatabase = FirebaseDatabase.getInstance();
         residentRef = mDatabase.getReference(Common.RESIDENT_REF);
+
         ResidentModel residentModel = new ResidentModel();
 
         Log.d(TAG, "retrieveQRCodeData: " + qrCode);
@@ -112,10 +124,31 @@ public class AdminQRFragment extends Fragment {
 
             }
         });
+
+
     }
 
     private void showResidentDialog(String residentId, String firstName, String lastName, String residentAvatar, String roomNumber) {
         AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
+        logsRef = mDatabase.getReference(Common.LOGS_REF);
+        String logId = logsRef.push().getKey();
+        String time = Calendar.getInstance().getTime().toString();
+        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+
+        Map map = new HashMap();
+        map.put("timestamp", ServerValue.TIMESTAMP);
+
+        logsModel.setLogId(logId);
+        logsModel.setGuardId("admin");
+        logsModel.setResidentFirstname(firstName);
+        logsModel.setResidentLastName(lastName);
+        logsModel.setResidentId(residentId);
+        logsModel.setResidentRoomNumber(roomNumber);
+        logsModel.setGuardName("Admin");
+        logsModel.setDateRecorded(date);
+        logsModel.setTimeRecorded(time);
+        logsModel.setResidentStatus(1);
+
 
         builder.setTitle("Resident").create();
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_show_resident_details, null);
@@ -131,7 +164,17 @@ public class AdminQRFragment extends Fragment {
         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Time In
+                logsRef.child(logId).setValue(logsModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "onSuccess: Registered to database.");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        Log.d(TAG, "onFailure: " + e.getMessage());
+                    }
+                });
             }
         });
 

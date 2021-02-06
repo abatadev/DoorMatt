@@ -13,6 +13,10 @@
         android:icon="@drawable/ic_baseline_qr_code_scanner_24"
         android:title="Scan QR Code" />
     <item
+        android:id="@+id/admin_nav_logs"
+        android:icon="@drawable/ic_baseline_format_align_justify_24"
+        android:title="Logs" />
+    <item
         android:id="@+id/admin_nav_logout"
         android:icon="@drawable/ic_baseline_power_settings_new_24"
         android:title="Log Out" />
