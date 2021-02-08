@@ -1,4 +1,4 @@
-package com.example.doormatt.admin.ui.qr;
+package com.example.doormatt.guard.ui.qr;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -54,7 +54,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class AdminQRFragment extends Fragment {
+public class GuardQRFragment extends Fragment {
 
     private static final String TAG = QRCodeActivity.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CAMERA = 0;
@@ -149,6 +149,7 @@ public class AdminQRFragment extends Fragment {
         logsModel.setTimeRecorded(time);
         logsModel.setResidentStatus(1);
 
+
         builder.setTitle("Resident").create();
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_show_resident_details, null);
 
@@ -198,6 +199,7 @@ public class AdminQRFragment extends Fragment {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
             }
         }
+
     }
 
     private void startCamera() {
@@ -207,6 +209,7 @@ public class AdminQRFragment extends Fragment {
                 bindCameraPreview(cameraProvider);
             } catch (ExecutionException | InterruptedException e) {
                 Toast.makeText(getContext(), "Error starting camera " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "startCamera: " + e.getMessage());
             }
         }, ContextCompat.getMainExecutor(getContext()));
     }

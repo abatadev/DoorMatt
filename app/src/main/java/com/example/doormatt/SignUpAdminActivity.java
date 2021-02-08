@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.doormatt.admin.AdminActivity;
+import com.example.doormatt.admin.AdminMainActivity;
 import com.example.doormatt.model.AdminModel;
 import com.example.doormatt.common.Common;
 import com.example.doormatt.model.RolesModel;
@@ -102,12 +103,10 @@ public class SignUpAdminActivity extends AppCompatActivity {
                     if(task.isSuccessful()) {
                         // Redirect to Admin Panel
                         Log.d(TAG, "Sign Up Success!");
-
-                        Intent intent = new Intent(SignUpAdminActivity.this, AdminActivity.class);
-                        startActivity(intent);
-
                         rolesModel = new RolesModel(userId, 1);
                         rolesRef.child(userId).setValue(rolesModel);
+                        Intent intent = new Intent(SignUpAdminActivity.this, AdminMainActivity.class);
+                        startActivity(intent);
                     } else {
                         Log.e(TAG, "createUserWithEmail:failure", task.getException());
                         Toast.makeText(SignUpAdminActivity.this, "Sign Up Failed", Toast.LENGTH_SHORT).show();

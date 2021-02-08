@@ -48,8 +48,9 @@ dependencies {
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
     implementation 'com.google.zxing:core:3.3.2'
 
-    //Picasso
+    //Image
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 
     // Firebase Platform
     implementation 'com.google.firebase:firebase-auth:20.0.2'

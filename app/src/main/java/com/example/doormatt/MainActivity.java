@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.doormatt.admin.AdminActivity;
+import com.example.doormatt.admin.AdminMainActivity;
 import com.example.doormatt.common.Common;
-import com.example.doormatt.guard.GuardActivity;
+import com.example.doormatt.guard.GuardMainActivity;
+import com.example.doormatt.model.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -17,8 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.security.Guard;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_residence);
+        setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
 
         listenForUser();
@@ -52,48 +52,17 @@ public class MainActivity extends AppCompatActivity {
         try {
             userId = mAuth.getCurrentUser().getUid().toString();
             currentUser = mAuth.getCurrentUser().getEmail().toString();
+            Intent intent = new Intent(MainActivity.this, LandingPageActivity.class);
+            intent.putExtra("userId", mAuth.getUid());
+            startActivity(intent);
         } catch (NullPointerException e) {
             Log.e("MainActivity.class", "Error: " + e.getMessage());
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         }
 
-        userRef.child(userId).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    boolean isAdmin = snapshot.getValue(boolean.class);
-
-                    if(isAdmin == true) {
-                        Intent intent = new Intent(MainActivity.this, AdminActivity.class);
-                        startActivity(intent);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        userRef.child(userId).child("guard").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    boolean isGuard = snapshot.getValue(boolean.class);
-
-                    if(isGuard == true) {
-                        startActivity(new Intent(MainActivity.this, GuardActivity.class));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
     }
+
+
 }   

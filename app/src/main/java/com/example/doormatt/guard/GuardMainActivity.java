@@ -1,4 +1,4 @@
-package com.example.doormatt.admin;
+package com.example.doormatt.guard;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,51 +14,52 @@ import com.example.doormatt.admin.ui.guard.AdminGuardFragment;
 import com.example.doormatt.admin.ui.logs.AdminLogsFragment;
 import com.example.doormatt.admin.ui.qr.AdminQRFragment;
 import com.example.doormatt.admin.ui.resident.AdminResidentFragment;
+import com.example.doormatt.guard.ui.logs.GuardLogsFragment;
+import com.example.doormatt.guard.ui.qr.GuardQRFragment;
+import com.example.doormatt.guard.ui.resident.GuardResidentFragment;
+import com.example.doormatt.guard.ui.visitor.GuardVisitorFragment;
 import com.example.doormatt.model.UserModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class AdminMainActivity extends AppCompatActivity {
+public class GuardMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_main);
-        BottomNavigationView bottonNavAdmin = findViewById(R.id.admin_bottom_navigation);
-        bottonNavAdmin.setOnNavigationItemSelectedListener(navListener);
+        setContentView(R.layout.activity_guard_main);
+        BottomNavigationView bottomNavGuard = findViewById(R.id.guard_bottom_navigation);
+        bottomNavGuard.setOnNavigationItemSelectedListener(navListener);
         //I added this if statement to keep the selected fragment when rotating the device
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.admin_fragment_container,
-                    new AdminResidentFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.guard_fragment_container,
+                    new GuardResidentFragment()).commit();
         }
     }
-
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-        new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        item -> {
             Fragment selectedFragment = null;
             switch (item.getItemId()) {
-                case R.id.admin_nav_resident:
-                    selectedFragment = new AdminResidentFragment();
+                case R.id.guard_nav_logs:
+                    selectedFragment = new GuardLogsFragment();
                     break;
-                case R.id.admin_nav_guard:
-                    selectedFragment = new AdminGuardFragment();
+                case R.id.guard_nav_resident:
+                    selectedFragment = new GuardResidentFragment();
                     break;
-                case R.id.admin_nav_logs:
-                    selectedFragment = new AdminLogsFragment();
+                case R.id.guard_nav_visitor:
+                    selectedFragment = new GuardVisitorFragment();
                     break;
-                case R.id.admin_nav_qr_scanner:
-                    selectedFragment = new AdminQRFragment();
+                case R.id.guard_nav_qr_fragment:
+                    selectedFragment = new GuardQRFragment();
                     break;
-                case R.id.admin_nav_logout:
-                    signOut();
+                case R.id.guard_nav_logout:
+                    FirebaseAuth.getInstance().signOut();
+                    finish();
                     break;
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.admin_fragment_container,
+            getSupportFragmentManager().beginTransaction().replace(R.id.guard_fragment_container,
                     selectedFragment).commit();
             return true;
-        }
     };
 
     private void signOut() {
@@ -71,4 +72,5 @@ public class AdminMainActivity extends AppCompatActivity {
 
         finish();
     }
+
 }

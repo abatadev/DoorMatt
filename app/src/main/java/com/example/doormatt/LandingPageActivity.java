@@ -7,11 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.doormatt.admin.AdminActivity;
 import com.example.doormatt.admin.AdminMainActivity;
 import com.example.doormatt.common.Common;
-import com.example.doormatt.guard.GuardActivity;
-import com.example.doormatt.resident.ResidentActivity;
+import com.example.doormatt.guard.GuardMainActivity;
+import com.example.doormatt.resident.ResidentMainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,12 +53,12 @@ public class LandingPageActivity extends AppCompatActivity {
                                 break;
                             case (Common.GUARD_ROLE):
                                 loadingDialog.dismissLoadingDialog();
-                                Intent guardIntent = new Intent(LandingPageActivity.this, GuardActivity.class);
+                                Intent guardIntent = new Intent(LandingPageActivity.this, GuardMainActivity.class);
                                 startActivity(guardIntent);
                                 break;
                             case (Common.RESIDENT_ROLE):
                                 loadingDialog.dismissLoadingDialog();
-                                Intent residentIntent = new Intent(LandingPageActivity.this, ResidentActivity.class);
+                                Intent residentIntent = new Intent(LandingPageActivity.this, ResidentMainActivity.class);
                                 startActivity(residentIntent);
                                 break;
                             default:

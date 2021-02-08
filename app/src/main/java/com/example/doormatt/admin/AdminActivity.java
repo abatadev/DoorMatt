@@ -15,12 +15,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.doormatt.LoginActivity;
+import com.example.doormatt.MainActivity;
 import com.example.doormatt.R;
 import com.example.doormatt.admin.ui.guard.NewGuardActivity;
 import com.example.doormatt.admin.ui.resident.NewResidentActivity;
 import com.example.doormatt.common.Common;
 import com.example.doormatt.model.ResidentModel;
+import com.example.doormatt.model.UserModel;
 import com.example.doormatt.qrcode.QRCodeActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -123,6 +127,8 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
+
     private void loadData(String data) {
         Query query = residentRef.orderByChild("firstName").startAt(data).endAt(data + "\uf8ff");
 
@@ -135,7 +141,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public ResidentsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_admin_residents, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_guard_resident, parent, false);
                 return new ResidentsViewHolder(view);
             }
 

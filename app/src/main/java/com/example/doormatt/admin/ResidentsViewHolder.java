@@ -17,7 +17,7 @@ public class ResidentsViewHolder extends RecyclerView.ViewHolder{
     public ResidentsViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
 
-        residentName = itemView.findViewById(R.id.card_view_resident_full_name);
-        residentRoomNumber = itemView.findViewById(R.id.card_view_resident_room_number);
+//        residentName = itemView.findViewById(R.id.card_view_resident_full_name);
+//        residentRoomNumber = itemView.findViewById(R.id.card_view_resident_room_number);
     }
 }

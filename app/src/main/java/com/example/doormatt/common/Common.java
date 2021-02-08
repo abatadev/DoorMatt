@@ -8,11 +8,12 @@ public class Common {
     public static final String GUARD_REF = "Guard";
     public static final String ROLE_REF = "Role";
     public static final String LOGS_REF = "Logs";
+    public static final String VISITOR_REF = "Visitor";
     public static final String NAME_PATTERN = "^[A-Za-z]+$";
 
     //Status Code
     public static final int CHECKED_OUT = 1;
-    public static final int CHECKED_IN = 1;
+    public static final int CHECKED_IN = 2;
 
     // Firebase Storage References
     public static final String AVATAR_IMAGES = "avatar_images";
@@ -25,5 +26,6 @@ public class Common {
     public static final int VISITOR_ROLE = 4;
 
     public static final int PICK_IMAGE_REQUEST = 1234;
+
 
 }

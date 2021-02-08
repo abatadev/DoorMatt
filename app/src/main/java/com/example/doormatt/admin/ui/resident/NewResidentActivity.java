@@ -219,7 +219,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
                 bitmap = qrgEncoder.getBitmap();
                 qrImage.setImageBitmap(bitmap);
 
-                saveQrCode();
+                saveQrCodeToDevice();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -231,8 +231,8 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         ByteArrayOutputStream boas = new ByteArrayOutputStream();
         onSetQRBitmap.compress(Bitmap.CompressFormat.JPEG, 100, boas);
         byte[] data = boas.toByteArray();
-
-//        final StorageReference filePath = avatarStorageRef.child(imageUri.getLastPathSegment()+ unique_name);
+// AAA
+        final StorageReference qrFilePath = avatarStorageRef.child(imageUri.getLastPathSegment()+ qrCodeValue);
         UploadTask uploadTask = qrStorageRef.child(qrCodeValue).putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -243,12 +243,18 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.d(TAG, "SUCCESS");
+                Task<Uri> qrUriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        downloadQRImageUrl = qrFilePath.getDownloadUrl().toString();
+                        return qrFilePath.getDownloadUrl();
+                    }
+                });
             }
         });
     }
 
-    private void saveQrCode() {
+    private void saveQrCodeToDevice() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             try {
                 boolean save = new QRGSaver().save(savePath, qrCodeValue, bitmap, QRGContents.ImageType.IMAGE_JPEG);
@@ -283,7 +289,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
             residentModel.setDateOfBirth(dateOfBirth);
             residentModel.setRoomNumber(roomNumber);
             residentModel.setResidentAvatar(downloadImageUrl);
-            residentModel.setQrCode(qrCodeValue);
+            residentModel.setQrCode(downloadQRImageUrl);
 
             residentRef.child(residentId).setValue(residentModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override

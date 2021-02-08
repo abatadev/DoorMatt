@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/guard_nav_logs"
+        android:icon="@drawable/ic_baseline_format_align_justify_24"
+        android:title="Logs" />
+    <item
+        android:id="@+id/guard_nav_resident"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Residents" />
+    <item
+        android:id="@+id/guard_nav_qr_fragment"
+        android:icon="@drawable/ic_baseline_qr_code_scanner_24"
+        android:title="QR Reader" />
+    <item
+        android:id="@+id/guard_nav_visitor"
+        android:icon="@drawable/ic_baseline_person_outline_24"
+        android:title="Visitor" />
+    <item
+        android:id="@+id/guard_nav_logout"
+        android:icon="@drawable/ic_baseline_power_settings_new_24"
+        android:title="Log Out" />
+</menu>

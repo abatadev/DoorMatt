@@ -5,19 +5,15 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/new_resident_button"
+        android:id="@+id/guard_add_resident_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add New Resident"/>
-
-    <EditText
-        android:id="@+id/resident_search_bar_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Search"/>
+        android:text="Add Resident"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/admin_resident_recyclerView"
+        android:id="@+id/guard_resident_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+
 </LinearLayout>
