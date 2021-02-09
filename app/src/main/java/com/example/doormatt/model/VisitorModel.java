@@ -1,21 +1,12 @@
 package com.example.doormatt.model;
 
 public class VisitorModel {
-    String visitorId, visitorName, dateOfBirth, residentId, residentFirstName, residentLastName, residentRoomNumber , residentQRCode;
+    String visitorId, visitorName, timeVisited, reasonForVisit;
+    String residentId, residentFirstName, residentLastName, residentQRCode;
 
     public VisitorModel() {
     }
 
-    public VisitorModel(String visitorId, String visitorName, String dateOfBirth, String residentId, String residentFirstName, String residentLastName, String residentRoomNumber, String residentQRCode) {
-        this.visitorId = visitorId;
-        this.visitorName = visitorName;
-        this.dateOfBirth = dateOfBirth;
-        this.residentId = residentId;
-        this.residentFirstName = residentFirstName;
-        this.residentLastName = residentLastName;
-        this.residentRoomNumber = residentRoomNumber;
-        this.residentQRCode = residentQRCode;
-    }
 
     public String getVisitorId() {
         return visitorId;
@@ -33,12 +24,20 @@ public class VisitorModel {
         this.visitorName = visitorName;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
+    public String getTimeVisited() {
+        return timeVisited;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setTimeVisited(String timeVisited) {
+        this.timeVisited = timeVisited;
+    }
+
+    public String getReasonForVisit() {
+        return reasonForVisit;
+    }
+
+    public void setReasonForVisit(String reasonForVisit) {
+        this.reasonForVisit = reasonForVisit;
     }
 
     public String getResidentId() {
@@ -63,14 +62,6 @@ public class VisitorModel {
 
     public void setResidentLastName(String residentLastName) {
         this.residentLastName = residentLastName;
-    }
-
-    public String getResidentRoomNumber() {
-        return residentRoomNumber;
-    }
-
-    public void setResidentRoomNumber(String residentRoomNumber) {
-        this.residentRoomNumber = residentRoomNumber;
     }
 
     public String getResidentQRCode() {

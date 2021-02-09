@@ -26,7 +26,7 @@ public class GuardLogsRecyclerAdapter extends FirebaseRecyclerAdapter<LogsModel,
     protected void onBindViewHolder(@NonNull @NotNull GuardLogsRecyclerAdapter.ViewHolder holder, int position, @NonNull @NotNull LogsModel model) {
         holder.residentName.setText(model.getResidentFirstname() + " " + model.getResidentLastName());
         holder.residentRoom.setText(model.getResidentRoomNumber());
-        holder.residentStatus.setText(model.getResidentStatus());
+        holder.residentStatus.setText("");
         holder.guardName.setText(model.getGuardName());
         holder.guardDateAndTime.setText(model.getDateRecorded());
     }

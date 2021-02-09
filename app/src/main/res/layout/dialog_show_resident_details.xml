@@ -6,6 +6,7 @@
     android:layout_margin="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/dialog_resident_avatar"
         android:layout_width="84dp"
         android:layout_height="84dp"
         android:src="@drawable/sample_avatar"

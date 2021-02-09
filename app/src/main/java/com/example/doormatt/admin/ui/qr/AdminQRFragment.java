@@ -43,6 +43,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,6 +54,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdminQRFragment extends Fragment {
 
@@ -155,6 +158,8 @@ public class AdminQRFragment extends Fragment {
         TextView residentIdTextView = view.findViewById(R.id.dialog_qr_resident_id);
         TextView residentNameTextView = view.findViewById(R.id.dialog_qr_first_name);
         TextView residentRoomNumberTextView = view.findViewById(R.id.dialog_room_number);
+        CircleImageView residentAvatarCircleImageView = view.findViewById(R.id.dialog_resident_avatar);
+        Picasso.get().load(residentAvatar).into(residentAvatarCircleImageView);
 
         residentIdTextView.setText("Resident ID: " + residentId);
         residentNameTextView.setText("Name: " + firstName + " " + lastName);

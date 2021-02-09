@@ -1,18 +1,22 @@
 package com.example.doormatt.model;
 
 public class ResidentModel {
-    String residentId, firstName, lastName, dateOfBirth, roomNumber, residentAvatar, qrCode;
+    String residentId, firstName, lastName, dateOfBirth, roomNumber,
+            emergencyContactNumber, emergencyContactPerson, residentAvatar, qrCode;
 
     public ResidentModel() {
     }
 
-    public ResidentModel(String residentId, String firstName, String lastName, String dateOfBirth, String roomNumber, String residentAvatar) {
+    public ResidentModel(String residentId, String firstName, String lastName, String dateOfBirth, String roomNumber, String emergencyContactNumber, String emergencyContactPerson, String residentAvatar, String qrCode) {
         this.residentId = residentId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.roomNumber = roomNumber;
+        this.emergencyContactNumber = emergencyContactNumber;
+        this.emergencyContactPerson = emergencyContactPerson;
         this.residentAvatar = residentAvatar;
+        this.qrCode = qrCode;
     }
 
     public String getResidentId() {
@@ -53,6 +57,22 @@ public class ResidentModel {
 
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public String getEmergencyContactNumber() {
+        return emergencyContactNumber;
+    }
+
+    public void setEmergencyContactNumber(String emergencyContactNumber) {
+        this.emergencyContactNumber = emergencyContactNumber;
+    }
+
+    public String getEmergencyContactPerson() {
+        return emergencyContactPerson;
+    }
+
+    public void setEmergencyContactPerson(String emergencyContactPerson) {
+        this.emergencyContactPerson = emergencyContactPerson;
     }
 
     public String getResidentAvatar() {
