@@ -4,15 +4,18 @@ public class ResidentModel {
     String residentId, firstName, lastName, dateOfBirth, roomNumber,
             emergencyContactNumber, emergencyContactPerson, residentAvatar, qrCode;
 
+    int residentStatus;
+
     public ResidentModel() {
     }
 
-    public ResidentModel(String residentId, String firstName, String lastName, String dateOfBirth, String roomNumber, String emergencyContactNumber, String emergencyContactPerson, String residentAvatar, String qrCode) {
+    public ResidentModel(String residentId, String firstName, String lastName, String dateOfBirth, String roomNumber, int residentStatus, String emergencyContactNumber, String emergencyContactPerson, String residentAvatar, String qrCode) {
         this.residentId = residentId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.roomNumber = roomNumber;
+        this.residentStatus = residentStatus;
         this.emergencyContactNumber = emergencyContactNumber;
         this.emergencyContactPerson = emergencyContactPerson;
         this.residentAvatar = residentAvatar;
@@ -57,6 +60,14 @@ public class ResidentModel {
 
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public int getResidentStatus() {
+        return residentStatus;
+    }
+
+    public void setResidentStatus(int residentStatus) {
+        this.residentStatus = residentStatus;
     }
 
     public String getEmergencyContactNumber() {

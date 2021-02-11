@@ -34,4 +34,8 @@
     <string name="title_activity_admin_main">MainActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="emergency_contact_number">Emergency Contact Number</string>
+    <string name="emergency_contact_person">Emergency Contact Person</string>
+    <string name="room_number">Room Number</string>
+    <string name="save">Save</string>
 </resources>

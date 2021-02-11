@@ -165,6 +165,19 @@ public class AdminQRFragment extends Fragment {
         residentNameTextView.setText("Name: " + firstName + " " + lastName);
         residentRoomNumberTextView.setText("Room Number: "+ roomNumber);
 
+        // Read resident status
+        residentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                final String residentStatus = snapshot.child("").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

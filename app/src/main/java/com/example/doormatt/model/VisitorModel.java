@@ -2,7 +2,7 @@ package com.example.doormatt.model;
 
 public class VisitorModel {
     String visitorId, visitorName, timeVisited, reasonForVisit;
-    String residentId, residentFirstName, residentLastName, residentQRCode;
+    String residentId, residentFirstName, residentLastName, residentRoomNumber, residentQRCode;
 
     public VisitorModel() {
     }
@@ -62,6 +62,14 @@ public class VisitorModel {
 
     public void setResidentLastName(String residentLastName) {
         this.residentLastName = residentLastName;
+    }
+
+    public String getResidentRoomNumber() {
+        return residentRoomNumber;
+    }
+
+    public void setResidentRoomNumber(String residentRoomNumber) {
+        this.residentRoomNumber = residentRoomNumber;
     }
 
     public String getResidentQRCode() {

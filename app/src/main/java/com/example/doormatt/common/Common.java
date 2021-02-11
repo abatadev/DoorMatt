@@ -11,7 +11,8 @@ public class Common {
     public static final String VISITOR_REF = "Visitor";
     public static final String NAME_PATTERN = "^[A-Za-z]+$";
 
-    //Status Code
+    //Resident Status Code
+    public static final int NONE = 0;
     public static final int CHECKED_OUT = 1;
     public static final int CHECKED_IN = 2;
 

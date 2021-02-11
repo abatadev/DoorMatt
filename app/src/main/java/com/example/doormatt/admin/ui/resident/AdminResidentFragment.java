@@ -1,5 +1,8 @@
 package com.example.doormatt.admin.ui.resident;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -24,6 +27,8 @@ import com.example.doormatt.common.Common;
 import com.example.doormatt.model.ResidentModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -129,11 +134,40 @@ public class AdminResidentFragment extends Fragment {
                     }
                 });
 
+                holder.editResident.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), EditResidentActivity.class);
+                        intent.putExtra("residentId", getRef(position).getKey());
+//                        intent.putExtra("", model.getFirstName());
+//                        intent.putExtra("", model.getLastName());
+//                        intent.putExtra("", model.get)
+                        startActivity(intent);
+                    }
+                });
+
+                holder.deleteResident.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String residentId = getRef(position).getKey();
+                        deleteResident(residentId);
+                    }
+                });
+
             }
         };
 
         adapter.startListening();
         recyclerView.setAdapter(adapter);
+    }
+
+    private void deleteResident(final String residentId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setMessage("Delete this entry?");
+        builder.setPositiveButton("Delete", (dialog, which) -> residentRef.child(residentId).removeValue()
+                .addOnSuccessListener(unused -> Toast.makeText(getContext(), "Entry has been deleted.", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Log.d(TAG, "onFailure: " + e.getMessage())))
+        .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
     }
 
     @Override
