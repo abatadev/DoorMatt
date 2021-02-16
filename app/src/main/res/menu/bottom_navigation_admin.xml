@@ -7,7 +7,7 @@
     <item
         android:id="@+id/admin_nav_guard"
         android:icon="@drawable/ic_baseline_security_24"
-        android:title="Guard" />
+        android:title="Staff" />
     <item
         android:id="@+id/admin_nav_qr_scanner"
         android:icon="@drawable/ic_baseline_qr_code_scanner_24"

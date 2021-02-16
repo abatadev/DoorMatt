@@ -1,7 +1,7 @@
 package com.example.doormatt.model;
 
 public class ResidentModel {
-    String residentId, firstName, lastName, dateOfBirth, roomNumber,
+    String residentId, firstName, lastName, dateOfBirth, roomNumber, contactNumber,
             emergencyContactNumber, emergencyContactPerson, residentAvatar, qrCode;
 
     int residentStatus;
@@ -9,17 +9,26 @@ public class ResidentModel {
     public ResidentModel() {
     }
 
-    public ResidentModel(String residentId, String firstName, String lastName, String dateOfBirth, String roomNumber, int residentStatus, String emergencyContactNumber, String emergencyContactPerson, String residentAvatar, String qrCode) {
+    public ResidentModel(int residentStatus) {
+        this.residentStatus = residentStatus;
+    }
+
+    public ResidentModel(String residentId, String firstName, String lastName, String dateOfBirth,
+                         String roomNumber, String contactNumber, String emergencyContactNumber,
+                         String emergencyContactPerson, String residentAvatar, String qrCode,
+                         int residentStatus) {
+
         this.residentId = residentId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.roomNumber = roomNumber;
-        this.residentStatus = residentStatus;
+        this.contactNumber = contactNumber;
         this.emergencyContactNumber = emergencyContactNumber;
         this.emergencyContactPerson = emergencyContactPerson;
         this.residentAvatar = residentAvatar;
         this.qrCode = qrCode;
+        this.residentStatus = residentStatus;
     }
 
     public String getResidentId() {
@@ -100,5 +109,13 @@ public class ResidentModel {
 
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 }

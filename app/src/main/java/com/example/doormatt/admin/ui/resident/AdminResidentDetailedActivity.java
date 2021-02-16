@@ -50,7 +50,7 @@ import static com.example.doormatt.common.Common.QR_IMAGES;
 public class AdminResidentDetailedActivity extends AppCompatActivity {
     final String TAG = AdminResidentDetailedActivity.class.getSimpleName();
 
-    private TextView firstNameTextView, lastNameTextView, dateOfBirthTextView, roomNumberTextView;
+    private TextView firstNameTextView, lastNameTextView, dateOfBirthTextView, roomNumberTextView, contactNumberTextView;
     private CircleImageView residentAvatarCircleImageView;
     private ImageView qrCode;
     private LinearLayout linearLayout;
@@ -71,6 +71,7 @@ public class AdminResidentDetailedActivity extends AppCompatActivity {
         firstNameTextView = findViewById(R.id.resident_detailed_first_name_textView);
         lastNameTextView = findViewById(R.id.resident_detailed_last_name_textView);
         dateOfBirthTextView = findViewById(R.id.resident_detailed_date_of_birth_textView);
+        contactNumberTextView = findViewById(R.id.resident_detailed_contact_number_text_view);
         roomNumberTextView = findViewById(R.id.resident_detailed_room_number_text_view);
         residentAvatarCircleImageView = findViewById(R.id.resident_detailed_avatar);
         saveTemplateButton = findViewById(R.id.save_template_button);
@@ -84,14 +85,15 @@ public class AdminResidentDetailedActivity extends AppCompatActivity {
                     final String lastName = snapshot.child("lastName").getValue().toString();
                     final String dateOfBirth = snapshot.child("dateOfBirth").getValue().toString();
                     final String roomNumber = snapshot.child("roomNumber").getValue().toString();
-
                     final String residentAvatar = snapshot.child("residentAvatar").getValue().toString();
+                    final String contactNumber = snapshot.child("contactNumber").getValue().toString();
 //                    final String residentQRCode = snapshot.child(residentId).getValue().toString();
 
                     firstNameTextView.setText(firstName);
                     lastNameTextView.setText(lastName);
                     dateOfBirthTextView.setText(dateOfBirth);
                     roomNumberTextView.setText(roomNumber);
+                    contactNumberTextView.setText(contactNumber);
                     Picasso.get().load(residentAvatar).into(residentAvatarCircleImageView);
 
                     StorageReference mImageStorage = FirebaseStorage.getInstance().getReference();

@@ -73,7 +73,7 @@ public class EditResidentActivity extends AppCompatActivity implements DatePicke
         dateOfBirthTextView = findViewById(R.id.edit_resident_date_of_birth_textView);
         roomNumberEditText = findViewById(R.id.edit_resident_room_number_textView);
         emergencyContactPersonEditText = findViewById(R.id.edit_resident_emergency_contact_person);
-        emergencyContactNumberEditText = findViewById(R.id.emergencyContactNumberEditText);
+        emergencyContactNumberEditText = findViewById(R.id.edit_resident_emergency_contact_number);
         dateOfBirthImageView = findViewById(R.id.edit_resident_date_imageView);
         editResidentButton = findViewById(R.id.edit_resident_button);
     }
@@ -113,12 +113,12 @@ public class EditResidentActivity extends AppCompatActivity implements DatePicke
     private void editResidentDetails() {
         Map<String, Object> updateData = new HashMap<>();
 
-        updateData.put("firstName", firstNameEditText.getText());
-        updateData.put("lastName", lastNameEditText.getText());
-        updateData.put("dateOfBirth", dateOfBirthTextView.getText());
-        updateData.put("roomNumber", roomNumberEditText.getText());
-        updateData.put("emergencyContactPerson", emergencyContactPersonEditText.getText());
-        updateData.put("emergencyContactNumber", emergencyContactNumberEditText.getText());
+        updateData.put("firstName", firstNameEditText.getText().toString());
+        updateData.put("lastName", lastNameEditText.getText().toString());
+        updateData.put("dateOfBirth", dateOfBirthTextView.getText().toString());
+        updateData.put("roomNumber", roomNumberEditText.getText().toString());
+        updateData.put("emergencyContactPerson", emergencyContactPersonEditText.getText().toString());
+        updateData.put("emergencyContactNumber", emergencyContactNumberEditText.getText().toString());
 
         updateResidentDetails(updateData);
     }

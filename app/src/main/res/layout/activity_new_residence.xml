@@ -79,7 +79,7 @@
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/firstNameEditText"
+                    android:id="@+id/newVisitorFirstNameTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/first_name"
@@ -90,7 +90,7 @@
                     android:padding="8dp"/>
 
                 <EditText
-                    android:id="@+id/lastNameEditText"
+                    android:id="@+id/newVisitorLastNameTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/last_name"
@@ -107,7 +107,7 @@
                     android:weightSum="5">
 
                     <TextView
-                        android:id="@+id/dateOfBirthTextView"
+                        android:id="@+id/newVisitorDateOfBirthEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/date_of_birth"
@@ -115,6 +115,7 @@
                         android:textColor="@color/grey"
                         android:background="@drawable/rounded_corners_text_input"
                         android:padding="8dp"
+                        android:textSize="18sp"
                         android:layout_weight="1" />
 
                     <ImageView
@@ -140,11 +141,22 @@
                     android:padding="8dp"/>
 
                 <EditText
+                    android:id="@+id/contactNumberEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contact Number"
+                    android:inputType="number"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@color/grey"
+                    android:background="@drawable/rounded_corners_text_input"
+                    android:padding="8dp"/>
+
+                <EditText
                     android:id="@+id/emergencyContactPersonEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/emergency_contact_person"
-                    android:inputType="number"
+                    android:inputType="textCapWords"
                     android:layout_marginBottom="8dp"
                     android:textColor="@color/grey"
                     android:background="@drawable/rounded_corners_text_input"

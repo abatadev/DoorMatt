@@ -2,18 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_margin="8dp">
 
     <Button
         android:id="@+id/guard_add_resident_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="Add Resident"/>
+
+    <EditText
+        android:id="@+id/guard_resident_search_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search"
+        android:ems="15"
+        android:drawableStart="@drawable/ic_baseline_search_24"
+        android:layout_marginBottom="8dp"
+        android:inputType="textCapWords"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/guard_resident_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
     </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

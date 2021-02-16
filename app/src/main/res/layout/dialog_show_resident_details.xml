@@ -39,4 +39,12 @@
         android:textSize="18sp"
         android:text="Room Number"/>
 
+    <TextView
+        android:id="@+id/dialog_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:text="Resident Status"/>
+
 </LinearLayout>

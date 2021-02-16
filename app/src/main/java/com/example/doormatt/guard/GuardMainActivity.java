@@ -15,7 +15,7 @@ import com.example.doormatt.admin.ui.logs.AdminLogsFragment;
 import com.example.doormatt.admin.ui.qr.AdminQRFragment;
 import com.example.doormatt.admin.ui.resident.AdminResidentFragment;
 import com.example.doormatt.guard.ui.logs.GuardLogsFragment;
-import com.example.doormatt.guard.ui.qr.GuardQRFragment;
+
 import com.example.doormatt.guard.ui.resident.GuardResidentFragment;
 import com.example.doormatt.guard.ui.visitor.GuardVisitorFragment;
 import com.example.doormatt.model.UserModel;
@@ -30,7 +30,7 @@ public class GuardMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_guard_main);
         BottomNavigationView bottomNavGuard = findViewById(R.id.guard_bottom_navigation);
         bottomNavGuard.setOnNavigationItemSelectedListener(navListener);
-        //I added this if statement to keep the selected fragment when rotating the device
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.guard_fragment_container,
                     new GuardResidentFragment()).commit();
@@ -50,12 +50,10 @@ public class GuardMainActivity extends AppCompatActivity {
                     selectedFragment = new GuardVisitorFragment();
                     break;
                 case R.id.guard_nav_qr_fragment:
-                    selectedFragment = new GuardQRFragment();
+                    selectedFragment = new AdminQRFragment();
                     break;
                 case R.id.guard_nav_logout:
-                    FirebaseAuth.getInstance().signOut();
-                    finish();
-                    break;
+                    signOut();
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.guard_fragment_container,
                     selectedFragment).commit();
@@ -63,14 +61,10 @@ public class GuardMainActivity extends AppCompatActivity {
     };
 
     private void signOut() {
-        UserModel userModel = null;
-
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-
-        finish();
     }
 
 }

@@ -66,7 +66,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
 
     private QRGEncoder qrgEncoder;
 
-    private EditText firstNameEditText, lastNameEditText, roomNumberEditText;
+    private EditText firstNameEditText, lastNameEditText, roomNumberEditText, emergencyContactPersonEditText, emergencyContactNumberEditText, contactNumberEditText;
     private TextView dateOfBirthTextView;
     private Button addPictureButton, saveResidenceButton;
     private ImageView qrImage, showDateOfBirthTextView;
@@ -107,12 +107,15 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         residentRef = FirebaseDatabase.getInstance().getReference().child(Common.RESIDENT_REF);
         roleRef = FirebaseDatabase.getInstance().getReference().child(Common.ROLE_REF);
 
-        firstNameEditText = findViewById(R.id.firstNameEditText);
-        lastNameEditText = findViewById(R.id.lastNameEditText);
+        firstNameEditText = findViewById(R.id.newVisitorFirstNameTextView);
+        lastNameEditText = findViewById(R.id.newVisitorLastNameTextView);
         roomNumberEditText = findViewById(R.id.roomNumberEditText);
+        contactNumberEditText = findViewById(R.id.contactNumberEditText);
+        emergencyContactPersonEditText = findViewById(R.id.emergencyContactPersonEditText);
+        emergencyContactNumberEditText = findViewById(R.id.emergencyContactNumberEditText);
 
-        dateOfBirthTextView = findViewById(R.id.dateOfBirthTextView);
-        showDateOfBirthTextView = findViewById(R.id.showDateofBirthImageView);
+        dateOfBirthTextView = findViewById(R.id.newVisitorDateOfBirthEditText);
+        showDateOfBirthTextView = findViewById(R.id.showDateOfBirthImageView);
 
         addPictureButton = findViewById(R.id.editPictureButton);
         saveResidenceButton = findViewById(R.id.saveResidenceButton);
@@ -282,6 +285,9 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
             lastName = lastNameEditText.getText().toString().trim();
             roomNumber = roomNumberEditText.getText().toString().trim();
             dateOfBirth = dateOfBirthTextView.getText().toString().trim();
+            String contactNumber = contactNumberEditText.getText().toString().trim();
+            String emergencyContactPerson = emergencyContactPersonEditText.getText().toString().trim();
+            String emergencyContactNumber = emergencyContactNumberEditText.getText().toString().trim();
 
             residentModel.setResidentId(residentId);
             residentModel.setFirstName(firstName);
@@ -290,6 +296,10 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
             residentModel.setRoomNumber(roomNumber);
             residentModel.setResidentAvatar(downloadImageUrl);
             residentModel.setQrCode(downloadQRImageUrl);
+            residentModel.setContactNumber(contactNumber);
+            residentModel.setResidentStatus(Common.NONE);
+            residentModel.setEmergencyContactPerson(emergencyContactPerson);
+            residentModel.setEmergencyContactNumber(emergencyContactNumber);
 
             residentRef.child(residentId).setValue(residentModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override

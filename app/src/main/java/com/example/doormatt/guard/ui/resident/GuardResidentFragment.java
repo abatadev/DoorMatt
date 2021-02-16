@@ -2,10 +2,14 @@ package com.example.doormatt.guard.ui.resident;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,34 +18,52 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doormatt.R;
+import com.example.doormatt.admin.ui.resident.AdminResidentDetailedActivity;
+import com.example.doormatt.admin.ui.resident.EditResidentActivity;
 import com.example.doormatt.admin.ui.resident.NewResidentActivity;
+import com.example.doormatt.admin.ui.resident.ResidentViewHolder;
 import com.example.doormatt.common.Common;
-import com.example.doormatt.guard.ui.logs.GuardLogsRecyclerAdapter;
+import com.example.doormatt.guard.ui.visitor.GuardNewVisitorActivity;
 import com.example.doormatt.model.GuardModel;
 import com.example.doormatt.model.LogsModel;
 import com.example.doormatt.model.ResidentModel;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 public class GuardResidentFragment extends Fragment {
     private final String TAG = GuardResidentFragment.class.getSimpleName();
     private Button newResidentButton;
+    private EditText searchEditText;
 
-    GuardResidentRecyclerAdapter adapter;
+    FirebaseRecyclerAdapter<ResidentModel, GuardResidentViewHolder> adapter;
+    FirebaseRecyclerOptions<ResidentModel> options;
     RecyclerView recyclerView;
     ResidentModel residentModel;
+    private DatabaseReference residentRef, visitorRef;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guard_resident, container, false);
+        residentRef = FirebaseDatabase.getInstance().getReference(Common.RESIDENT_REF);
+
         recyclerView = view.findViewById(R.id.guard_resident_list);
+        searchEditText = view.findViewById(R.id.guard_resident_search_edit_text);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
+
         residentModel = new ResidentModel();
+        loadData("");
 
         view.findViewById(R.id.guard_add_resident_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,21 +73,91 @@ public class GuardResidentFragment extends Fragment {
             }
         });
 
-        queryList();
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(editable.toString() != null) {
+                    loadData(editable.toString());
+
+                } else {
+                    loadData("");
+                }
+            }
+        });
 
         return view;
     }
 
+    private void loadData(String data) {
+        Query query = residentRef.orderByChild("firstName").startAt(data).endAt(data + "\uf8ff");;
 
-    private void queryList() {
-        FirebaseRecyclerOptions<ResidentModel> setOptions =
-                new FirebaseRecyclerOptions.Builder<ResidentModel>()
-                        .setQuery(
-                                FirebaseDatabase.getInstance().getReference(Common.RESIDENT_REF)
-                                ,ResidentModel.class)
-                        .build();
+        options = new FirebaseRecyclerOptions.Builder<ResidentModel>()
+                .setQuery(query, ResidentModel.class)
+                .build();
 
-        adapter = new GuardResidentRecyclerAdapter(setOptions);
+        adapter = new FirebaseRecyclerAdapter<ResidentModel, GuardResidentViewHolder>(options) {
+            @NonNull
+            @NotNull
+            @Override
+            public GuardResidentViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_guard_resident, parent, false);
+                return new GuardResidentViewHolder(view);
+            }
+
+
+            @Override
+            protected void onBindViewHolder(@NonNull @NotNull GuardResidentViewHolder holder, int position, @NonNull @NotNull ResidentModel model) {
+                holder.residentNameTextView.setText(model.getFirstName() + " " + model.getLastName());
+                holder.residentRoomNumberTextView.setText(model.getRoomNumber());
+                Log.d(TAG, "onBindViewHolder: " + model.getResidentStatus());
+                Picasso.get().load(model.getResidentAvatar()).into(holder.residentAvatar);
+
+                try {
+                    if(model.getResidentStatus() == Common.CHECKED_OUT) {
+                        holder.residentStatusTextView.setText("Checked Out");
+                    } else if (model.getResidentStatus() == Common.CHECKED_IN) {
+                        holder.residentStatusTextView.setText("Checked In");
+                    }
+                } catch (NullPointerException e) {
+                    Log.d(TAG, "onBindViewHolder: " + e.getMessage());
+                    e.printStackTrace();
+                }
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), GuardNewVisitorActivity.class);
+                        intent.putExtra("residentId", getRef(position).getKey());
+                        startActivity(intent);
+                    }
+                });
+            }
+        };
+
+        adapter.startListening();
         recyclerView.setAdapter(adapter);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

@@ -10,6 +10,10 @@ public class LogsModel {
     public LogsModel() {
     }
 
+    public LogsModel(int residentStatus) {
+        this.residentStatus = residentStatus;
+    }
+
     public LogsModel(String logId, String residentId, String guardId, String residentFirstname, String residentLastName, String residentRoomNumber, String guardName, int residentStatus, String dateRecorded, String timeRecorded) {
         this.logId = logId;
         this.residentId = residentId;

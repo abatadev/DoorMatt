@@ -1,12 +1,27 @@
 package com.example.doormatt.model;
 
 public class VisitorModel {
-    String visitorId, visitorName, timeVisited, reasonForVisit;
-    String residentId, residentFirstName, residentLastName, residentRoomNumber, residentQRCode;
+    String visitorId, visitorFirstName, visitorLastName, visitorDateOfBirth, visitorContactNumber, visitorTimeVisited, visitorReasonForVisit;
+    String residentId, residentFirstName, residentLastName, residentRoomNumber, residentContactNumber, residentQRCode;
 
     public VisitorModel() {
     }
 
+    public VisitorModel(String visitorId, String visitorFirstName, String visitorLastName, String visitorDateOfBirth, String visitorContactNumber, String visitorTimeVisited, String visitorReasonForVisit, String residentId, String residentFirstName, String residentLastName, String residentRoomNumber, String residentContactNumber, String residentQRCode) {
+        this.visitorId = visitorId;
+        this.visitorFirstName = visitorFirstName;
+        this.visitorLastName = visitorLastName;
+        this.visitorDateOfBirth = visitorDateOfBirth;
+        this.visitorContactNumber = visitorContactNumber;
+        this.visitorTimeVisited = visitorTimeVisited;
+        this.visitorReasonForVisit = visitorReasonForVisit;
+        this.residentId = residentId;
+        this.residentFirstName = residentFirstName;
+        this.residentLastName = residentLastName;
+        this.residentRoomNumber = residentRoomNumber;
+        this.residentContactNumber = residentContactNumber;
+        this.residentQRCode = residentQRCode;
+    }
 
     public String getVisitorId() {
         return visitorId;
@@ -16,28 +31,52 @@ public class VisitorModel {
         this.visitorId = visitorId;
     }
 
-    public String getVisitorName() {
-        return visitorName;
+    public String getVisitorFirstName() {
+        return visitorFirstName;
     }
 
-    public void setVisitorName(String visitorName) {
-        this.visitorName = visitorName;
+    public void setVisitorFirstName(String visitorFirstName) {
+        this.visitorFirstName = visitorFirstName;
     }
 
-    public String getTimeVisited() {
-        return timeVisited;
+    public String getVisitorLastName() {
+        return visitorLastName;
     }
 
-    public void setTimeVisited(String timeVisited) {
-        this.timeVisited = timeVisited;
+    public void setVisitorLastName(String visitorLastName) {
+        this.visitorLastName = visitorLastName;
     }
 
-    public String getReasonForVisit() {
-        return reasonForVisit;
+    public String getVisitorDateOfBirth() {
+        return visitorDateOfBirth;
     }
 
-    public void setReasonForVisit(String reasonForVisit) {
-        this.reasonForVisit = reasonForVisit;
+    public void setVisitorDateOfBirth(String visitorDateOfBirth) {
+        this.visitorDateOfBirth = visitorDateOfBirth;
+    }
+
+    public String getVisitorContactNumber() {
+        return visitorContactNumber;
+    }
+
+    public void setVisitorContactNumber(String visitorContactNumber) {
+        this.visitorContactNumber = visitorContactNumber;
+    }
+
+    public String getVisitorTimeVisited() {
+        return visitorTimeVisited;
+    }
+
+    public void setVisitorTimeVisited(String visitorTimeVisited) {
+        this.visitorTimeVisited = visitorTimeVisited;
+    }
+
+    public String getVisitorReasonForVisit() {
+        return visitorReasonForVisit;
+    }
+
+    public void setVisitorReasonForVisit(String visitorReasonForVisit) {
+        this.visitorReasonForVisit = visitorReasonForVisit;
     }
 
     public String getResidentId() {
@@ -70,6 +109,14 @@ public class VisitorModel {
 
     public void setResidentRoomNumber(String residentRoomNumber) {
         this.residentRoomNumber = residentRoomNumber;
+    }
+
+    public String getResidentContactNumber() {
+        return residentContactNumber;
+    }
+
+    public void setResidentContactNumber(String residentContactNumber) {
+        this.residentContactNumber = residentContactNumber;
     }
 
     public String getResidentQRCode() {

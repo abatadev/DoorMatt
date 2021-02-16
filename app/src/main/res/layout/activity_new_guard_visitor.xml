@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background=""
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/newVisitorFirstNameEditText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/circleImageView"
+                    android:id="@+id/residentCircleImageView"
                     android:layout_width="74dp"
                     android:layout_height="74dp"
                     android:layout_marginStart="8dp"
@@ -64,22 +64,33 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                    app:layout_constraintStart_toEndOf="@+id/residentCircleImageView"
                     app:layout_constraintTop_toBottomOf="@+id/CardViewResidentRoomNumberTextView" />
 
                 <TextView
-                    android:id="@+id/CardViewResidentFullNameTextView"
-                    android:layout_width="0dp"
+                    android:id="@+id/CardViewResidentFirstNameTextView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="Full Name"
+                    android:text="@string/first_name"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/CardViewResidentRoomNumberTextView"
+                    app:layout_constraintStart_toEndOf="@+id/residentCircleImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/CardViewResidentLastNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="149dp"
+                    android:text="@string/last_name"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/CardViewResidentRoomNumberTextView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                    app:layout_constraintStart_toEndOf="@+id/CardViewResidentFirstNameTextView"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -94,8 +105,8 @@
                     app:layout_constraintBottom_toTopOf="@+id/CardViewResidentContactNumberTextView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/circleImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/CardViewResidentFullNameTextView" />
+                    app:layout_constraintStart_toEndOf="@+id/residentCircleImageView"
+                    app:layout_constraintTop_toBottomOf="@+id/CardViewResidentFirstNameTextView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -116,7 +127,7 @@
         android:fontFamily="sans-serif"
         android:inputType="textPersonName"
         android:padding="8dp"
-        android:text="@string/first_name"
+        android:hint="@string/first_name"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#1E1E1E"
@@ -139,27 +150,26 @@
         android:fontFamily="sans-serif"
         android:inputType="textPersonName"
         android:padding="8dp"
-        android:text="@string/last_name"
+        android:hint="@string/last_name"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#1E1E1E"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/newVisitorDateOfBirthEditText"
+        app:layout_constraintBottom_toTopOf="@+id/newVisitorDateOfBirthTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newVisitorFirstNameEditText" />
 
     <EditText
-        android:id="@+id/newVisitorDateOfBirthEditText"
+        android:id="@+id/newVisitorDateOfBirthTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
         android:background="@drawable/rounded_corners_text_input"
         android:fontFamily="sans-serif"
+        android:hint="@string/date_of_birth"
         android:padding="8dp"
-        android:text="@string/date_of_birth"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#1E1E1E"
@@ -174,12 +184,15 @@
         android:id="@+id/newVisitorDateOfBirthImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/newVisitorRoomNumberEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/newVisitorDateOfBirthEditText"
+        app:layout_constraintStart_toEndOf="@+id/newVisitorDateOfBirthTextView"
         app:layout_constraintTop_toBottomOf="@+id/newVisitorLastNameEditText"
-        tools:srcCompat="@drawable/ic_baseline_calendar_today_24" />
+        android:src="@drawable/ic_baseline_calendar_today_24" />
 
     <EditText
         android:id="@+id/newVisitorRoomNumberEditText"
@@ -193,19 +206,19 @@
         android:fontFamily="sans-serif"
         android:inputType="textPersonName"
         android:padding="8dp"
-        android:text="@string/room_number"
+        android:hint="@string/room_number"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#1E1E1E"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/newVisitorEmergencyContactPersonEditText"
+        app:layout_constraintBottom_toTopOf="@+id/newVisitorEmergencyContactNumberEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newVisitorDateOfBirthEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/newVisitorDateOfBirthTextView" />
 
     <EditText
-        android:id="@+id/newVisitorEmergencyContactPersonEditText"
+        android:id="@+id/newVisitorEmergencyContactNumberEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -216,18 +229,18 @@
         android:fontFamily="sans-serif"
         android:inputType="textPersonName"
         android:padding="8dp"
-        android:text="Contact Number"
+        android:hint="Contact Number"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#1E1E1E"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/newVisitorEmergencyContactPersonEditText2"
+        app:layout_constraintBottom_toTopOf="@+id/newVisitorTimeVisitEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newVisitorRoomNumberEditText" />
 
     <EditText
-        android:id="@+id/newVisitorEmergencyContactPersonEditText2"
+        android:id="@+id/newVisitorTimeVisitEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -238,18 +251,18 @@
         android:fontFamily="sans-serif"
         android:inputType="textPersonName"
         android:padding="8dp"
-        android:text="@string/emergency_contact_person"
+        android:hint="Time Visited"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#1E1E1E"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/newVisitorContactNumberEditText"
+        app:layout_constraintBottom_toTopOf="@+id/newVisitorReasonForVisitEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newVisitorEmergencyContactPersonEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/newVisitorEmergencyContactNumberEditText" />
 
     <EditText
-        android:id="@+id/newVisitorContactNumberEditText"
+        android:id="@+id/newVisitorReasonForVisitEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -258,9 +271,11 @@
         android:background="@drawable/rounded_corners_text_input"
         android:ems="10"
         android:fontFamily="sans-serif"
-        android:inputType="number"
+        android:inputType="text"
+        android:lines="3"
+        android:maxLines="5"
         android:padding="8dp"
-        android:text="@string/emergency_contact_number"
+        android:hint="Reason For Visit"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#1E1E1E"
@@ -269,7 +284,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newVisitorEmergencyContactPersonEditText2" />
+        app:layout_constraintTop_toBottomOf="@+id/newVisitorTimeVisitEditText" />
 
     <Button
         android:id="@+id/newVisitorSaveButton"
@@ -283,7 +298,7 @@
         android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newVisitorContactNumberEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/newVisitorReasonForVisitEditText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

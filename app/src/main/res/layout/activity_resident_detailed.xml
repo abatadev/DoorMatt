@@ -10,13 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="1">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add Visitor"/>
 
         <Button
             android:id="@+id/save_template_button"
@@ -25,7 +20,17 @@
             android:layout_weight="1"
             android:text="Save Template"/>
 
+
     </LinearLayout>
+
+
+    <Button
+        android:id="@+id/add_visitor_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:text="Add Visitor"/>
 
 
     <LinearLayout
@@ -110,6 +115,20 @@
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
 
+                <TextView
+                    android:id="@+id/resident_detailed_contact_number_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Contact Number"
+                    android:textSize="22sp"
+                    android:visibility="gone"
+                    android:layout_marginTop="4dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
                 <ImageView
                     android:id="@+id/resident_detailed_qr_code"
                     android:layout_width="190dp"
@@ -121,6 +140,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
+
+
 
             </LinearLayout>
 

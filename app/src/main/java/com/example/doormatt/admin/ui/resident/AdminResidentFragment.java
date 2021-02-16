@@ -47,7 +47,7 @@ public class AdminResidentFragment extends Fragment {
     FirebaseRecyclerOptions<ResidentModel> options;
     private RecyclerView recyclerView;
     private ResidentModel residentModel;
-    private Button newResidentButton;
+    private Button newResidentButton, editResidentButton;
     private EditText searchBarEditText;
 
     @Nullable
@@ -73,6 +73,7 @@ public class AdminResidentFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
 
         searchBarEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -120,15 +121,13 @@ public class AdminResidentFragment extends Fragment {
 
                 holder.residentNameTextView.setText(model.getFirstName() + " " + model.getLastName());
                 holder.residentRoomNumberTextView.setText(model.getRoomNumber());
-//                holder.residentStatusTextView.setText("1");
+//                holder.residentStatusTextView.setText(readResidentStatus());
                 Picasso.get().load(model.getResidentAvatar()).into(holder.residentAvatar);
-//                holder.residentStatusTextView.setText(model.);
-
-                Intent intent = new Intent(getContext(), AdminResidentDetailedActivity.class);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), AdminResidentDetailedActivity.class);
                         intent.putExtra("residentId", model.getResidentId());
                         startActivity(intent);
                     }
@@ -139,9 +138,6 @@ public class AdminResidentFragment extends Fragment {
                     public void onClick(View v) {
                         Intent intent = new Intent(getContext(), EditResidentActivity.class);
                         intent.putExtra("residentId", getRef(position).getKey());
-//                        intent.putExtra("", model.getFirstName());
-//                        intent.putExtra("", model.getLastName());
-//                        intent.putExtra("", model.get)
                         startActivity(intent);
                     }
                 });
@@ -161,6 +157,34 @@ public class AdminResidentFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+//    private int readResidentStatus() {
+//        // Read resident status
+//        residentRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+//                final int residentStatus = snapshot.child(residentId).child("residentStatus").getValue(int.class);
+//
+//                try {
+//                    if (residentStatus == Common.CHECKED_OUT) {
+//                        residentStatusTextView.setText("Checked Out");
+//                    } else if (residentStatus == Common.CHECKED_IN) {
+//                        residentStatusTextView.setText("Checked In");
+//                    } else {
+//                        residentStatusTextView.setVisibility(View.GONE);
+//                    }
+//                } catch (NullPointerException e) {
+//                    Log.d(TAG, "onDataChange: "  + e.getMessage());
+//                    residentStatusTextView.setText(0);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
+
     private void deleteResident(final String residentId) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setMessage("Delete this entry?");
@@ -168,6 +192,8 @@ public class AdminResidentFragment extends Fragment {
                 .addOnSuccessListener(unused -> Toast.makeText(getContext(), "Entry has been deleted.", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Log.d(TAG, "onFailure: " + e.getMessage())))
         .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        builder.create();
+        builder.show();
     }
 
     @Override

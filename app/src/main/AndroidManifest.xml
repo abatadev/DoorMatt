@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoorMatt">
-        <activity android:name=".LandingPageActivity"/>
+        <activity android:name=".guard.ui.resident.GuardResidentDetailedActivity"></activity>
+        <activity android:name=".guard.ui.visitor.GuardNewVisitorActivity"/>
+        <activity android:name=".admin.ui.resident.AddVisitorButton" />
+        <activity android:name=".LandingPageActivity" />
         <activity android:name=".admin.AdminMainActivity" />
         <activity android:name=".qrcode.QRCodeActivity" />
         <activity android:name=".admin.ui.guard.NewGuardActivity" />
@@ -26,8 +29,9 @@
         <activity android:name=".VisitorsPanelActivity" />
         <activity android:name=".admin.ui.resident.NewResidentActivity" />
         <activity android:name=".admin.ui.resident.AdminResidentDetailedActivity" />
+        <activity android:name=".admin.ui.resident.EditResidentActivity" />
         <activity android:name=".WelcomeActivity" />
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

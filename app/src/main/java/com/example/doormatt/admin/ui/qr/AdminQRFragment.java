@@ -59,7 +59,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdminQRFragment extends Fragment {
 
-    private static final String TAG = QRCodeActivity.class.getSimpleName();
+    private static final String TAG = AdminQRFragment.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CAMERA = 0;
 
     private PreviewView previewView;
@@ -70,6 +70,8 @@ public class AdminQRFragment extends Fragment {
     private Button qrCodeFoundButton;
     private String qrCode;
     private String residentId, firstName, lastName, residentAvatar, roomNumber;
+    private int residentStatus;
+
     LogsModel logsModel = new LogsModel();
 
     @Override
@@ -84,8 +86,8 @@ public class AdminQRFragment extends Fragment {
         qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), qrCode, Toast.LENGTH_SHORT).show();
-                Log.i(QRCodeActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
+//                Toast.makeText(getContext(), qrCode, Toast.LENGTH_SHORT).show();
+//                Log.i(QRCodeActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
                 retrieveQRCodeData(qrCode);
             }
         });
@@ -106,11 +108,12 @@ public class AdminQRFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    final String residentId = snapshot.child("residentId").getValue().toString();
+                    residentId = snapshot.child("residentId").getValue().toString();
                     final String firstName = snapshot.child("firstName").getValue().toString();
                     final String lastName = snapshot.child("lastName").getValue().toString();
                     final String residentAvatar = snapshot.child("residentAvatar").getValue().toString();
                     final String roomNumber = snapshot.child("roomNumber").getValue().toString();
+                    residentStatus = snapshot.child("residentStatus").getValue(int.class);
 
                     Log.d(TAG, "User ID: " + residentId);
                     Log.d(TAG, "First Name: " + firstName);
@@ -118,7 +121,7 @@ public class AdminQRFragment extends Fragment {
                     Log.d(TAG, "Resident Avatar Path: " + residentAvatar);
                     Log.d(TAG, "Room Number: " + roomNumber);
 
-                    showResidentDialog(residentId, firstName, lastName, residentAvatar, roomNumber);
+                    showResidentDialog(residentId, firstName, lastName, residentAvatar, roomNumber, residentStatus);
                 }
             }
 
@@ -131,7 +134,9 @@ public class AdminQRFragment extends Fragment {
 
     }
 
-    private void showResidentDialog(String residentId, String firstName, String lastName, String residentAvatar, String roomNumber) {
+    private void showResidentDialog(String residentId, String firstName, String lastName, String residentAvatar, String roomNumber, int residentStatus) {
+        ResidentModel residentModel = new ResidentModel();
+
         AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
         logsRef = mDatabase.getReference(Common.LOGS_REF);
         String logId = logsRef.push().getKey();
@@ -150,7 +155,7 @@ public class AdminQRFragment extends Fragment {
         logsModel.setGuardName("Admin");
         logsModel.setDateRecorded(date);
         logsModel.setTimeRecorded(time);
-        logsModel.setResidentStatus(1);
+        logsModel.setResidentStatus(residentStatus);
 
         builder.setTitle("Resident").create();
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_show_resident_details, null);
@@ -158,6 +163,7 @@ public class AdminQRFragment extends Fragment {
         TextView residentIdTextView = view.findViewById(R.id.dialog_qr_resident_id);
         TextView residentNameTextView = view.findViewById(R.id.dialog_qr_first_name);
         TextView residentRoomNumberTextView = view.findViewById(R.id.dialog_room_number);
+        TextView residentStatusTextView = view.findViewById(R.id.dialog_status);
         CircleImageView residentAvatarCircleImageView = view.findViewById(R.id.dialog_resident_avatar);
         Picasso.get().load(residentAvatar).into(residentAvatarCircleImageView);
 
@@ -166,10 +172,23 @@ public class AdminQRFragment extends Fragment {
         residentRoomNumberTextView.setText("Room Number: "+ roomNumber);
 
         // Read resident status
-        residentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        residentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                final String residentStatus = snapshot.child("").getValue().toString();
+                final int residentStatus = snapshot.child(residentId).child("residentStatus").getValue(int.class);
+
+                try {
+                    if (residentStatus == Common.CHECKED_OUT) {
+                        residentStatusTextView.setText("Checked Out");
+                    } else if (residentStatus == Common.CHECKED_IN) {
+                        residentStatusTextView.setText("Checked In");
+                    } else {
+                        residentStatusTextView.setVisibility(View.GONE);
+                    }
+                } catch (NullPointerException e) {
+                    Log.d(TAG, "onDataChange: "  + e.getMessage());
+                    residentStatusTextView.setText(0);
+                }
             }
 
             @Override
@@ -178,20 +197,17 @@ public class AdminQRFragment extends Fragment {
             }
         });
 
-        builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Check In", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                logsRef.child(logId).setValue(logsModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG, "onSuccess: Registered to database.");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull @NotNull Exception e) {
-                        Log.d(TAG, "onFailure: " + e.getMessage());
-                    }
-                });
+                setResidentToCheckedIn(logId);
+            }
+        });
+
+        builder.setNeutralButton("Check Out", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                setResidentToCheckedOut(logId);
             }
         });
 
@@ -203,6 +219,46 @@ public class AdminQRFragment extends Fragment {
         });
 
         builder.setView(view).show();
+    }
+
+    private void setResidentToCheckedIn(String logId) {
+        Log.d(TAG, "onClick: " + logId);
+        logsModel.setResidentStatus(Common.CHECKED_IN);
+        logsRef.child(logId).setValue(logsModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Map<String, Object> updateData = new HashMap<>();
+                updateData.put("residentStatus", Common.CHECKED_IN);
+                residentRef.child(residentId).updateChildren(updateData);
+                Toast.makeText(getContext(), "Checked In.", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Log.d(TAG, "onFailure: " + e.getMessage());
+            }
+        });
+
+    }
+
+    private void setResidentToCheckedOut(String logId) {
+        Log.d(TAG, "onClick: " + logId);
+        logsModel.setResidentStatus(Common.CHECKED_OUT);
+        logsRef.child(logId).setValue(logsModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Map<String, Object> updateData = new HashMap<>();
+                updateData.put("residentStatus", Common.CHECKED_OUT);
+                residentRef.child(residentId).updateChildren(updateData);
+                Toast.makeText(getContext(), "Checked Out.", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Log.d(TAG, "onFailure: " + e.getMessage());
+            }
+        });
+
     }
 
 
