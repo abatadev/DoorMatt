@@ -12,9 +12,8 @@ import com.example.doormatt.LoginActivity;
 import com.example.doormatt.R;
 import com.example.doormatt.admin.ui.guard.AdminGuardFragment;
 import com.example.doormatt.admin.ui.logs.AdminLogsFragment;
-import com.example.doormatt.admin.ui.qr.AdminQRFragment;
+import com.example.doormatt.qrcode.QRScannerFragment;
 import com.example.doormatt.admin.ui.resident.AdminResidentFragment;
-import com.example.doormatt.model.UserModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -49,7 +48,7 @@ public class AdminMainActivity extends AppCompatActivity {
                     selectedFragment = new AdminLogsFragment();
                     break;
                 case R.id.admin_nav_qr_scanner:
-                    selectedFragment = new AdminQRFragment();
+                    selectedFragment = new QRScannerFragment();
                     break;
                 case R.id.admin_nav_logout:
                     signOut();

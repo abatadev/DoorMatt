@@ -1,24 +1,18 @@
 package com.example.doormatt.guard;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.example.doormatt.LoginActivity;
 import com.example.doormatt.R;
-import com.example.doormatt.admin.ui.guard.AdminGuardFragment;
-import com.example.doormatt.admin.ui.logs.AdminLogsFragment;
-import com.example.doormatt.admin.ui.qr.AdminQRFragment;
-import com.example.doormatt.admin.ui.resident.AdminResidentFragment;
+import com.example.doormatt.qrcode.QRScannerFragment;
 import com.example.doormatt.guard.ui.logs.GuardLogsFragment;
 
 import com.example.doormatt.guard.ui.resident.GuardResidentFragment;
 import com.example.doormatt.guard.ui.visitor.GuardVisitorFragment;
-import com.example.doormatt.model.UserModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -50,7 +44,7 @@ public class GuardMainActivity extends AppCompatActivity {
                     selectedFragment = new GuardVisitorFragment();
                     break;
                 case R.id.guard_nav_qr_fragment:
-                    selectedFragment = new AdminQRFragment();
+                    selectedFragment = new QRScannerFragment();
                     break;
                 case R.id.guard_nav_logout:
                     signOut();

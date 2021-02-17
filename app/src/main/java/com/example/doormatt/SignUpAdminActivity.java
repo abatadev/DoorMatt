@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.example.doormatt.admin.AdminActivity;
 import com.example.doormatt.admin.AdminMainActivity;
 import com.example.doormatt.model.AdminModel;
 import com.example.doormatt.common.Common;

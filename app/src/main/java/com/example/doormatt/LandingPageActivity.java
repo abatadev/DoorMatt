@@ -10,7 +10,6 @@ import android.util.Log;
 import com.example.doormatt.admin.AdminMainActivity;
 import com.example.doormatt.common.Common;
 import com.example.doormatt.guard.GuardMainActivity;
-import com.example.doormatt.resident.ResidentMainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +36,8 @@ public class LandingPageActivity extends AppCompatActivity {
         String userId = intent.getStringExtra("userId");
         Log.d(TAG,userId);
 
+
+
         roleReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -55,11 +56,6 @@ public class LandingPageActivity extends AppCompatActivity {
                                 loadingDialog.dismissLoadingDialog();
                                 Intent guardIntent = new Intent(LandingPageActivity.this, GuardMainActivity.class);
                                 startActivity(guardIntent);
-                                break;
-                            case (Common.RESIDENT_ROLE):
-                                loadingDialog.dismissLoadingDialog();
-                                Intent residentIntent = new Intent(LandingPageActivity.this, ResidentMainActivity.class);
-                                startActivity(residentIntent);
                                 break;
                             default:
                                 loadingDialog.dismissLoadingDialog();

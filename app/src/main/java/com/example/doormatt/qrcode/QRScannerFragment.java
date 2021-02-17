@@ -1,25 +1,18 @@
-package com.example.doormatt.admin.ui.qr;
+package com.example.doormatt.qrcode;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.camera.core.Camera;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageAnalysis;
-import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
-
 import android.util.Log;
-import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +20,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.budiyev.android.codescanner.AutoFocusMode;
+import com.budiyev.android.codescanner.CodeScanner;
+import com.budiyev.android.codescanner.CodeScannerView;
+import com.budiyev.android.codescanner.DecodeCallback;
+import com.budiyev.android.codescanner.ScanMode;
 import com.example.doormatt.R;
 import com.example.doormatt.common.Common;
 import com.example.doormatt.model.LogsModel;
 import com.example.doormatt.model.ResidentModel;
-import com.example.doormatt.qrcode.QRCodeActivity;
-import com.example.doormatt.qrcode.QRCodeFoundListener;
-import com.example.doormatt.qrcode.QRCodeImageAnalyzer;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -43,6 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.Result;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -51,15 +47,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AdminQRFragment extends Fragment {
+public class QRScannerFragment extends Fragment {
 
-    private static final String TAG = AdminQRFragment.class.getSimpleName();
+    private static final String TAG = QRScannerFragment.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CAMERA = 0;
 
     private PreviewView previewView;
@@ -72,25 +66,46 @@ public class AdminQRFragment extends Fragment {
     private String residentId, firstName, lastName, residentAvatar, roomNumber;
     private int residentStatus;
 
+    private CodeScanner mCodeScanner;
+
     LogsModel logsModel = new LogsModel();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        final Activity activity = getActivity();
         View view = inflater.inflate(R.layout.fragment_admin_qr, container, false);
+        CodeScannerView scannerView = view.findViewById(R.id.qrScannerView);
+        mCodeScanner = new CodeScanner(activity, scannerView);
+        mCodeScanner.setCamera(CodeScanner.CAMERA_BACK);
+        mCodeScanner.setFormats(CodeScanner.TWO_DIMENSIONAL_FORMATS);
+        mCodeScanner.setAutoFocusMode(AutoFocusMode.SAFE);
+        mCodeScanner.setScanMode(ScanMode.SINGLE);
+        mCodeScanner.setAutoFocusEnabled(true);
+        mCodeScanner.setFlashEnabled(false);
 
-        previewView = view.findViewById(R.id.fragment_qr_code_previewView);
-
-        qrCodeFoundButton = view.findViewById(R.id.fragment_qr_code_admin_button);
-        qrCodeFoundButton.setVisibility(View.INVISIBLE);
-        qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
+        mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
-            public void onClick(View v) {
-//                Toast.makeText(getContext(), qrCode, Toast.LENGTH_SHORT).show();
-//                Log.i(QRCodeActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
-                retrieveQRCodeData(qrCode);
+            public void onDecoded(@NonNull @NotNull Result result) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//                        Toast.makeText(activity, result.getText(), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "run: " + result.getText());
+                        retrieveQRCodeData(result.getText());
+                    }
+
+                });
             }
         });
+        scannerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCodeScanner.startPreview();
+            }
+        });
+
+        previewView = view.findViewById(R.id.fragment_qr_code_previewView);
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(getContext());
         requestCamera();
@@ -264,7 +279,7 @@ public class AdminQRFragment extends Fragment {
 
     private void requestCamera() {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            startCamera();
+
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
@@ -274,50 +289,21 @@ public class AdminQRFragment extends Fragment {
         }
     }
 
-    private void startCamera() {
-        cameraProviderFuture.addListener(() -> {
-            try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-                bindCameraPreview(cameraProvider);
-            } catch (ExecutionException | InterruptedException e) {
-                Toast.makeText(getContext(), "Error starting camera " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }, ContextCompat.getMainExecutor(getContext()));
+    @Override
+    public void onResume() {
+        mCodeScanner.startPreview();
+        super.onResume();
     }
 
-    private void bindCameraPreview(@NonNull ProcessCameraProvider cameraProvider) {
-        previewView.setPreferredImplementationMode(PreviewView.ImplementationMode.SURFACE_VIEW);
-
-        Preview preview = new Preview.Builder()
-                .build();
-
-        CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build();
-
-        preview.setSurfaceProvider(previewView.createSurfaceProvider());
-
-        ImageAnalysis imageAnalysis =
-                new ImageAnalysis.Builder()
-                        .setTargetResolution(new Size(1280, 720))
-                        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                        .build();
-
-        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(getContext()), new QRCodeImageAnalyzer(new QRCodeFoundListener() {
-            @Override
-            public void onQRCodeFound(String _qrCode) {
-                qrCode = _qrCode;
-                qrCodeFoundButton.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void qrCodeNotFound() {
-                qrCodeFoundButton.setVisibility(View.INVISIBLE);
-            }
-        }));
-
-        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageAnalysis, preview);
+    @Override
+    public void onPause() {
+        mCodeScanner.releaseResources();
+        super.onPause();
     }
 
-
+    @Override
+    public void onStop() {
+        mCodeScanner.stopPreview();
+        super.onStop();
+    }
 }
