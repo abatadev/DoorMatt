@@ -73,6 +73,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif"
                 android:text="Visitor Full Name"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/textView3"
@@ -87,6 +88,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif"
                 android:text="Contact Number"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView18"
                 app:layout_constraintTop_toBottomOf="@+id/visitorsFullNameTextViewVisitors"
@@ -111,6 +113,7 @@
                 android:layout_marginEnd="32dp"
                 android:fontFamily="sans-serif"
                 android:text="Contact Number"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -133,6 +136,7 @@
                 android:layout_marginTop="4dp"
                 android:fontFamily="sans-serif"
                 android:text="Full Name"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView1"
                 app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -144,6 +148,7 @@
                 android:layout_marginTop="4dp"
                 android:fontFamily="sans-serif"
                 android:text="Room Number"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/residentRoomTextView"
                 app:layout_constraintTop_toBottomOf="@+id/residentFullNameTextViewVisitors" />
 
@@ -181,6 +186,30 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view" />
+
+<!--            <Button-->
+<!--                android:id="@+id/visitorTimeInButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:text="Time In"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/visitorContactNumberTextViewVisitors" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/visitorTimeOutButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:text="Time Out"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/visitorTimeInButton"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/visitorContactNumberTextViewVisitors" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
