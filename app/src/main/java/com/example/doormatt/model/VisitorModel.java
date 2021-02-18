@@ -1,15 +1,21 @@
 package com.example.doormatt.model;
 
 public class VisitorModel {
-    String visitorId, visitorFirstName, visitorLastName, visitorDateOfBirth, visitorContactNumber, visitorTimeVisited, visitorReasonForVisit;
-    String residentId, residentFirstName, residentLastName, residentRoomNumber, residentContactNumber, residentQRCode;
+    String visitorId, visitorFirstName, visitorMiddleName, visitorLastName, visitorDateOfBirth, visitorContactNumber, visitorTimeVisited, visitorReasonForVisit;
+    String residentId, residentFirstName, residentMiddleName, residentLastName, residentRoomNumber, residentContactNumber, residentQRCode;
 
     public VisitorModel() {
     }
 
-    public VisitorModel(String visitorId, String visitorFirstName, String visitorLastName, String visitorDateOfBirth, String visitorContactNumber, String visitorTimeVisited, String visitorReasonForVisit, String residentId, String residentFirstName, String residentLastName, String residentRoomNumber, String residentContactNumber, String residentQRCode) {
+    public VisitorModel(String visitorId, String visitorFirstName, String visitorMiddleName,
+                        String visitorLastName, String visitorDateOfBirth, String visitorContactNumber,
+                        String visitorTimeVisited, String visitorReasonForVisit, String residentId,
+                        String residentFirstName, String residentMiddleName, String residentLastName,
+                        String residentRoomNumber, String residentContactNumber, String residentQRCode) {
+
         this.visitorId = visitorId;
         this.visitorFirstName = visitorFirstName;
+        this.visitorMiddleName = visitorMiddleName;
         this.visitorLastName = visitorLastName;
         this.visitorDateOfBirth = visitorDateOfBirth;
         this.visitorContactNumber = visitorContactNumber;
@@ -17,6 +23,7 @@ public class VisitorModel {
         this.visitorReasonForVisit = visitorReasonForVisit;
         this.residentId = residentId;
         this.residentFirstName = residentFirstName;
+        this.residentMiddleName = residentMiddleName;
         this.residentLastName = residentLastName;
         this.residentRoomNumber = residentRoomNumber;
         this.residentContactNumber = residentContactNumber;
@@ -37,6 +44,14 @@ public class VisitorModel {
 
     public void setVisitorFirstName(String visitorFirstName) {
         this.visitorFirstName = visitorFirstName;
+    }
+
+    public String getVisitorMiddleName() {
+        return visitorMiddleName;
+    }
+
+    public void setVisitorMiddleName(String visitorMiddleName) {
+        this.visitorMiddleName = visitorMiddleName;
     }
 
     public String getVisitorLastName() {
@@ -93,6 +108,14 @@ public class VisitorModel {
 
     public void setResidentFirstName(String residentFirstName) {
         this.residentFirstName = residentFirstName;
+    }
+
+    public String getResidentMiddleName() {
+        return residentMiddleName;
+    }
+
+    public void setResidentMiddleName(String residentMiddleName) {
+        this.residentMiddleName = residentMiddleName;
     }
 
     public String getResidentLastName() {

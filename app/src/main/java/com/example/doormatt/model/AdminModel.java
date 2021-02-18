@@ -1,10 +1,16 @@
 package com.example.doormatt.model;
 
 public class AdminModel {
-    String userId, email, password;
-    boolean isAdmin, isGuard;
+    private String userId, email, password;
 
     public AdminModel() {
+
+    }
+
+    public AdminModel(String userId, String email, String password) {
+        this.userId = userId;
+        this.email = email;
+        this.password = password;
     }
 
     public String getUserId() {
@@ -29,21 +35,5 @@ public class AdminModel {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
-    public boolean isGuard() {
-        return isGuard;
-    }
-
-    public void setGuard(boolean guard) {
-        isGuard = guard;
     }
 }

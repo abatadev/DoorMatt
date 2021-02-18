@@ -37,6 +37,17 @@
                 android:padding="8dp"/>
 
             <EditText
+                android:id="@+id/edit_resident_middle_name_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/middle_name"
+                android:inputType="textCapSentences"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/colorGrey"
+                android:background="@drawable/rounded_corners_text_input"
+                android:padding="8dp"/>
+
+            <EditText
                 android:id="@+id/edit_resident_last_name_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,6 +73,7 @@
                     android:textColor="@color/grey"
                     android:background="@drawable/rounded_corners_text_input"
                     android:padding="8dp"
+                    android:textSize="16sp"
                     android:layout_weight="1" />
 
                 <ImageView
@@ -87,6 +99,17 @@
                 android:padding="8dp"/>
 
             <EditText
+                android:id="@+id/edit_resident_contact_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contact Number"
+                android:inputType="number"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/colorGrey"
+                android:background="@drawable/rounded_corners_text_input"
+                android:padding="8dp"/>
+
+            <EditText
                 android:id="@+id/edit_resident_emergency_contact_person"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/emergency_contact_number"
-                android:inputType="textCapSentences"
+                android:inputType="number"
                 android:layout_marginBottom="8dp"
                 android:textColor="@color/colorGrey"
                 android:background="@drawable/rounded_corners_text_input"

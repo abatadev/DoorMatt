@@ -4,7 +4,7 @@ public class Common {
 
     // Firebase Realtime Database References
     public static final String RESIDENT_REF = "Resident";
-    public static final String USER_REF = "User";
+    public static final String ADMIN_REF = "Admin";
     public static final String GUARD_REF = "Guard";
     public static final String ROLE_REF = "Role";
     public static final String LOGS_REF = "Logs";

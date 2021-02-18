@@ -5,12 +5,12 @@
     android:orientation="vertical"
     android:layout_margin="8dp">
 
-    <Button
-        android:id="@+id/guard_add_resident_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="Add Resident"/>
+<!--    <Button-->
+<!--        android:id="@+id/guard_add_resident_button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:visibility="gone"-->
+<!--        android:text="Add Resident"/>-->
 
     <EditText
         android:id="@+id/guard_resident_search_edit_text"
@@ -18,6 +18,8 @@
         android:layout_height="wrap_content"
         android:hint="Search"
         android:ems="15"
+        android:focusable="true"
+        android:focusedByDefault="true"
         android:drawableStart="@drawable/ic_baseline_search_24"
         android:layout_marginBottom="8dp"
         android:inputType="textCapWords"/>

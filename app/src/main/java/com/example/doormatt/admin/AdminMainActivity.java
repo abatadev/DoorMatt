@@ -9,20 +9,26 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.doormatt.LoginActivity;
+import com.example.doormatt.MainActivity;
 import com.example.doormatt.R;
-import com.example.doormatt.admin.ui.guard.AdminGuardFragment;
-import com.example.doormatt.admin.ui.logs.AdminLogsFragment;
+import com.example.doormatt.admin.adminUi.guard.AdminGuardFragment;
+import com.example.doormatt.admin.adminUi.logs.AdminLogsFragment;
 import com.example.doormatt.qrcode.QRScannerFragment;
-import com.example.doormatt.admin.ui.resident.AdminResidentFragment;
+import com.example.doormatt.admin.adminUi.resident.AdminResidentFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class AdminMainActivity extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
+
+public class AdminMainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener {
+
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
+        mAuth = FirebaseAuth.getInstance();
         BottomNavigationView bottonNavAdmin = findViewById(R.id.admin_bottom_navigation);
         bottonNavAdmin.setOnNavigationItemSelectedListener(navListener);
         //I added this if statement to keep the selected fragment when rotating the device
@@ -51,6 +57,8 @@ public class AdminMainActivity extends AppCompatActivity {
                     selectedFragment = new QRScannerFragment();
                     break;
                 case R.id.admin_nav_logout:
+                    selectedFragment = null;
+                    mAuth.signOut();
                     signOut();
                     break;
             }
@@ -61,10 +69,15 @@ public class AdminMainActivity extends AppCompatActivity {
     };
 
     private void signOut() {
-        FirebaseAuth.getInstance().signOut();
-
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        Intent intent = new Intent(AdminMainActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
+        if (firebaseAuth.getCurrentUser()==null){
+            startActivity(new Intent(AdminMainActivity.this, LoginActivity.class));
+        }
     }
 }

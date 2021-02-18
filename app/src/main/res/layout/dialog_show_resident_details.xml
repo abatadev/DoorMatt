@@ -1,50 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/dialog_resident_avatar"
+        android:id="@+id/dialogResidentAvatar"
         android:layout_width="84dp"
         android:layout_height="84dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="128dp"
         android:src="@drawable/sample_avatar"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:layout_gravity="center"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dialog_qr_resident_id"
-        android:layout_width="match_parent"
+        android:id="@+id/dialogQrStatus"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
+        android:layout_marginTop="4dp"
         android:fontFamily="sans-serif-medium"
-        android:textSize="18sp"
-        android:text="Resident ID" />
-
-    <TextView
-        android:id="@+id/dialog_qr_first_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:text="Resident Status"
         android:textAlignment="center"
         android:textSize="18sp"
-        android:text="Resident First Name" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialogRoomNumber" />
 
     <TextView
-        android:id="@+id/dialog_room_number"
-        android:layout_width="match_parent"
+        android:id="@+id/dialogRoomNumber"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Room Number"
         android:textAlignment="center"
         android:textSize="18sp"
-        android:text="Room Number"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialogQrContactNumber" />
 
     <TextView
-        android:id="@+id/dialog_status"
-        android:layout_width="match_parent"
+        android:id="@+id/dialogQrContactNumber"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Resident Contact Number"
         android:textAlignment="center"
         android:textSize="18sp"
-        android:text="Resident Status"/>
+        app:layout_constraintBottom_toTopOf="@+id/dialogRoomNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialogQrResidentId" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/dialogQrFirstName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Resident First Name"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/dialogQrContactNumber"
+        app:layout_constraintEnd_toStartOf="@+id/dialogQrLastName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialogQrResidentId" />
+
+    <TextView
+        android:id="@+id/dialogQrLastName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Resident Last Name"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/dialogQrContactNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dialogQrFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/dialogQrResidentId" />
+
+    <TextView
+        android:id="@+id/dialogQrResidentId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Resident ID"
+        android:textAlignment="center"
+        android:textColor="@color/colorLightGrey"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialogResidentAvatar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

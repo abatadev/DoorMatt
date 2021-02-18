@@ -32,6 +32,7 @@ import com.example.doormatt.model.ResidentModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -63,7 +64,7 @@ public class QRScannerFragment extends Fragment {
     private DatabaseReference residentRef, logsRef;
     private Button qrCodeFoundButton;
     private String qrCode;
-    private String residentId, firstName, lastName, residentAvatar, roomNumber;
+    private String residentId, firstName, lastName, residentAvatar, roomNumber, scannedBy;
     private int residentStatus;
 
     private CodeScanner mCodeScanner;
@@ -83,6 +84,41 @@ public class QRScannerFragment extends Fragment {
         mCodeScanner.setScanMode(ScanMode.SINGLE);
         mCodeScanner.setAutoFocusEnabled(true);
         mCodeScanner.setFlashEnabled(false);
+
+        DatabaseReference guardRef, adminRef, roleRef;
+        guardRef = FirebaseDatabase.getInstance().getReference(Common.GUARD_REF);
+        adminRef = FirebaseDatabase.getInstance().getReference(Common.ADMIN_REF);
+        roleRef = FirebaseDatabase.getInstance().getReference(Common.ROLE_REF);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String myId = mAuth.getCurrentUser().getUid().toString();
+        Log.d(TAG, "Role ID: " + myId);
+        roleRef.child(myId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.hasChild(myId)) {
+                    int roleType = snapshot.child("accountType").getValue(int.class);
+
+                    switch(roleType) {
+                        case (Common.ADMIN_ROLE):
+                            readAdminDetails(myId, adminRef);
+                            break;
+                        case (Common.GUARD_ROLE):
+                            readGuardDetails(myId, guardRef);
+                            break;
+
+                    }
+                } else {
+                    //TODO
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
 
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
@@ -112,6 +148,25 @@ public class QRScannerFragment extends Fragment {
         return view;
     }
 
+    private void readGuardDetails(String myId, DatabaseReference guardRef) {
+        guardRef.child(myId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    scannedBy = snapshot.child("guardName").getValue(String.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void readAdminDetails(String myId, DatabaseReference adminRef) {
+    }
+
     private void retrieveQRCodeData(String qrCode) {
         mDatabase = FirebaseDatabase.getInstance();
         residentRef = mDatabase.getReference(Common.RESIDENT_REF);
@@ -122,12 +177,14 @@ public class QRScannerFragment extends Fragment {
         residentRef.child(qrCode).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
+//                if(snapshot.exists(qrCode)) {
                     residentId = snapshot.child("residentId").getValue().toString();
                     final String firstName = snapshot.child("firstName").getValue().toString();
                     final String lastName = snapshot.child("lastName").getValue().toString();
+                    final String middleName = snapshot.child("middleName").getValue().toString();
                     final String residentAvatar = snapshot.child("residentAvatar").getValue().toString();
                     final String roomNumber = snapshot.child("roomNumber").getValue().toString();
+                    final String contactNumber = snapshot.child("contactNumber").getValue().toString();
                     residentStatus = snapshot.child("residentStatus").getValue(int.class);
 
                     Log.d(TAG, "User ID: " + residentId);
@@ -136,8 +193,10 @@ public class QRScannerFragment extends Fragment {
                     Log.d(TAG, "Resident Avatar Path: " + residentAvatar);
                     Log.d(TAG, "Room Number: " + roomNumber);
 
-                    showResidentDialog(residentId, firstName, lastName, residentAvatar, roomNumber, residentStatus);
-                }
+                    showResidentDialog(residentId, firstName, middleName, lastName, contactNumber, residentAvatar, roomNumber, residentStatus);
+//                } else {
+//                    Toast.makeText(getContext(), "QR Code does not exist in the database.", Toast.LENGTH_SHORT).show();
+//                }
             }
 
             @Override
@@ -149,13 +208,16 @@ public class QRScannerFragment extends Fragment {
 
     }
 
-    private void showResidentDialog(String residentId, String firstName, String lastName, String residentAvatar, String roomNumber, int residentStatus) {
+    private void showResidentDialog(String residentId, String firstName, String middleName, String lastName, String contactNumber, String residentAvatar, String roomNumber, int residentStatus) {
         ResidentModel residentModel = new ResidentModel();
 
         AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
         logsRef = mDatabase.getReference(Common.LOGS_REF);
         String logId = logsRef.push().getKey();
-        String time = Calendar.getInstance().getTime().toString();
+        Date dateToTime = new Date();
+        String strDateFormat = "HH:mm:ss a";
+        SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+        String time = sdf.format(dateToTime);
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 
         Map map = new HashMap();
@@ -164,7 +226,9 @@ public class QRScannerFragment extends Fragment {
         logsModel.setLogId(logId);
         logsModel.setGuardId("admin");
         logsModel.setResidentFirstname(firstName);
+        logsModel.setResidentMiddleName(middleName);
         logsModel.setResidentLastName(lastName);
+        logsModel.setResidentContactNumber(contactNumber);
         logsModel.setResidentId(residentId);
         logsModel.setResidentRoomNumber(roomNumber);
         logsModel.setGuardName("Admin");
@@ -175,11 +239,11 @@ public class QRScannerFragment extends Fragment {
         builder.setTitle("Resident").create();
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_show_resident_details, null);
 
-        TextView residentIdTextView = view.findViewById(R.id.dialog_qr_resident_id);
-        TextView residentNameTextView = view.findViewById(R.id.dialog_qr_first_name);
-        TextView residentRoomNumberTextView = view.findViewById(R.id.dialog_room_number);
-        TextView residentStatusTextView = view.findViewById(R.id.dialog_status);
-        CircleImageView residentAvatarCircleImageView = view.findViewById(R.id.dialog_resident_avatar);
+        TextView residentIdTextView = view.findViewById(R.id.dialogQrResidentId);
+        TextView residentNameTextView = view.findViewById(R.id.dialogQrFirstName);
+        TextView residentRoomNumberTextView = view.findViewById(R.id.dialogRoomNumber);
+        TextView residentStatusTextView = view.findViewById(R.id.dialogQrStatus);
+        CircleImageView residentAvatarCircleImageView = view.findViewById(R.id.dialogResidentAvatar);
         Picasso.get().load(residentAvatar).into(residentAvatarCircleImageView);
 
         residentIdTextView.setText("Resident ID: " + residentId);
@@ -244,6 +308,7 @@ public class QRScannerFragment extends Fragment {
             public void onSuccess(Void unused) {
                 Map<String, Object> updateData = new HashMap<>();
                 updateData.put("residentStatus", Common.CHECKED_IN);
+                updateData.put("scannedBy", scannedBy);
                 residentRef.child(residentId).updateChildren(updateData);
                 Toast.makeText(getContext(), "Checked In.", Toast.LENGTH_SHORT).show();
             }

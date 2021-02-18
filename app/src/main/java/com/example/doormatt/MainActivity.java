@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference userRef;
     private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
 
     String userId, currentUser;
 
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void listenForUser() {
-        userRef = FirebaseDatabase.getInstance().getReference(Common.USER_REF);
 
         try {
             userId = mAuth.getCurrentUser().getUid().toString();

@@ -55,7 +55,7 @@ public class SignUpAdminActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mAuth = FirebaseAuth.getInstance();
-        adminRef = mDatabase.getReference(Common.USER_REF);
+        adminRef = mDatabase.getReference(Common.ADMIN_REF);
         rolesRef = mDatabase.getReference(Common.ROLE_REF);
 
         Log.d(TAG, "Admin Ref: " + adminRef.getParent());
@@ -72,10 +72,6 @@ public class SignUpAdminActivity extends AppCompatActivity {
     private void registerNewAdmin() {
         String TAG = "registerNewAdmin()";
 
-//        boolean emailVerified = validateInput.validateUsername();
-//        boolean passwordVerified = validateInput.validatePassword();
-//        boolean confirmPasswordVerified = validateInput.validateConfirmPassword();
-
         email = adminEmailEditText.getText().toString().trim();
         password = adminPasswordEditText.getText().toString().trim();
 
@@ -91,8 +87,6 @@ public class SignUpAdminActivity extends AppCompatActivity {
                     adminModel.setUserId(userId);
                     adminModel.setEmail(email);
                     adminModel.setPassword(password);
-                    adminModel.setAdmin(true);
-                    adminModel.setGuard(false);
 
                     adminRef.child(userId).setValue(adminModel);
 

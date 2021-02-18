@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".guard.GuardMainActivity">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -98,6 +98,6 @@
             android:padding="8dp"
             android:layout_gravity="right"/>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 
 </LinearLayout>

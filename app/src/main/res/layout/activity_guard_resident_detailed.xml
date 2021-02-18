@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".guard.ui.resident.GuardResidentDetailedActivity">
+    tools:context=".guard.guardUi.resident.GuardResidentDetailedActivity">
 
     <Button
         android:id="@+id/addNewVisitorGuardButton"

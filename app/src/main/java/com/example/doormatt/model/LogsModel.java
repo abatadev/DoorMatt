@@ -3,7 +3,7 @@ package com.example.doormatt.model;
 import java.util.Map;
 
 public class LogsModel {
-    public String logId, residentId, guardId, residentFirstname, residentLastName, residentRoomNumber, guardName;
+    public String logId, residentId, guardId, residentFirstname, residentMiddleName, residentLastName, residentContactNumber, residentRoomNumber, scannedBy;
     public int residentStatus;
     public String dateRecorded, timeRecorded;
 
@@ -14,14 +14,18 @@ public class LogsModel {
         this.residentStatus = residentStatus;
     }
 
-    public LogsModel(String logId, String residentId, String guardId, String residentFirstname, String residentLastName, String residentRoomNumber, String guardName, int residentStatus, String dateRecorded, String timeRecorded) {
+    public LogsModel(String logId, String residentId, String guardId, String residentFirstname,
+                         String residentLastName, String residentContactNumber, String residentRoomNumber,
+                         String guardName, int residentStatus, String dateRecorded, String timeRecorded) {
+
         this.logId = logId;
         this.residentId = residentId;
         this.guardId = guardId;
         this.residentFirstname = residentFirstname;
         this.residentLastName = residentLastName;
+        this.residentContactNumber = residentContactNumber;
         this.residentRoomNumber = residentRoomNumber;
-        this.guardName = guardName;
+        this.scannedBy = scannedBy;
         this.residentStatus = residentStatus;
         this.dateRecorded = dateRecorded;
         this.timeRecorded = timeRecorded;
@@ -76,11 +80,11 @@ public class LogsModel {
     }
 
     public String getGuardName() {
-        return guardName;
+        return scannedBy;
     }
 
-    public void setGuardName(String guardName) {
-        this.guardName = guardName;
+    public void setGuardName(String scannedBy) {
+        this.scannedBy = scannedBy;
     }
 
     public int getResidentStatus() {
@@ -105,5 +109,29 @@ public class LogsModel {
 
     public void setTimeRecorded(String timeRecorded) {
         this.timeRecorded = timeRecorded;
+    }
+
+    public String getResidentContactNumber() {
+        return residentContactNumber;
+    }
+
+    public void setResidentContactNumber(String residentContactNumber) {
+        this.residentContactNumber = residentContactNumber;
+    }
+
+    public String getResidentMiddleName() {
+        return residentMiddleName;
+    }
+
+    public void setResidentMiddleName(String residentMiddleName) {
+        this.residentMiddleName = residentMiddleName;
+    }
+
+    public String getScannedBy() {
+        return scannedBy;
+    }
+
+    public void setScannedBy(String scannedBy) {
+        this.scannedBy = scannedBy;
     }
 }

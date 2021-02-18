@@ -9,10 +9,10 @@ import android.os.Bundle;
 import com.example.doormatt.LoginActivity;
 import com.example.doormatt.R;
 import com.example.doormatt.qrcode.QRScannerFragment;
-import com.example.doormatt.guard.ui.logs.GuardLogsFragment;
+import com.example.doormatt.guard.guardUi.logs.GuardLogsFragment;
 
-import com.example.doormatt.guard.ui.resident.GuardResidentFragment;
-import com.example.doormatt.guard.ui.visitor.GuardVisitorFragment;
+import com.example.doormatt.guard.guardUi.resident.GuardResidentFragment;
+import com.example.doormatt.guard.guardUi.visitor.GuardVisitorFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -27,9 +27,10 @@ public class GuardMainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.guard_fragment_container,
-                    new GuardResidentFragment()).commit();
+                    new GuardLogsFragment()).commit();
         }
     }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
         item -> {
             Fragment selectedFragment = null;
