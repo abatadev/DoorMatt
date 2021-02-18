@@ -50,7 +50,7 @@ import static com.example.doormatt.common.Common.QR_IMAGES;
 public class AdminResidentDetailedActivity extends AppCompatActivity {
     final String TAG = AdminResidentDetailedActivity.class.getSimpleName();
 
-    private TextView firstNameTextView, lastNameTextView, dateOfBirthTextView, roomNumberTextView, contactNumberTextView;
+    private TextView residentIdTextView, firstNameTextView, lastNameTextView, dateOfBirthTextView, roomNumberTextView, contactNumberTextView;
     private CircleImageView residentAvatarCircleImageView;
     private ImageView qrCode;
     private LinearLayout linearLayout;
@@ -68,14 +68,16 @@ public class AdminResidentDetailedActivity extends AppCompatActivity {
 
         residentId = getIntent().getStringExtra("residentId");
 
-        firstNameTextView = findViewById(R.id.resident_detailed_first_name_textView);
-        lastNameTextView = findViewById(R.id.resident_detailed_last_name_textView);
-        dateOfBirthTextView = findViewById(R.id.resident_detailed_date_of_birth_textView);
-        contactNumberTextView = findViewById(R.id.resident_detailed_contact_number_text_view);
-        roomNumberTextView = findViewById(R.id.resident_detailed_room_number_text_view);
-        residentAvatarCircleImageView = findViewById(R.id.resident_detailed_avatar);
-        saveTemplateButton = findViewById(R.id.save_template_button);
-        qrCode = findViewById(R.id.resident_detailed_qr_code);
+        firstNameTextView = findViewById(R.id.detailedFirstNameTextView);
+        lastNameTextView = findViewById(R.id.detailedLastNameTextView);
+        residentIdTextView = findViewById(R.id.detailedResidentIdTextView);
+        roomNumberTextView = findViewById(R.id.detailedRoomNumberTextView);
+        dateOfBirthTextView = findViewById(R.id.detailedDateOfBirthTextView);
+        contactNumberTextView = findViewById(R.id.detailedPhoneNumberTextView);
+
+        residentAvatarCircleImageView = findViewById(R.id.detailedResidentPictureCircleImageView);
+        saveTemplateButton = findViewById(R.id.createIdTemplateButton);
+        qrCode = findViewById(R.id.detailedQrCodeImageView);
 
         residentRef.child(residentId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -126,7 +128,7 @@ public class AdminResidentDetailedActivity extends AppCompatActivity {
             }
         });
 
-        linearLayout = findViewById(R.id.id_resident_template_layout);
+        linearLayout = findViewById(R.id.residentTemplateLayout);
 
         saveTemplateButton.setOnClickListener(new View.OnClickListener() {
             @Override
