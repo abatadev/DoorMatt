@@ -25,6 +25,7 @@ public class ResidentViewHolder extends RecyclerView.ViewHolder {
         residentAvatar = itemView.findViewById(R.id.admin_resident_avatar);
         residentNameTextView = itemView.findViewById(R.id.card_view_admin_resident_name_textView);
         residentRoomNumberTextView = itemView.findViewById(R.id.card_view_admin_resident_roomNumber_textView);
+        residentStatusTextView = itemView.findViewById(R.id.card_view_admin_resident_status_textView);
         deleteResident = itemView.findViewById(R.id.delete_resident_button);
         editResident = itemView.findViewById(R.id.edit_individual_resident_button);
     }

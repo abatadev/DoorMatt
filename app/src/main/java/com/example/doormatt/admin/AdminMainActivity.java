@@ -13,6 +13,7 @@ import com.example.doormatt.MainActivity;
 import com.example.doormatt.R;
 import com.example.doormatt.admin.adminUi.guard.AdminGuardFragment;
 import com.example.doormatt.admin.adminUi.logs.AdminLogsFragment;
+import com.example.doormatt.guard.LogOutFragment;
 import com.example.doormatt.qrcode.QRScannerFragment;
 import com.example.doormatt.admin.adminUi.resident.AdminResidentFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -57,9 +58,7 @@ public class AdminMainActivity extends AppCompatActivity implements FirebaseAuth
                     selectedFragment = new QRScannerFragment();
                     break;
                 case R.id.admin_nav_logout:
-                    selectedFragment = null;
-                    mAuth.signOut();
-                    signOut();
+                    selectedFragment = new LogOutFragment();
                     break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_fragment_container,
@@ -67,12 +66,6 @@ public class AdminMainActivity extends AppCompatActivity implements FirebaseAuth
             return true;
         }
     };
-
-    private void signOut() {
-        Intent intent = new Intent(AdminMainActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
 
     @Override
     public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {

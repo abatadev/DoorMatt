@@ -145,6 +145,7 @@ public class GuardNewVisitorActivity extends AppCompatActivity implements DatePi
         residentId = intent.getStringExtra("residentId");
 
         residentFirstName = residentFirstNameTextView.getText().toString();
+        Log.d(TAG, "saveDataToFirebase: residentFirstName" + residentFirstName);
         residentLastName = residentLastNameTextView.getText().toString();
         residentRoomNumber = residentRoomNumberTextView.getText().toString();
         residentContactNumber = residentContactNumberTextView.getText().toString();

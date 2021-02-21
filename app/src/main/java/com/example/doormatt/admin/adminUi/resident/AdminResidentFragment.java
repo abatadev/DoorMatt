@@ -93,7 +93,7 @@ public class AdminResidentFragment extends Fragment {
     }
 
     private void loadData(String data) {
-        Query query = residentRef.orderByChild("firstName").startAt(data).endAt(data + "\uf8ff");;
+        Query query = residentRef.orderByChild("firstName").startAt(data).endAt(data + "\uf8ff");
 
         options = new FirebaseRecyclerOptions.Builder<ResidentModel>()
                 .setQuery(query, ResidentModel.class)
@@ -114,7 +114,17 @@ public class AdminResidentFragment extends Fragment {
 
                 holder.residentNameTextView.setText(model.getFirstName() + " " + model.getLastName());
                 holder.residentRoomNumberTextView.setText(model.getRoomNumber());
-//                holder.residentStatusTextView.setText(readResidentStatus());
+                try {
+                    if(model.getResidentStatus() == Common.CHECKED_OUT) {
+                        holder.residentStatusTextView.setText("Checked Out");
+                    } else if (model.getResidentStatus() == Common.CHECKED_IN) {
+                        holder.residentStatusTextView.setText("Checked In");
+                    }
+                } catch (NullPointerException e) {
+                    Log.d(TAG, "onBindViewHolder: " + e.getMessage());
+                    e.printStackTrace();
+                }
+
                 Picasso.get().load(model.getResidentAvatar()).into(holder.residentAvatar);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {

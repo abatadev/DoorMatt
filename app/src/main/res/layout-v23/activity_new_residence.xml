@@ -145,7 +145,7 @@
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/roomNumberEditText"
+                        android:id="@+id/newResidentRoomNumberEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/room_number"
@@ -156,7 +156,7 @@
                         android:padding="8dp"/>
 
                     <EditText
-                        android:id="@+id/contactNumberEditText"
+                        android:id="@+id/newResidentContactNumberEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Contact Number"
@@ -167,7 +167,7 @@
                         android:padding="8dp"/>
 
                     <EditText
-                        android:id="@+id/emergencyContactPersonEditText"
+                        android:id="@+id/newResidentEmergencyContactPersonEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/emergency_contact_person"
@@ -178,7 +178,7 @@
                         android:padding="8dp"/>
 
                     <EditText
-                        android:id="@+id/emergencyContactNumberEditText"
+                        android:id="@+id/newResidentEmergencyContactNumberEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/emergency_contact_number"
@@ -189,7 +189,7 @@
                         android:padding="8dp"/>
 
                     <Button
-                        android:id="@+id/saveResidenceButton"
+                        android:id="@+id/newResidentButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Save"
@@ -206,7 +206,11 @@
                     <ImageView
                         android:id="@+id/qrCodeImageView"
                         android:layout_width="320dp"
-                        android:layout_height="320dp"/>
+                        android:layout_height="320dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"/>
 
 
                 </LinearLayout>

@@ -9,11 +9,9 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
@@ -53,7 +51,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -77,7 +74,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
     private ImageView qrImage, showDateOfBirthTextView;
     private CircleImageView avatarResidenceCircleImageView;
 
-    private String firstName, middleName, lastName, dateOfBirth, roomNumber;
+    private String firstName, middleName, lastName, dateOfBirth, roomNumber, contactNumber, emergencyContactPerson, emergencyContactNumber;
     private String downloadImageUrl;
     private String downloadQRImageUrl;
     private String qrCodeValue;
@@ -112,22 +109,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         residentRef = FirebaseDatabase.getInstance().getReference().child(Common.RESIDENT_REF);
         roleRef = FirebaseDatabase.getInstance().getReference().child(Common.ROLE_REF);
 
-        firstNameEditText = findViewById(R.id.newResidentFirstNameEditText);
-        middleNameEditText = findViewById(R.id.newResidentMiddleNameEditText);
-        lastNameEditText = findViewById(R.id.newResidentLastNameEditText);
-        roomNumberEditText = findViewById(R.id.roomNumberEditText);
-        contactNumberEditText = findViewById(R.id.contactNumberEditText);
-        emergencyContactPersonEditText = findViewById(R.id.emergencyContactPersonEditText);
-        emergencyContactNumberEditText = findViewById(R.id.emergencyContactNumberEditText);
-        avatarResidenceCircleImageView = findViewById(R.id.avatarResidenceImageView);
-
-        dateOfBirthTextView = findViewById(R.id.newResidentDateOfBirthTextView);
-        showDateOfBirthTextView = findViewById(R.id.showDateOfBirthImageView);
-
-        addPictureButton = findViewById(R.id.editPictureButton);
-        saveResidenceButton = findViewById(R.id.saveResidenceButton);
-
-        qrImage = findViewById(R.id.qrCodeImageView);
+        initializeViews();
 
         validateResidentDetails = new ValidateResidentInput(
                 NewResidentActivity.this,
@@ -160,20 +142,23 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
         });
     }
 
-    public void showDatePickerDialog() {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                this,
-                Calendar.getInstance().get(Calendar.YEAR),
-                Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.show();
-    }
+    private void initializeViews() {
+        firstNameEditText = findViewById(R.id.newResidentFirstNameEditText);
+        middleNameEditText = findViewById(R.id.newResidentMiddleNameEditText);
+        lastNameEditText = findViewById(R.id.newResidentLastNameEditText);
+        roomNumberEditText = findViewById(R.id.newResidentRoomNumberEditText);
+        contactNumberEditText = findViewById(R.id.newResidentContactNumberEditText);
+        emergencyContactPersonEditText = findViewById(R.id.newResidentEmergencyContactPersonEditText);
+        emergencyContactNumberEditText = findViewById(R.id.newResidentEmergencyContactNumberEditText);
+        avatarResidenceCircleImageView = findViewById(R.id.avatarResidenceImageView);
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        dateOfBirth = month + "/" + dayOfMonth + "/" + year;
-        dateOfBirthTextView.setText(dateOfBirth);
+        dateOfBirthTextView = findViewById(R.id.newResidentDateOfBirthTextView);
+        showDateOfBirthTextView = findViewById(R.id.showDateOfBirthImageView);
+
+        addPictureButton = findViewById(R.id.editPictureButton);
+        saveResidenceButton = findViewById(R.id.newResidentButton);
+
+        qrImage = findViewById(R.id.qrCodeImageView);
     }
 
     private void generateQRCode() {
@@ -264,9 +249,9 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
             lastName = lastNameEditText.getText().toString().trim();
             roomNumber = roomNumberEditText.getText().toString().trim();
             dateOfBirth = dateOfBirthTextView.getText().toString().trim();
-            String contactNumber = contactNumberEditText.getText().toString().trim();
-            String emergencyContactPerson = emergencyContactPersonEditText.getText().toString().trim();
-            String emergencyContactNumber = emergencyContactNumberEditText.getText().toString().trim();
+            contactNumber = contactNumberEditText.getText().toString().trim();
+            emergencyContactPerson = emergencyContactPersonEditText.getText().toString().trim();
+            emergencyContactNumber = emergencyContactNumberEditText.getText().toString().trim();
 
             residentModel.setResidentId(residentId);
             residentModel.setFirstName(firstName);
@@ -287,13 +272,7 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
                     Toast.makeText(NewResidentActivity.this, "New resident added!", Toast.LENGTH_SHORT).show();
                     saveResidenceButton.setText("Submitted");
                     saveResidenceButton.setEnabled(false);
-//                    rolesModel = new RolesModel(residentId, 3);
-//                    roleRef.child(residentId).setValue(rolesModel).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull @NotNull Exception e) {
-//                            Log.d(TAG, "Error Role: " + e.getMessage());
-//                        }
-//                    });
+
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -379,6 +358,23 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
             });
         } catch(NullPointerException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
+    }
+
+    public void showDatePickerDialog() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        dateOfBirth = month + "/" + dayOfMonth + "/" + year;
+        dateOfBirthTextView.setText(dateOfBirth);
     }
 }

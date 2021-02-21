@@ -23,8 +23,6 @@ public class Common {
     // Firebase Role Types
     public static final int ADMIN_ROLE = 1;
     public static final int GUARD_ROLE = 2;
-    public static final int RESIDENT_ROLE = 3;
-    public static final int VISITOR_ROLE = 4;
 
     public static final int PICK_IMAGE_REQUEST = 1234;
 

@@ -48,18 +48,11 @@ public class GuardMainActivity extends AppCompatActivity {
                     selectedFragment = new QRScannerFragment();
                     break;
                 case R.id.guard_nav_logout:
-                    signOut();
+                    selectedFragment = new LogOutFragment();
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.guard_fragment_container,
                     selectedFragment).commit();
             return true;
     };
-
-    private void signOut() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
 
 }

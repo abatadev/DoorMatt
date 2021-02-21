@@ -103,18 +103,12 @@ public class GuardVisitorFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(@NonNull @NotNull GuardVisitorViewHolder holder, int position, @NonNull @NotNull VisitorModel model) {
-                holder.visitorFullNameTextView.setText(String.format("%s %s %s",
-                        model.getResidentFirstName(),
-                        model.getResidentMiddleName(),
-                        model.getResidentLastName()));
-
+                holder.residentFullName.setText(model.getResidentFirstName() + " " + model.getResidentLastName());
                 holder.residentRoomNumberTextView.setText(model.getResidentRoomNumber());
                 holder.residentContactNumberTextView.setText(model.getResidentContactNumber());
 
-                holder.visitorFullNameTextView.setText(model.getVisitorFirstName());
+                holder.visitorFullNameTextView.setText(model.getVisitorFirstName() + " " +  model.getVisitorLastName());
                 holder.visitorContactNumberTextView.setText(model.getVisitorContactNumber());
-
-
 
 
                 Log.d(TAG, "onBindViewHolder: " + model.getResidentFirstName().toString());

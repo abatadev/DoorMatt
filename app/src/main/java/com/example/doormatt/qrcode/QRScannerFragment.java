@@ -90,6 +90,7 @@ public class QRScannerFragment extends Fragment {
         adminRef = FirebaseDatabase.getInstance().getReference(Common.ADMIN_REF);
         roleRef = FirebaseDatabase.getInstance().getReference(Common.ROLE_REF);
 
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String myId = mAuth.getCurrentUser().getUid().toString();
         Log.d(TAG, "Role ID: " + myId);
@@ -165,19 +166,29 @@ public class QRScannerFragment extends Fragment {
     }
 
     private void readAdminDetails(String myId, DatabaseReference adminRef) {
+        adminRef.child(myId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                final String adminId = snapshot.child("userId").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void retrieveQRCodeData(String qrCode) {
         mDatabase = FirebaseDatabase.getInstance();
         residentRef = mDatabase.getReference(Common.RESIDENT_REF);
 
-        ResidentModel residentModel = new ResidentModel();
-
         Log.d(TAG, "retrieveQRCodeData: " + qrCode);
         residentRef.child(qrCode).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 //                if(snapshot.exists(qrCode)) {
+                try {
                     residentId = snapshot.child("residentId").getValue().toString();
                     final String firstName = snapshot.child("firstName").getValue().toString();
                     final String lastName = snapshot.child("lastName").getValue().toString();
@@ -194,9 +205,11 @@ public class QRScannerFragment extends Fragment {
                     Log.d(TAG, "Room Number: " + roomNumber);
 
                     showResidentDialog(residentId, firstName, middleName, lastName, contactNumber, residentAvatar, roomNumber, residentStatus);
-//                } else {
-//                    Toast.makeText(getContext(), "QR Code does not exist in the database.", Toast.LENGTH_SHORT).show();
-//                }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Code doest not exist in the database.", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override

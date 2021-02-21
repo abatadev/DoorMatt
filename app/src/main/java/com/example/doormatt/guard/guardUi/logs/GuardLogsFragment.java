@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,7 @@ public class GuardLogsFragment extends Fragment {
     private final String TAG = GuardLogsFragment.class.getSimpleName();
 
     GuardLogsRecyclerAdapter adapter;
+    EditText searchView;
     RecyclerView recyclerView;
     LogsModel logsModel;
 
@@ -31,6 +33,7 @@ public class GuardLogsFragment extends Fragment {
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guard_logs, container, false);
         recyclerView = view.findViewById(R.id.guard_logs_list);
+        searchView = view.findViewById(R.id.searchViewGuardLogsEditText);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
         logsModel = new LogsModel();
