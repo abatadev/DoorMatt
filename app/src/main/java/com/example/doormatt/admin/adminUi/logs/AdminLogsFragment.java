@@ -41,13 +41,13 @@ public class AdminLogsFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_logs, container, false);
         logsRef = FirebaseDatabase.getInstance().getReference(Common.LOGS_REF);
         recyclerView = view.findViewById(R.id.admin_logs_list);
+
         searchEditText = view.findViewById(R.id.admin_logs_search_editText);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setHasFixedSize(true);
 
         logsModel = new LogsModel();
         loadData("");
@@ -65,7 +65,7 @@ public class AdminLogsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(editable.toString() != null) {
+                if(!editable.toString().isEmpty()) {
                     loadData(editable.toString());
                 } else {
                     loadData("");
@@ -90,7 +90,8 @@ public class AdminLogsFragment extends Fragment {
                 holder.residentStatusTextView.setText(" " + model.getResidentStatus());
 
                 holder.dateAndTimeTextView.setText("Date: " + model.getDateRecorded() + "\nTime:  " + model.getTimeRecorded());
-
+                Log.d(TAG, "onBindViewHolder: Resident Name: " + model.getResidentFirstname());
+                Log.d(TAG, "onBindViewHolder: Resident Status: " + model.getResidentStatus());
                 try {
                     if(model.getResidentStatus() == Common.CHECKED_OUT) {
                         holder.residentStatusTextView.setText("Checked Out");

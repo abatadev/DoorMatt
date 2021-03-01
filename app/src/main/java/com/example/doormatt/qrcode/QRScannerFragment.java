@@ -320,7 +320,9 @@ public class QRScannerFragment extends Fragment {
             @Override
             public void onSuccess(Void unused) {
                 Map<String, Object> updateData = new HashMap<>();
-                updateData.put("residentStatus", Common.CHECKED_IN);
+                logsModel.setResidentStatus(Common.CHECKED_IN);
+                updateData.put("residentStatus", logsModel.getResidentStatus());
+//                updateData.put("residentStatus", Common.CHECKED_IN);
                 updateData.put("scannedBy", scannedBy);
                 residentRef.child(residentId).updateChildren(updateData);
                 Toast.makeText(getContext(), "Checked In.", Toast.LENGTH_SHORT).show();
@@ -341,7 +343,9 @@ public class QRScannerFragment extends Fragment {
             @Override
             public void onSuccess(Void unused) {
                 Map<String, Object> updateData = new HashMap<>();
-                updateData.put("residentStatus", Common.CHECKED_OUT);
+                logsModel.setResidentStatus(Common.CHECKED_OUT);
+                updateData.put("residentStatus", logsModel.getResidentStatus());
+//                updateData.put("residentStatus", Common.CHECKED_IN);
                 residentRef.child(residentId).updateChildren(updateData);
                 Toast.makeText(getContext(), "Checked Out.", Toast.LENGTH_SHORT).show();
             }

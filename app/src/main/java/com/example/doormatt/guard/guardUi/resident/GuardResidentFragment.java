@@ -53,18 +53,8 @@ public class GuardResidentFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-//        recyclerView.setHasFixedSize(true);
-
         residentModel = new ResidentModel();
         loadData("");
-
-//        view.findViewById(R.id.guard_add_resident_button).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getContext(), NewResidentActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override

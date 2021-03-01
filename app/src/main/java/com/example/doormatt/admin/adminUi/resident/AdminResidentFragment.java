@@ -81,7 +81,7 @@ public class AdminResidentFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(editable.toString() != null) {
+                if(!editable.toString().isEmpty()) {
                     loadData(editable.toString());
                 } else {
                     loadData("");
@@ -114,6 +114,7 @@ public class AdminResidentFragment extends Fragment {
 
                 holder.residentNameTextView.setText(model.getFirstName() + " " + model.getLastName());
                 holder.residentRoomNumberTextView.setText(model.getRoomNumber());
+                Log.d(TAG, "onBindViewHolder: Resident Status: " + model.getResidentStatus());
                 try {
                     if(model.getResidentStatus() == Common.CHECKED_OUT) {
                         holder.residentStatusTextView.setText("Checked Out");
