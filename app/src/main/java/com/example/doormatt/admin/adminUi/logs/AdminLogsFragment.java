@@ -37,8 +37,6 @@ public class AdminLogsFragment extends Fragment {
     LogsModel logsModel;
     private EditText searchEditText;
 
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

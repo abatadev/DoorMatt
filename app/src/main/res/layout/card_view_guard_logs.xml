@@ -56,26 +56,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/residentTimeInTextViewLogs" />
 
             <TextView
-                android:id="@+id/residentContactNumberLogs2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="128dp"
-                android:fontFamily="sans-serif"
-                android:text="Phone: "
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/residentContactNumberLogs5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="128dp"
                 android:fontFamily="sans-serif"
                 android:text="Time: "
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/residentContactNumberLogs2" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/residentContactNumberLogs6"
@@ -130,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="64dp"
                 android:layout_marginTop="8dp"
+                android:textStyle="bold"
                 android:text="Resident Full Name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
