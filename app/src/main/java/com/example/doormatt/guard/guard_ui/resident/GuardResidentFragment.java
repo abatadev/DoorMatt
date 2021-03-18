@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -107,22 +108,25 @@ public class GuardResidentFragment extends Fragment {
                 try {
                     if(model.getResidentStatus() == Common.CHECKED_OUT) {
                         holder.residentStatusTextView.setText("Checked Out");
+
+                        Toast.makeText(getContext(), "Cannot add visitor to a checked out resident.", Toast.LENGTH_SHORT).show();
                     } else if (model.getResidentStatus() == Common.CHECKED_IN) {
                         holder.residentStatusTextView.setText("Checked In");
+
+                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getContext(), GuardNewVisitorActivity.class);
+                                intent.putExtra("residentId", getRef(position).getKey());
+                                startActivity(intent);
+                            }
+                        });
                     }
                 } catch (NullPointerException e) {
                     Log.d(TAG, "onBindViewHolder: " + e.getMessage());
                     e.printStackTrace();
                 }
 
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getContext(), GuardNewVisitorActivity.class);
-                        intent.putExtra("residentId", getRef(position).getKey());
-                        startActivity(intent);
-                    }
-                });
             }
         };
 
