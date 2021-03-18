@@ -1,4 +1,4 @@
-package com.example.doormatt.guard.guardUi.visitor;
+package com.example.doormatt.guard.guard_ui.visitor;
 
 import android.os.Bundle;
 import android.text.Editable;

@@ -1,4 +1,4 @@
-package com.example.doormatt.guard.guardUi.resident;
+package com.example.doormatt.guard.guard_ui.resident;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.example.doormatt.R;
 import com.example.doormatt.common.Common;
-import com.example.doormatt.guard.guardUi.visitor.GuardNewVisitorActivity;
+import com.example.doormatt.guard.guard_ui.visitor.GuardNewVisitorActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

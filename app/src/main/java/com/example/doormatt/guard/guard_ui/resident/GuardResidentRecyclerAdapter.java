@@ -1,4 +1,4 @@
-package com.example.doormatt.guard.guardUi.resident;
+package com.example.doormatt.guard.guard_ui.resident;
 
 import android.view.LayoutInflater;
 import android.view.View;

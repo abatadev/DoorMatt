@@ -1,4 +1,4 @@
-package com.example.doormatt.admin.adminUi.logs;
+package com.example.doormatt.admin.admin_ui.logs;
 
 import android.app.Activity;
 import android.os.Bundle;

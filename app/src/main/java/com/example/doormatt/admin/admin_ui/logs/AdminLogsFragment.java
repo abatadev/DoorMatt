@@ -1,4 +1,4 @@
-package com.example.doormatt.admin.adminUi.logs;
+package com.example.doormatt.admin.admin_ui.logs;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,10 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doormatt.R;
-import com.example.doormatt.admin.adminUi.resident.ResidentViewHolder;
 import com.example.doormatt.common.Common;
 import com.example.doormatt.model.LogsModel;
-import com.example.doormatt.model.ResidentModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;

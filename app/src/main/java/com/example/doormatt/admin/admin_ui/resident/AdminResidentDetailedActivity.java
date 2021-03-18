@@ -1,4 +1,4 @@
-package com.example.doormatt.admin.adminUi.resident;
+package com.example.doormatt.admin.admin_ui.resident;
 
 import android.content.Context;
 import android.graphics.Bitmap;

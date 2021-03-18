@@ -1,4 +1,4 @@
-package com.example.doormatt.admin.adminUi.resident;
+package com.example.doormatt.admin.admin_ui.resident;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -1,4 +1,4 @@
-package com.example.doormatt.admin.adminUi.resident;
+package com.example.doormatt.admin.admin_ui.resident;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;

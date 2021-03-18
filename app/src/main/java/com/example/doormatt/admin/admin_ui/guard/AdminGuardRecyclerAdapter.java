@@ -1,4 +1,4 @@
-package com.example.doormatt.admin.adminUi.guard;
+package com.example.doormatt.admin.admin_ui.guard;
 
 import android.view.LayoutInflater;
 import android.view.View;

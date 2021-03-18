@@ -203,11 +203,11 @@ public class QRScannerFragment extends Fragment {
                     Log.d(TAG, "Last Name: " + lastName);
                     Log.d(TAG, "Resident Avatar Path: " + residentAvatar);
                     Log.d(TAG, "Room Number: " + roomNumber);
+                    Log.d(TAG, "Contact Number: " + contactNumber);
 
                     showResidentDialog(residentId, firstName, middleName, lastName, contactNumber, residentAvatar, roomNumber, residentStatus);
                 } catch (NullPointerException e) {
                     e.printStackTrace();
-                    Toast.makeText(getContext(), "Code doest not exist in the database.", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -254,13 +254,15 @@ public class QRScannerFragment extends Fragment {
 
         TextView residentIdTextView = view.findViewById(R.id.dialogQrResidentId);
         TextView residentNameTextView = view.findViewById(R.id.dialogQrFirstName);
+        TextView residentContactNumberTextView = view.findViewById(R.id.dialogQrContactNumber);
         TextView residentRoomNumberTextView = view.findViewById(R.id.dialogRoomNumber);
         TextView residentStatusTextView = view.findViewById(R.id.dialogQrStatus);
         CircleImageView residentAvatarCircleImageView = view.findViewById(R.id.dialogResidentAvatar);
         Picasso.get().load(residentAvatar).into(residentAvatarCircleImageView);
 
-        residentIdTextView.setText("Resident ID: " + residentId);
-        residentNameTextView.setText("Name: " + firstName + " " + lastName);
+        residentIdTextView.setText("ID: " + residentId);
+        residentNameTextView.setText("" + firstName + " " + lastName);
+        residentContactNumberTextView.setText(contactNumber);
         residentRoomNumberTextView.setText("Room Number: "+ roomNumber);
 
         // Read resident status

@@ -9,13 +9,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.doormatt.LoginActivity;
-import com.example.doormatt.MainActivity;
 import com.example.doormatt.R;
-import com.example.doormatt.admin.adminUi.guard.AdminGuardFragment;
-import com.example.doormatt.admin.adminUi.logs.AdminLogsFragment;
+import com.example.doormatt.admin.admin_ui.guard.AdminGuardFragment;
+import com.example.doormatt.admin.admin_ui.logs.AdminLogsFragment;
 import com.example.doormatt.guard.LogOutFragment;
 import com.example.doormatt.qrcode.QRScannerFragment;
-import com.example.doormatt.admin.adminUi.resident.AdminResidentFragment;
+import com.example.doormatt.admin.admin_ui.resident.AdminResidentFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 

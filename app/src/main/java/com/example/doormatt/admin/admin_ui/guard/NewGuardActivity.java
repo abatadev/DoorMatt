@@ -1,4 +1,4 @@
-package com.example.doormatt.admin.adminUi.guard;
+package com.example.doormatt.admin.admin_ui.guard;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

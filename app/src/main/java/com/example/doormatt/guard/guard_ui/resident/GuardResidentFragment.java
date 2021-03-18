@@ -1,4 +1,4 @@
-package com.example.doormatt.guard.guardUi.resident;
+package com.example.doormatt.guard.guard_ui.resident;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,9 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doormatt.R;
-import com.example.doormatt.admin.adminUi.resident.NewResidentActivity;
 import com.example.doormatt.common.Common;
-import com.example.doormatt.guard.guardUi.visitor.GuardNewVisitorActivity;
+import com.example.doormatt.guard.guard_ui.visitor.GuardNewVisitorActivity;
 import com.example.doormatt.model.ResidentModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;

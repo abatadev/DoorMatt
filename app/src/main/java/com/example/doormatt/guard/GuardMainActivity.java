@@ -3,18 +3,15 @@ package com.example.doormatt.guard;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.doormatt.LoginActivity;
 import com.example.doormatt.R;
 import com.example.doormatt.qrcode.QRScannerFragment;
-import com.example.doormatt.guard.guardUi.logs.GuardLogsFragment;
+import com.example.doormatt.guard.guard_ui.logs.GuardLogsFragment;
 
-import com.example.doormatt.guard.guardUi.resident.GuardResidentFragment;
-import com.example.doormatt.guard.guardUi.visitor.GuardVisitorFragment;
+import com.example.doormatt.guard.guard_ui.resident.GuardResidentFragment;
+import com.example.doormatt.guard.guard_ui.visitor.GuardVisitorFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class GuardMainActivity extends AppCompatActivity {
 

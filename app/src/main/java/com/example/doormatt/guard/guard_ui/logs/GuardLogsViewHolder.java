@@ -1,4 +1,4 @@
-package com.example.doormatt.guard.guardUi.logs;
+package com.example.doormatt.guard.guard_ui.logs;
 
 
 import android.view.View;

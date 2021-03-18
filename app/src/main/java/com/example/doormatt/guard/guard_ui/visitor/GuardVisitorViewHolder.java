@@ -1,4 +1,4 @@
-package com.example.doormatt.guard.guardUi.visitor;
+package com.example.doormatt.guard.guard_ui.visitor;
 
 import android.view.View;
 import android.widget.TextView;

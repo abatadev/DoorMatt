@@ -66,31 +66,19 @@
         android:id="@+id/dialogQrFirstName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
         android:fontFamily="sans-serif-medium"
         android:text="Resident First Name"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/dialogQrContactNumber"
-        app:layout_constraintEnd_toStartOf="@+id/dialogQrLastName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialogQrResidentId" />
-
-    <TextView
-        android:id="@+id/dialogQrLastName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Resident Last Name"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/dialogQrContactNumber"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dialogQrFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/dialogQrResidentId" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialogQrResidentId"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/dialogQrResidentId"
