@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/gradient_white_grey"
     tools:context=".guard.GuardMainActivity">
 
     <LinearLayout
@@ -21,7 +22,6 @@
             android:textColor="@color/ColorPrimary"
             android:textAllCaps="true"
             android:layout_marginBottom="4dp"
-            android:background="@drawable/rounded_corners_text_input"
             android:fontFamily="sans-serif-black"/>
 
         <TextView
@@ -32,7 +32,6 @@
             android:textStyle="bold"
             android:textColor="@color/ColorSecondary"
             android:fontFamily="sans-serif-condensed"
-            android:background="@drawable/rounded_corners_text_input"
             android:layout_marginBottom="8dp"/>
 
         <EditText

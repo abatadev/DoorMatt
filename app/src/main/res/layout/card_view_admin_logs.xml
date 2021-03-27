@@ -44,14 +44,14 @@
                 android:fontFamily="sans-serif"
                 android:text="Resident Status"/>
 
-            <TextView
-                android:id="@+id/card_view_logs_guard_name_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Guard Name"
-                android:layout_marginTop="8dp"
-                android:fontFamily="sans-serif"
-                android:layout_marginStart="4dp"/>
+<!--            <TextView-->
+<!--                android:id="@+id/card_view_logs_guard_name_textView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Guard Name"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:fontFamily="sans-serif"-->
+<!--                android:layout_marginStart="4dp"/>-->
 
             <TextView
                 android:id="@+id/card_view_logs_resident_date_time_textView"

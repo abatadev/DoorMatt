@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doormatt.R;
 import com.example.doormatt.common.Common;
+import com.example.doormatt.model.ResidentModel;
 import com.example.doormatt.model.VisitorModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -86,6 +87,13 @@ public class GuardNewVisitorActivity extends AppCompatActivity implements DatePi
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        ResidentModel residentModel = new ResidentModel();
+        residentModel.setResidentStatus(Common.CHECKED_OUT);
+        super.onBackPressed();
     }
 
     private void initializeViews() {

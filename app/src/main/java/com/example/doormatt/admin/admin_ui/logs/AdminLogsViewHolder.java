@@ -21,7 +21,7 @@ public class AdminLogsViewHolder extends RecyclerView.ViewHolder {
         residentNameTextView = itemView.findViewById(R.id.card_view_logs_resident_name_textView);
         residentRoomTextView = itemView.findViewById(R.id.card_view_logs_resident_room_textView);
         residentStatusTextView = itemView.findViewById(R.id.card_view_logs_resident_status_textView);
-        guardNameTextView = itemView.findViewById(R.id.card_view_logs_guard_name_textView);
+//        guardNameTextView = itemView.findViewById(R.id.card_view_logs_guard_name_textView);
         dateAndTimeTextView = itemView.findViewById(R.id.card_view_logs_resident_date_time_textView);
     }
 }

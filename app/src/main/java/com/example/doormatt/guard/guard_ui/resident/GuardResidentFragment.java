@@ -109,10 +109,15 @@ public class GuardResidentFragment extends Fragment {
                     if(model.getResidentStatus() == Common.CHECKED_OUT) {
                         holder.residentStatusTextView.setText("Checked Out");
 
+                        
                         Toast.makeText(getContext(), "Cannot add visitor to a checked out resident.", Toast.LENGTH_SHORT).show();
+                        model.setResidentStatus(Common.CHECKED_OUT);
+
                     } else if (model.getResidentStatus() == Common.CHECKED_IN) {
                         holder.residentStatusTextView.setText("Checked In");
 
+
+                        // Create new visitor
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

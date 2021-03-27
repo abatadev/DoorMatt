@@ -26,7 +26,7 @@ public class AdminLogsRecyclerAdapter extends FirebaseRecyclerAdapter<LogsModel,
         holder.residentNameTextView.setText("Name: " + model.getResidentFirstname() + " " + model.getResidentLastName());
         holder.residentRoomTextView.setText("Room: " + model.getResidentRoomNumber());
         holder.residentStatusTextView.setText("Status: " + model.getResidentStatus());
-        holder.guardNameTextView.setText("Guard: " + model.getGuardName());
+//        holder.guardNameTextView.setText("Guard: " + model.getGuardName());
         holder.dateAndTimeTextView.setText("Date: + " + model.getDateRecorded());
     }
 
@@ -49,7 +49,7 @@ public class AdminLogsRecyclerAdapter extends FirebaseRecyclerAdapter<LogsModel,
             residentNameTextView = itemView.findViewById(R.id.card_view_logs_resident_name_textView);
             residentRoomTextView = itemView.findViewById(R.id.card_view_logs_resident_room_textView);
             residentStatusTextView = itemView.findViewById(R.id.card_view_logs_resident_status_textView);
-            guardNameTextView = itemView.findViewById(R.id.card_view_logs_guard_name_textView);
+//            guardNameTextView = itemView.findViewById(R.id.card_view_logs_guard_name_textView);
             dateAndTimeTextView = itemView.findViewById(R.id.card_view_logs_resident_date_time_textView);
         }
     }

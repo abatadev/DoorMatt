@@ -187,27 +187,30 @@ public class QRScannerFragment extends Fragment {
         residentRef.child(qrCode).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                if(snapshot.exists(qrCode)) {
-                try {
-                    residentId = snapshot.child("residentId").getValue().toString();
-                    final String firstName = snapshot.child("firstName").getValue().toString();
-                    final String lastName = snapshot.child("lastName").getValue().toString();
-                    final String middleName = snapshot.child("middleName").getValue().toString();
-                    final String residentAvatar = snapshot.child("residentAvatar").getValue().toString();
-                    final String roomNumber = snapshot.child("roomNumber").getValue().toString();
-                    final String contactNumber = snapshot.child("contactNumber").getValue().toString();
-                    residentStatus = snapshot.child("residentStatus").getValue(int.class);
-
-                    Log.d(TAG, "User ID: " + residentId);
-                    Log.d(TAG, "First Name: " + firstName);
-                    Log.d(TAG, "Last Name: " + lastName);
-                    Log.d(TAG, "Resident Avatar Path: " + residentAvatar);
-                    Log.d(TAG, "Room Number: " + roomNumber);
-                    Log.d(TAG, "Contact Number: " + contactNumber);
-
-                    showResidentDialog(residentId, firstName, middleName, lastName, contactNumber, residentAvatar, roomNumber, residentStatus);
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
+                if(qrCode != null)
+                    try {
+                        residentId = snapshot.child("residentId").getValue().toString();
+                        final String firstName = snapshot.child("firstName").getValue().toString();
+                        final String lastName = snapshot.child("lastName").getValue().toString();
+                        final String middleName = snapshot.child("middleName").getValue().toString();
+                        final String residentAvatar = snapshot.child("residentAvatar").getValue().toString();
+                        final String roomNumber = snapshot.child("roomNumber").getValue().toString();
+                        final String contactNumber = snapshot.child("contactNumber").getValue().toString();
+                        residentStatus = snapshot.child("residentStatus").getValue(int.class);
+    
+                        Log.d(TAG, "User ID: " + residentId);
+                        Log.d(TAG, "First Name: " + firstName);
+                        Log.d(TAG, "Last Name: " + lastName);
+                        Log.d(TAG, "Resident Avatar Path: " + residentAvatar);
+                        Log.d(TAG, "Room Number: " + roomNumber);
+                        Log.d(TAG, "Contact Number: " + contactNumber);
+    
+                        showResidentDialog(residentId, firstName, middleName, lastName, contactNumber, residentAvatar, roomNumber, residentStatus);
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
+                else {
+                    Toast.makeText(getContext(), "QR Code not found.", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -244,7 +247,7 @@ public class QRScannerFragment extends Fragment {
         logsModel.setResidentContactNumber(contactNumber);
         logsModel.setResidentId(residentId);
         logsModel.setResidentRoomNumber(roomNumber);
-        logsModel.setGuardName("Admin");
+//        logsModel.setGuardName("Admin");
         logsModel.setDateRecorded(date);
         logsModel.setTimeRecorded(time);
         logsModel.setResidentStatus(residentStatus);
