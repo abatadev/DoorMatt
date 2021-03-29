@@ -26,6 +26,7 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.budiyev.android.codescanner.ScanMode;
 import com.example.doormatt.R;
+import com.example.doormatt.admin.admin_ui.logs.AdminLogsDetailed;
 import com.example.doormatt.common.Common;
 import com.example.doormatt.model.LogsModel;
 import com.example.doormatt.model.ResidentModel;
@@ -35,6 +36,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
@@ -187,8 +189,11 @@ public class QRScannerFragment extends Fragment {
         residentRef.child(qrCode).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if(qrCode != null)
+//                if(snapshot.child("firstName").getValue().toString() != null) {
+                if(snapshot.child("firstName").exists()) {
+                    Log.d(TAG, "onDataChange: ");
                     try {
+                        Log.d(TAG, "onDataChange: Okay");
                         residentId = snapshot.child("residentId").getValue().toString();
                         final String firstName = snapshot.child("firstName").getValue().toString();
                         final String lastName = snapshot.child("lastName").getValue().toString();
@@ -197,20 +202,21 @@ public class QRScannerFragment extends Fragment {
                         final String roomNumber = snapshot.child("roomNumber").getValue().toString();
                         final String contactNumber = snapshot.child("contactNumber").getValue().toString();
                         residentStatus = snapshot.child("residentStatus").getValue(int.class);
-    
+
                         Log.d(TAG, "User ID: " + residentId);
                         Log.d(TAG, "First Name: " + firstName);
                         Log.d(TAG, "Last Name: " + lastName);
                         Log.d(TAG, "Resident Avatar Path: " + residentAvatar);
                         Log.d(TAG, "Room Number: " + roomNumber);
                         Log.d(TAG, "Contact Number: " + contactNumber);
-    
+
                         showResidentDialog(residentId, firstName, middleName, lastName, contactNumber, residentAvatar, roomNumber, residentStatus);
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
+                    } catch (DatabaseException e) {
+//                        e.printStackTrace();
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                else {
-                    Toast.makeText(getContext(), "QR Code not found.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Does not exist.", Toast.LENGTH_SHORT).show();
                 }
 
             }
