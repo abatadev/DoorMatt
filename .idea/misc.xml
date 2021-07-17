@@ -4,10 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Hans/Documents/GitHub/DoorMat/app/src/main/res/layout/fragment_admin_qr.xml" value="0.16717325227963525" />
+        <entry key="..\:/Users/ImaheLabs - Earl/Documents/GitHub/DoorMatt/app/src/main/res/layout-v23/activity_login.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/ImaheLabs - Earl/Documents/GitHub/DoorMatt/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/ImaheLabs - Earl/Documents/GitHub/DoorMatt/app/src/main/res/layout/activity_sign_up_admin.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/ImaheLabs - Earl/Documents/GitHub/DoorMatt/app/src/main/res/layout/fragment_guard_logs.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

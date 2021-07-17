@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,78 +10,83 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="16sp"
         android:orientation="vertical"
-        android:layout_margin="16sp">
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="2dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/bebas"
             android:text="Door Mat"
-            android:textSize="48sp"
             android:textAllCaps="true"
             android:textColor="@color/ColorPrimary"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/bebas"/>
+            android:textSize="48sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign Up Admin"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/ColorSecondary"
+            android:layout_marginBottom="16dp"
             android:fontFamily="sans-serif-condensed"
-            android:layout_marginBottom="16dp"/>
+            android:text="Sign Up Admin"
+            android:textColor="@color/ColorSecondary"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/admin_sign_up_login_email_editText"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/grey"
+            android:autofillHints="Email"
             android:background="@drawable/rounded_corners_text_input"
+            android:hint="@string/email"
+
+            android:inputType="textEmailAddress"
             android:padding="8dp"
-            android:autofillHints="Email" />
+            android:textColor="@color/grey" />
 
         <EditText
             android:id="@+id/admin_sign_up_login_password_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints="Password"
             android:background="@drawable/rounded_corners_text_input"
             android:hint="@string/password"
-            android:layout_marginBottom="8dp"
             android:inputType="textPassword"
             android:padding="8dp"
-            android:textColor="@color/grey"
-            android:autofillHints="Password" />
+            android:textColor="@color/grey" />
 
         <EditText
             android:id="@+id/admin_sign_up_login_confirm_password_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/confirm_password"
-            android:inputType="textPassword"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
-            android:textColor="@color/grey"
+            android:autofillHints="Confirm Password"
             android:background="@drawable/rounded_corners_text_input"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
             android:padding="8dp"
-            android:autofillHints="Confirm Password" />
+            android:textColor="@color/grey" />
 
         <Button
             android:id="@+id/admin_sign_up_login_submit_button"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:background="@drawable/rounded_corners_button"
             android:text="@string/sign_up"
             android:textAllCaps="true"
-            android:background="@drawable/rounded_corners_button"
             android:textColor="@color/white"
-            />
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
 
     </LinearLayout>
 
