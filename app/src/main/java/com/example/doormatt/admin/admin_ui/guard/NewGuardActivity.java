@@ -65,8 +65,6 @@ public class NewGuardActivity extends AppCompatActivity {
         saveGuardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                registerToUsers();
-//                submitToFirebase();
                 registerNewGuard();
             }
         });
@@ -84,10 +82,6 @@ public class NewGuardActivity extends AppCompatActivity {
         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-//                mUser = FirebaseAuth.getInstance().getUid();
-//                String guardId = guardReference.push().getKey();
-//                String guardId = mUser.toString();
-
                 Log.d(TAG, "onComplete: " + task.isSuccessful());
                 if(task.isSuccessful()) {
                     FirebaseUser user = task.getResult().getUser();
@@ -98,35 +92,24 @@ public class NewGuardActivity extends AppCompatActivity {
                     guardModel.setGuardEmail(email);
                     guardModel.setGuardFullName(name);
                     guardModel.setGuardPassword(password);
-                    guardReference.child(guardId).setValue(guardModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(NewGuardActivity.this, "Done.", Toast.LENGTH_SHORT).show();
+                    guardReference.child(guardId).setValue(guardModel).addOnSuccessListener(guardTask -> {
+                        Toast.makeText(NewGuardActivity.this, "Done.", Toast.LENGTH_SHORT).show();
 
-                            RolesModel rolesModel = new RolesModel(guardId, 2);
-                            roleReference.child(guardId).setValue(rolesModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Log.d(TAG, "onSuccess: Role added to Database.");
-                                }
-                            });
-                        }
+                        RolesModel rolesModel = new RolesModel(guardId, 2);
+                        roleReference.child(guardId).setValue(rolesModel).addOnSuccessListener(roleTask -> Log.d(TAG, "onSuccess: Role added to Database."));
                     });
 
                 }
 
         }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Log.d(TAG, "onFailure: " + e.getMessage());
-                e.printStackTrace();
-            }
+        }).addOnFailureListener(e -> {
+            Log.d(TAG, "onFailure: " + e.getMessage());
+            e.printStackTrace();
         });
 
 
     }
-
+/*
     private void submitToFirebase() {
         String guardName, guardEmail, guardPassword;
 
@@ -185,5 +168,5 @@ public class NewGuardActivity extends AppCompatActivity {
                 Log.d(TAG, e.getMessage());
             }
         }
-    }
+    }*/
 }

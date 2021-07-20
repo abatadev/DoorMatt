@@ -3,13 +3,6 @@ package com.example.doormatt.admin.admin_ui.resident;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,11 +13,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.doormatt.R;
 import com.example.doormatt.common.Common;
 import com.example.doormatt.model.ResidentModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -40,7 +40,8 @@ public class AdminResidentFragment extends Fragment {
     FirebaseRecyclerOptions<ResidentModel> options;
     private RecyclerView recyclerView;
     private ResidentModel residentModel;
-    private Button newResidentButton, editResidentButton;
+    private Button editResidentButton;
+    private FloatingActionButton newResidentButton;
     private EditText searchBarEditText;
 
     @Nullable
@@ -51,7 +52,7 @@ public class AdminResidentFragment extends Fragment {
         residentRef = FirebaseDatabase.getInstance().getReference(Common.RESIDENT_REF);
 
         recyclerView = view.findViewById(R.id.admin_resident_recyclerView);
-        newResidentButton = view.findViewById(R.id.new_resident_button);
+        newResidentButton = view.findViewById(R.id.addNewResidentFloatingActionButton);
         searchBarEditText = view.findViewById(R.id.resident_search_bar_editText);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
@@ -81,7 +82,7 @@ public class AdminResidentFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(!editable.toString().isEmpty()) {
+                if (!editable.toString().isEmpty()) {
                     loadData(editable.toString());
                 } else {
                     loadData("");
@@ -116,7 +117,7 @@ public class AdminResidentFragment extends Fragment {
                 holder.residentRoomNumberTextView.setText(model.getRoomNumber());
                 Log.d(TAG, "onBindViewHolder: Resident Status: " + model.getResidentStatus());
                 try {
-                    if(model.getResidentStatus() == Common.CHECKED_OUT) {
+                    if (model.getResidentStatus() == Common.CHECKED_OUT) {
                         holder.residentStatusTextView.setText("Checked Out");
                     } else if (model.getResidentStatus() == Common.CHECKED_IN) {
                         holder.residentStatusTextView.setText("Checked In");
@@ -164,11 +165,11 @@ public class AdminResidentFragment extends Fragment {
 
     private void deleteResident(final String residentId) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setMessage("Delete this entry?");
+        builder.setMessage("Delete this entry?");
         builder.setPositiveButton("Delete", (dialog, which) -> residentRef.child(residentId).removeValue()
                 .addOnSuccessListener(unused -> Toast.makeText(getContext(), "Entry has been deleted.", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Log.d(TAG, "onFailure: " + e.getMessage())))
-        .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         builder.create();
         builder.show();
     }

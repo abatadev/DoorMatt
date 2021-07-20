@@ -46,13 +46,11 @@
     <string name="login">Login</string>
     <string name="login_with_google">Login With Google</string>
     <string name="or">- OR -</string>
-    <string name="login">Login</string>
-    <string name="password">Password</string>
     <string name="sign_up_instead">Sign up instead</string>
     <string name="doormat">DoorMat</string>
-    <string name="email">Email</string>
-    <string name="register">Register</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="register">Register</string>
     <string name="login_instead">Login Instead</string>
+    <string name="add_guard">Add Guard</string>
+    <string name="register">Register</string>
+    <string name="add_new_resident">Add new resident.</string>
+    <string name="search">Search</string>
 </resources>
