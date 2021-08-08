@@ -25,19 +25,17 @@ public class AdminGuardFragment extends Fragment {
     private DatabaseReference guardRef;
     private AdminGuardRecyclerAdapter adapter;
     private RecyclerView recyclerView;
-    private GuardModel guardModel;
-    private Button newGuardButton;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_guard, container, false);
         recyclerView = view.findViewById(R.id.admin_guard_list);
-        newGuardButton = view.findViewById(R.id.new_guard_button);
+        Button newGuardButton = view.findViewById(R.id.new_guard_button);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
 
-        guardModel = new GuardModel();
+        GuardModel guardModel = new GuardModel();
         queryList();
 
         newGuardButton.setOnClickListener(new View.OnClickListener() {

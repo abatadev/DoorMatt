@@ -53,4 +53,6 @@
     <string name="register">Register</string>
     <string name="add_new_resident">Add new resident.</string>
     <string name="search">Search</string>
+    <string name="full_name">Full Name</string>
+
 </resources>
