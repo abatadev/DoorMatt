@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.doormatt.admin.admin_ui.logs.AdminLogsDetailed;
 import com.example.doormatt.validation.ValidateAccountInput;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,12 +21,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
+    private final String TAG = LoginActivity.class.getSimpleName();
 
-    TextInputEditText usernameEditText;
-    TextInputEditText passwordEditText;
+    private TextInputEditText usernameEditText;
+    private TextInputEditText passwordEditText;
     TextView signUpAdminTextView;
-
     Button submitButton;
+    Button signUpWithGoogleButton;
 
     String username, password;
 
@@ -42,11 +44,12 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        usernameEditText = findViewById(R.id.login_username_editText);
-        passwordEditText = findViewById(R.id.login_password_editText);
-        submitButton = findViewById(R.id.login_button);
+        usernameEditText = findViewById(R.id.loginEmailTextInputEditText);
+        passwordEditText = findViewById(R.id.loginPasswordTextInputEditText);
+        signUpWithGoogleButton = findViewById(R.id.loginWithGoogleButton);
+        submitButton = findViewById(R.id.loginButton);
 
-        signUpAdminTextView = findViewById(R.id.login_sign_up_admin_textView);
+        signUpAdminTextView = findViewById(R.id.signUpInsteadTextView);
 
         //validateInput
         validateAccountDetails = new ValidateAccountInput(
@@ -58,9 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         //Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() == null) {
-
-        } else {
-
+            Log.d(TAG, "onCreate: No active sessions found.");
         }
 
         submitButton.setOnClickListener(new View.OnClickListener() {

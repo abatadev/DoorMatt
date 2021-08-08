@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.doormatt.admin.AdminMainActivity;
 import com.example.doormatt.model.AdminModel;
@@ -25,12 +26,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpAdminActivity extends AppCompatActivity {
+    private final String TAG = SignUpAdminActivity.class.getSimpleName();
 
     ValidateAccountInput validateInput;
     AdminModel adminModel;
     RolesModel rolesModel;
 
-    EditText adminEmailEditText, adminPasswordEditText, adminConfirmPasswordEditText;
+    EditText adminPasswordEditText, adminConfirmPasswordEditText;
+    TextView adminEmailEditText;
     Button adminSignUpButton;
 
     private FirebaseAuth mAuth;
@@ -42,31 +45,40 @@ public class SignUpAdminActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String TAG = "onCreate";
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_admin);
 
-        adminEmailEditText = findViewById(R.id.admin_sign_up_login_email_editText);
-        adminPasswordEditText = findViewById(R.id.admin_sign_up_login_password_editText);
-        adminConfirmPasswordEditText = findViewById(R.id.admin_sign_up_login_confirm_password_editText);
-        adminSignUpButton = findViewById(R.id.admin_sign_up_login_submit_button);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
+        adminEmailEditText = findViewById(R.id.adminSignUpEmailTextInputEditText);
+        adminPasswordEditText = findViewById(R.id.adminSignUpPasswordTextInputEditText);
+        adminConfirmPasswordEditText = findViewById(R.id.adminSignUpConfirmPasswordTextInputEditText);
+        adminSignUpButton = findViewById(R.id.adminSignUpRegisterButton);
+
+        initializeFirebase();
+
+        Log.d(TAG, "Admin Ref: " + adminRef.getParent());
+
+        adminSignUpButton.setOnClickListener(v -> {
+            Log.d(TAG, "Admin Ref: " + adminRef.getParent());
+            registerNewAdmin();
+        });
+    }
+
+    private void initializeFirebase() {
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mAuth = FirebaseAuth.getInstance();
         adminRef = mDatabase.getReference(Common.ADMIN_REF);
         rolesRef = mDatabase.getReference(Common.ROLE_REF);
+    }
 
-        Log.d(TAG, "Admin Ref: " + adminRef.getParent());
-
-        adminSignUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Admin Ref: " + adminRef.getParent());
-                registerNewAdmin();
-            }
-        });
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initializeFirebase();
     }
 
     private void registerNewAdmin() {
@@ -76,43 +88,37 @@ public class SignUpAdminActivity extends AppCompatActivity {
         password = adminPasswordEditText.getText().toString().trim();
 
         mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    mUser  = FirebaseAuth.getInstance().getCurrentUser();
-                    String userId = mUser.getUid().toString();
+            .addOnCompleteListener(task -> {
+                mUser  = FirebaseAuth.getInstance().getCurrentUser();
+                assert mUser != null;
+                String userId = mUser.getUid().toString();
 
-                    AdminModel adminModel = new AdminModel();
+                AdminModel adminModel = new AdminModel();
 
-                    adminModel.setUserId(userId);
-                    adminModel.setEmail(email);
-                    adminModel.setPassword(password);
+                adminModel.setUserId(userId);
+                adminModel.setEmail(email);
+                adminModel.setPassword(password);
 
-                    adminRef.child(userId).setValue(adminModel);
+                adminRef.child(userId).setValue(adminModel);
 
-                    Log.d(TAG, "DB Ref: " + mDatabase.getReference().toString());
+                Log.d(TAG, "DB Ref: " + mDatabase.getReference().toString());
 
-                    if(task.isSuccessful()) {
-                        // Redirect to Admin Panel
-                        Log.d(TAG, "Sign Up Success!");
-                        rolesModel = new RolesModel(userId, 1);
-                        rolesRef.child(userId).setValue(rolesModel);
-                        Intent intent = new Intent(SignUpAdminActivity.this, AdminMainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Log.e(TAG, "createUserWithEmail:failure", task.getException());
-                        Toast.makeText(SignUpAdminActivity.this, "Sign Up Failed", Toast.LENGTH_SHORT).show();
-                    }
+                if(task.isSuccessful()) {
+                    // Redirect to Admin Panel
+                    Log.d(TAG, "Sign Up Success!");
+                    rolesModel = new RolesModel(userId, 1);
+                    rolesRef.child(userId).setValue(rolesModel);
+                    Intent intent = new Intent(SignUpAdminActivity.this, AdminMainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Log.e(TAG, "createUserWithEmail:failure", task.getException());
+                    Toast.makeText(SignUpAdminActivity.this, "Sign Up Failed", Toast.LENGTH_SHORT).show();
                 }
             })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(SignUpAdminActivity.this, "Register failed", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "Error: " + e.getMessage());
-        }
-
-        });
+            .addOnFailureListener(e -> {
+                Toast.makeText(SignUpAdminActivity.this, "Register failed", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Error: " + e.getMessage());
+    });
     }
 
 
