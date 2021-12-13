@@ -1,150 +1,367 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="8dp"
-    android:background="@drawable/gradient_white_grey">
+    android:background="@drawable/gradient_white_grey"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
+        android:id="@+id/textView14"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Resident"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/ColorSecondary"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-condensed"
-        android:layout_marginBottom="8dp"/>
+        android:text="@string/edit_resident"
+        android:textColor="@color/ColorSecondary"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/firstNameUpdateInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_resident_first_name_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="@string/first_name" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/middleNameUpdateInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/firstNameUpdateInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_resident_middle_name_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="@string/middle_name" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/lastNameUpdateInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/middleNameUpdateInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_resident_last_name_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="@string/last_name" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/dateOfBirthUpdateInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:focusable="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastNameUpdateInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_resident_date_of_birth_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="@string/date_of_birth" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/roomNumberUpdateInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dateOfBirthUpdateInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/edit_resident_room_number_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/room_number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/contactNumberUpdateInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/roomNumberUpdateInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_resident_contact_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/contact_number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/emergencyUpdateInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contactNumberUpdateInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_resident_emergency_contact_person"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="@string/emergency_contact_person" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/emergencyContactNumberUpdateInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emergencyUpdateInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_resident_emergency_contact_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/emergency_contact_number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/edit_resident_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/update"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emergencyContactNumberUpdateInputLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!--
+    <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:layout_margin="8dp"
+android:background="@drawable/gradient_white_grey">
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Edit Resident"
+    android:textSize="22sp"
+    android:textStyle="bold"
+    android:textColor="@color/ColorSecondary"
+    android:fontFamily="sans-serif-condensed"
+    android:layout_marginBottom="8dp"/>
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edit_resident_first_name_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/first_name"
+            android:inputType="textCapSentences"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/colorGrey"
+            android:background="@drawable/rounded_corners_text_input"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/edit_resident_middle_name_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/middle_name"
+            android:inputType="textCapSentences"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/colorGrey"
+            android:background="@drawable/rounded_corners_text_input"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/edit_resident_last_name_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/last_name"
+            android:inputType="textCapSentences"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/colorGrey"
+            android:background="@drawable/rounded_corners_text_input"
+            android:padding="8dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:weightSum="5">
 
-            <EditText
-                android:id="@+id/edit_resident_first_name_editText"
+            <TextView
+                android:id="@+id/edit_resident_date_of_birth_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/first_name"
-                android:inputType="textCapSentences"
+                android:hint="@string/date_of_birth"
                 android:layout_marginBottom="8dp"
-                android:textColor="@color/colorGrey"
+                android:textColor="@color/grey"
                 android:background="@drawable/rounded_corners_text_input"
-                android:padding="8dp"/>
-
-            <EditText
-                android:id="@+id/edit_resident_middle_name_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/middle_name"
-                android:inputType="textCapSentences"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/colorGrey"
-                android:background="@drawable/rounded_corners_text_input"
-                android:padding="8dp"/>
-
-            <EditText
-                android:id="@+id/edit_resident_last_name_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/last_name"
-                android:inputType="textCapSentences"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/colorGrey"
-                android:background="@drawable/rounded_corners_text_input"
-                android:padding="8dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="5">
-
-                <TextView
-                    android:id="@+id/edit_resident_date_of_birth_textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/date_of_birth"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/grey"
-                    android:background="@drawable/rounded_corners_text_input"
-                    android:padding="8dp"
-                    android:textSize="16sp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/edit_resident_date_imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_baseline_calendar_today_24"
-                    android:paddingTop="8dp"
-                    android:backgroundTint="@color/ColorPrimary"
-                    android:layout_weight="4"/>
-
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/edit_resident_room_number_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/room_number"
-                android:inputType="textCapSentences"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/colorGrey"
-                android:background="@drawable/rounded_corners_text_input"
-                android:padding="8dp"/>
-
-            <EditText
-                android:id="@+id/edit_resident_contact_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Contact Number"
-                android:inputType="number"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/colorGrey"
-                android:background="@drawable/rounded_corners_text_input"
-                android:padding="8dp"/>
-
-            <EditText
-                android:id="@+id/edit_resident_emergency_contact_person"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/emergency_contact_person"
-                android:inputType="textCapSentences"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/colorGrey"
-                android:background="@drawable/rounded_corners_text_input"
-                android:padding="8dp"/>
-
-            <EditText
-                android:id="@+id/edit_resident_emergency_contact_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/emergency_contact_number"
-                android:inputType="number"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/colorGrey"
-                android:background="@drawable/rounded_corners_text_input"
-                android:padding="8dp"/>
-
-            <Button
-                android:id="@+id/edit_resident_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/save"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:drawableStart="@drawable/ic_baseline_check_24"
-                android:drawableTint="@color/white"
-                android:textColor="@color/white"
-                android:background="@drawable/rounded_corners_button"
                 android:padding="8dp"
-                android:layout_gravity="end"/>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                android:textSize="16sp"
+                android:layout_weight="1" />
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/edit_resident_date_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_baseline_calendar_today_24"
+                android:paddingTop="8dp"
+                android:backgroundTint="@color/ColorPrimary"
+                android:layout_weight="4"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edit_resident_room_number_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/room_number"
+            android:inputType="textCapSentences"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/colorGrey"
+            android:background="@drawable/rounded_corners_text_input"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/edit_resident_contact_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contact Number"
+            android:inputType="number"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/colorGrey"
+            android:background="@drawable/rounded_corners_text_input"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/edit_resident_emergency_contact_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/emergency_contact_person"
+            android:inputType="textCapSentences"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/colorGrey"
+            android:background="@drawable/rounded_corners_text_input"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/edit_resident_emergency_contact_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/emergency_contact_number"
+            android:inputType="number"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/colorGrey"
+            android:background="@drawable/rounded_corners_text_input"
+            android:padding="8dp"/>
+
+        <Button
+            android:id="@+id/edit_resident_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/ic_baseline_check_24"
+            android:drawableTint="@color/white"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_corners_button"
+            android:padding="8dp"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+
+</LinearLayout>-->

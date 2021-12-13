@@ -76,7 +76,6 @@ public class EditResidentActivity extends AppCompatActivity implements DatePicke
         contactNumberEditText = findViewById(R.id.edit_resident_contact_number);
         emergencyContactPersonEditText = findViewById(R.id.edit_resident_emergency_contact_person);
         emergencyContactNumberEditText = findViewById(R.id.edit_resident_emergency_contact_number);
-        dateOfBirthImageView = findViewById(R.id.edit_resident_date_imageView);
         editResidentButton = findViewById(R.id.edit_resident_button);
     }
 
@@ -150,9 +149,9 @@ public class EditResidentActivity extends AppCompatActivity implements DatePicke
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 this,
-                Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
+                Calendar.getInstance().get(Calendar.YEAR));
         datePickerDialog.show();
     }
 

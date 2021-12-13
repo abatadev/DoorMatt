@@ -87,12 +87,12 @@ public class GuardLogsFragment extends Fragment {
         adapter = new FirebaseRecyclerAdapter<LogsModel, GuardLogsViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull @NotNull GuardLogsViewHolder holder, int position, @NonNull @NotNull LogsModel model) {
-                holder.residentName.setText(model.getResidentFirstname() + " " + model.getResidentMiddleName() + " " + model.getResidentLastName());
+                holder.residentName.setText(String.format("%s %s %s", model.getResidentFirstname(), model.getResidentMiddleName(), model.getResidentLastName()));
                 holder.residentRoom.setText(model.getResidentRoomNumber());
-                holder.residentStatus.setText(" " + model.getResidentStatus());
-                holder.residentContactNumber.setText("" + model.getResidentContactNumber());
-                holder.residentTime.setText("" + model.getTimeRecorded());
-                holder.residentDate.setText("" + model.getDateRecorded());
+                holder.residentStatus.setText(String.format(" %s", model.getResidentStatus()));
+                holder.residentContactNumber.setText(String.format("%s", model.getResidentContactNumber()));
+                holder.residentTime.setText(String.format("%s", model.getTimeRecorded()));
+                holder.residentDate.setText(String.format("%s", model.getDateRecorded()));
 
                 Log.d(TAG, "onBindViewHolder: Resident Name: " + model.getResidentFirstname());
                 Log.d(TAG, "onBindViewHolder: Resident Status: " + model.getResidentStatus());
