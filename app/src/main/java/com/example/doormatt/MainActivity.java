@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void listenForUser() {
-
         try {
             userId = mAuth.getCurrentUser().getUid().toString();
             currentUser = mAuth.getCurrentUser().getEmail().toString();
@@ -57,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         }
-
-
     }
 
     private void requestCamera() {

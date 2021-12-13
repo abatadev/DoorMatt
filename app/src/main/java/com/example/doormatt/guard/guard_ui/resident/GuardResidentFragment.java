@@ -97,7 +97,6 @@ public class GuardResidentFragment extends Fragment {
                 return new GuardResidentViewHolder(view);
             }
 
-
             @Override
             protected void onBindViewHolder(@NonNull @NotNull GuardResidentViewHolder holder, int position, @NonNull @NotNull ResidentModel model) {
                 holder.residentNameTextView.setText(model.getFirstName() + " " + model.getLastName());
@@ -115,7 +114,6 @@ public class GuardResidentFragment extends Fragment {
 
                     } else if (model.getResidentStatus() == Common.CHECKED_IN) {
                         holder.residentStatusTextView.setText("Checked In");
-
 
                         // Create new visitor
                         holder.itemView.setOnClickListener(new View.OnClickListener() {

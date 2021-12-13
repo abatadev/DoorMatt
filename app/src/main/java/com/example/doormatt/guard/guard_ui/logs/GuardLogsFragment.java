@@ -40,9 +40,12 @@ public class GuardLogsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guard_logs, container, false);
-        recyclerView = view.findViewById(R.id.guard_logs_list);
+
         logsRef = FirebaseDatabase.getInstance().getReference(Common.LOGS_REF);
+
         searchView = view.findViewById(R.id.searchViewGuardLogsEditText);
+
+        recyclerView = view.findViewById(R.id.guard_logs_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
         logsModel = new LogsModel();
