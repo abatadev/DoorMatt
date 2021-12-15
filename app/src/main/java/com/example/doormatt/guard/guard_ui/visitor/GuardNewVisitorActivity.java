@@ -209,7 +209,7 @@ public class GuardNewVisitorActivity extends AppCompatActivity implements DatePi
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        dateOfBirth = month + "/" + dayOfMonth + "/" + year;
+        dateOfBirth = month + 1 + "/" + dayOfMonth + "/" + year;
         dateOfBirthTextView.setText(dateOfBirth);
     }
 }

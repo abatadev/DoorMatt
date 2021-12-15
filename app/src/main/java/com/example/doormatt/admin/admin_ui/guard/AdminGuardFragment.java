@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.doormatt.R;
 import com.example.doormatt.common.Common;
@@ -25,6 +26,7 @@ public class AdminGuardFragment extends Fragment {
     private DatabaseReference guardRef;
     private AdminGuardRecyclerAdapter adapter;
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -32,11 +34,14 @@ public class AdminGuardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_admin_guard, container, false);
         recyclerView = view.findViewById(R.id.admin_guard_list);
         Button newGuardButton = view.findViewById(R.id.new_guard_button);
+        swipeRefreshLayout = view.findViewById(R.id.admin_guard_swipe_refresh);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
 
         GuardModel guardModel = new GuardModel();
         queryList();
+
+        setAdapter(adapter);
 
         newGuardButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +64,17 @@ public class AdminGuardFragment extends Fragment {
 
         adapter = new AdminGuardRecyclerAdapter(setOptions);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void setAdapter(AdminGuardRecyclerAdapter adapter) {
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+        );
     }
 
     @Override

@@ -51,6 +51,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -374,7 +375,8 @@ public class NewResidentActivity extends AppCompatActivity implements DatePicker
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        dateOfBirth = month + "/" + dayOfMonth + "/" + year;
+        dateOfBirth = month + 1 + "/" + dayOfMonth + "/" + year;
+        Calendar.getInstance().set(year, month + 1, dayOfMonth);
         dateOfBirthTextView.setText(dateOfBirth);
     }
 }
