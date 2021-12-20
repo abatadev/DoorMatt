@@ -78,7 +78,7 @@ public class GuardLogsFragment extends Fragment {
     }
 
     private void loadData(String data) {
-        Query query = logsRef.orderByChild("residentFirstname").startAt(data).endAt(data + "\uf8ff");
+        Query query = logsRef.orderByChild("residentTime").startAt(data).endAt(data + "\uf8ff");
 
         options = new FirebaseRecyclerOptions.Builder<LogsModel>()
                 .setQuery(query, LogsModel.class)
@@ -96,6 +96,7 @@ public class GuardLogsFragment extends Fragment {
 
                 Log.d(TAG, "onBindViewHolder: Resident Name: " + model.getResidentFirstname());
                 Log.d(TAG, "onBindViewHolder: Resident Status: " + model.getResidentStatus());
+
                 try {
                     if(model.getResidentStatus() == Common.CHECKED_OUT) {
                         holder.residentStatus.setText("Checked Out");

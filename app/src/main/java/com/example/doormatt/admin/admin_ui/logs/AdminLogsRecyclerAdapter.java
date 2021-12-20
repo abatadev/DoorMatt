@@ -26,7 +26,7 @@ public class AdminLogsRecyclerAdapter extends FirebaseRecyclerAdapter<LogsModel,
         holder.residentNameTextView.setText("Name: " + model.getResidentFirstname() + " " + model.getResidentLastName());
         holder.residentRoomTextView.setText("Room: " + model.getResidentRoomNumber());
         holder.residentStatusTextView.setText("Status: " + model.getResidentStatus());
-//        holder.guardNameTextView.setText("Guard: " + model.getGuardName());
+        holder.guardNameTextView.setText("Guard: " + model.getGuardName());
         holder.dateAndTimeTextView.setText("Date: + " + model.getDateRecorded());
     }
 

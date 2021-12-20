@@ -109,7 +109,6 @@ public class QRScannerFragment extends Fragment {
                         case (Common.GUARD_ROLE):
                             readGuardDetails(myId, guardRef);
                             break;
-
                     }
                 } else {
                     //TODO
@@ -156,13 +155,13 @@ public class QRScannerFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    scannedBy = snapshot.child("guardName").getValue(String.class);
+                    scannedBy = snapshot.child("guardFullName").getValue(String.class);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
+                Log.e(TAG, "onCancelled: ", error.toException());
             }
         });
     }
