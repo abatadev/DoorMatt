@@ -59,7 +59,7 @@ public class EditResidentActivity extends AppCompatActivity implements DatePicke
             }
         });
 
-        dateOfBirthImageView.setOnClickListener(new View.OnClickListener() {
+        dateOfBirthTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
@@ -77,6 +77,7 @@ public class EditResidentActivity extends AppCompatActivity implements DatePicke
         emergencyContactPersonEditText = findViewById(R.id.edit_resident_emergency_contact_person);
         emergencyContactNumberEditText = findViewById(R.id.edit_resident_emergency_contact_number);
         editResidentButton = findViewById(R.id.edit_resident_button);
+
     }
 
     private void retrieveResidentData() {

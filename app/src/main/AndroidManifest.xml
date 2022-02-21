@@ -19,7 +19,7 @@
         <activity android:name=".guard.guard_ui.visitor.GuardVisitorDetailedActivity"/>
         <activity android:name=".guard.guard_ui.resident.GuardResidentDetailedActivity" />
         <activity android:name=".guard.guard_ui.visitor.GuardNewVisitorActivity" />
-        <activity android:name=".admin.admin_ui.resident.AddVisitorButton" />
+        <activity android:name=".admin.admin_ui.resident.AddVisitorFromResidentActivity" />
         <activity android:name=".LandingPageActivity" />
         <activity android:name=".admin.AdminMainActivity" />
         <activity android:name=".admin.admin_ui.guard.NewGuardActivity" />

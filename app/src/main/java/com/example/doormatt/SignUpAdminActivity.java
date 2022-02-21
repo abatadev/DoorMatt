@@ -33,7 +33,7 @@ public class SignUpAdminActivity extends AppCompatActivity {
     RolesModel rolesModel;
 
     EditText adminPasswordEditText, adminConfirmPasswordEditText;
-    TextView adminEmailEditText;
+    TextView adminEmailEditText, loginInsteadTextView;
     Button adminSignUpButton;
 
     private FirebaseAuth mAuth;
@@ -56,6 +56,7 @@ public class SignUpAdminActivity extends AppCompatActivity {
         adminPasswordEditText = findViewById(R.id.adminSignUpPasswordTextInputEditText);
         adminConfirmPasswordEditText = findViewById(R.id.adminSignUpConfirmPasswordTextInputEditText);
         adminSignUpButton = findViewById(R.id.adminSignUpRegisterButton);
+        loginInsteadTextView = findViewById(R.id.loginInsteadTextView);
 
         initializeFirebase();
 
@@ -64,6 +65,11 @@ public class SignUpAdminActivity extends AppCompatActivity {
         adminSignUpButton.setOnClickListener(v -> {
             Log.d(TAG, "Admin Ref: " + adminRef.getParent());
             registerNewAdmin();
+        });
+
+        loginInsteadTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(SignUpAdminActivity.this, LoginActivity.class);
+            startActivity(intent);
         });
     }
 

@@ -61,5 +61,6 @@
     <string name="name">Name:</string>
     <string name="date">Date</string>
     <string name="guard_logs">Guard Logs</string>
+    <string name="new_visitor">New Visitor</string>
 
 </resources>

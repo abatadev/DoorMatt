@@ -51,6 +51,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -122,26 +123,11 @@ public class QRScannerFragment extends Fragment {
             }
         });
 
-        mCodeScanner.setDecodeCallback(new DecodeCallback() {
-            @Override
-            public void onDecoded(@NonNull @NotNull Result result) {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-//                        Toast.makeText(activity, result.getText(), Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "run: " + result.getText());
-                        retrieveQRCodeData(result.getText());
-                    }
-
-                });
-            }
-        });
-        scannerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCodeScanner.startPreview();
-            }
-        });
+        mCodeScanner.setDecodeCallback(result -> activity.runOnUiThread(() -> {
+            Log.d(TAG, "run: " + result.getText());
+            retrieveQRCodeData(result.getText());
+        }));
+        scannerView.setOnClickListener(v -> mCodeScanner.startPreview());
 
         previewView = view.findViewById(R.id.fragment_qr_code_previewView);
 
@@ -170,7 +156,7 @@ public class QRScannerFragment extends Fragment {
         adminRef.child(myId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                final String adminId = snapshot.child("userId").getValue().toString();
+                final String adminId = Objects.requireNonNull(snapshot.child("userId").getValue()).toString();
             }
 
             @Override
@@ -193,13 +179,13 @@ public class QRScannerFragment extends Fragment {
                     Log.d(TAG, "onDataChange: ");
                     try {
                         Log.d(TAG, "onDataChange: Okay");
-                        residentId = snapshot.child("residentId").getValue().toString();
-                        final String firstName = snapshot.child("firstName").getValue().toString();
-                        final String lastName = snapshot.child("lastName").getValue().toString();
-                        final String middleName = snapshot.child("middleName").getValue().toString();
-                        final String residentAvatar = snapshot.child("residentAvatar").getValue().toString();
-                        final String roomNumber = snapshot.child("roomNumber").getValue().toString();
-                        final String contactNumber = snapshot.child("contactNumber").getValue().toString();
+                        residentId = Objects.requireNonNull(snapshot.child("residentId").getValue()).toString();
+                        final String firstName = Objects.requireNonNull(snapshot.child("firstName").getValue()).toString();
+                        final String lastName = Objects.requireNonNull(snapshot.child("lastName").getValue()).toString();
+                        final String middleName = Objects.requireNonNull(snapshot.child("middleName").getValue()).toString();
+                        final String residentAvatar = Objects.requireNonNull(snapshot.child("residentAvatar").getValue()).toString();
+                        final String roomNumber = Objects.requireNonNull(snapshot.child("roomNumber").getValue()).toString();
+                        final String contactNumber = Objects.requireNonNull(snapshot.child("contactNumber").getValue()).toString();
                         residentStatus = snapshot.child("residentStatus").getValue(int.class);
 
                         Log.d(TAG, "User ID: " + residentId);
@@ -255,6 +241,7 @@ public class QRScannerFragment extends Fragment {
 //        logsModel.setGuardName("Admin");
         logsModel.setDateRecorded(date);
         logsModel.setTimeRecorded(time);
+        logsModel.setServerTimeRecorded(ServerValue.TIMESTAMP);
         logsModel.setResidentStatus(residentStatus);
 
         builder.setTitle("Resident").create();
@@ -278,7 +265,6 @@ public class QRScannerFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 final int residentStatus = snapshot.child(residentId).child("residentStatus").getValue(int.class);
-
                 try {
                     if (residentStatus == Common.CHECKED_OUT) {
                         residentStatusTextView.setText("Checked Out");
@@ -295,30 +281,13 @@ public class QRScannerFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
+                Log.e(TAG, "onCancelled: " + error.getMessage());
             }
         });
 
-        builder.setPositiveButton("Check In", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                setResidentToCheckedIn(logId);
-            }
-        });
-
-        builder.setNeutralButton("Check Out", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                setResidentToCheckedOut(logId);
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        builder.setPositiveButton("Check In", (dialog, which) -> setResidentToCheckedIn(logId));
+        builder.setNeutralButton("Check Out", (dialog, which) -> setResidentToCheckedOut(logId));
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
         builder.setView(view).show();
     }
@@ -326,46 +295,31 @@ public class QRScannerFragment extends Fragment {
     private void setResidentToCheckedIn(String logId) {
         Log.d(TAG, "onClick: " + logId);
         logsModel.setResidentStatus(Common.CHECKED_IN);
-        logsRef.child(logId).setValue(logsModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Map<String, Object> updateData = new HashMap<>();
-                logsModel.setResidentStatus(Common.CHECKED_IN);
-                updateData.put("residentStatus", logsModel.getResidentStatus());
+        logsRef.child(logId).setValue(logsModel).addOnSuccessListener(unused -> {
+            Map<String, Object> updateData = new HashMap<>();
+            logsModel.setResidentStatus(Common.CHECKED_IN);
+            updateData.put("residentStatus", logsModel.getResidentStatus());
 //                updateData.put("residentStatus", Common.CHECKED_IN);
-                updateData.put("scannedBy", scannedBy);
-                residentRef.child(residentId).updateChildren(updateData);
-                Toast.makeText(getContext(), "Checked In.", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Log.d(TAG, "onFailure: " + e.getMessage());
-            }
-        });
+            updateData.put("serverTimeRecorded", ServerValue.TIMESTAMP);
+            updateData.put("scannedBy", scannedBy);
+            residentRef.child(residentId).updateChildren(updateData);
+            Toast.makeText(getContext(), "Checked In.", Toast.LENGTH_SHORT).show();
+        }).addOnFailureListener(e -> Log.d(TAG, "onFailure: " + e.getMessage()));
 
     }
 
     private void setResidentToCheckedOut(String logId) {
         Log.d(TAG, "onClick: " + logId);
         logsModel.setResidentStatus(Common.CHECKED_OUT);
-        logsRef.child(logId).setValue(logsModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Map<String, Object> updateData = new HashMap<>();
-                logsModel.setResidentStatus(Common.CHECKED_OUT);
-                updateData.put("residentStatus", logsModel.getResidentStatus());
+        logsRef.child(logId).setValue(logsModel).addOnSuccessListener(unused -> {
+            Map<String, Object> updateData = new HashMap<>();
+            logsModel.setResidentStatus(Common.CHECKED_OUT);
+            updateData.put("residentStatus", logsModel.getResidentStatus());
+            updateData.put("serverTimeRecorded", ServerValue.TIMESTAMP);
 //                updateData.put("residentStatus", Common.CHECKED_IN);
-                residentRef.child(residentId).updateChildren(updateData);
-                Toast.makeText(getContext(), "Checked Out.", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Log.d(TAG, "onFailure: " + e.getMessage());
-            }
-        });
-
+            residentRef.child(residentId).updateChildren(updateData);
+            Toast.makeText(getContext(), "Checked Out.", Toast.LENGTH_SHORT).show();
+        }).addOnFailureListener(e -> Log.d(TAG, "onFailure: " + e.getMessage()));
     }
 
 

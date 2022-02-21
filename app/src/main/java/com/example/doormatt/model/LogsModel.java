@@ -6,15 +6,12 @@ public class LogsModel {
     public String logId, residentId, guardId, residentFirstname, residentMiddleName, residentLastName, residentContactNumber, residentRoomNumber, guardName;
     public int residentStatus;
     public String dateRecorded, timeRecorded;
+    public Map<String, String> serverTimeRecorded;
 
     public LogsModel() {
     }
 
-    public LogsModel(String logId, String residentId, String guardId, String residentFirstname,
-                     String residentMiddleName, String residentLastName, String residentContactNumber,
-                     String residentRoomNumber, String guardName, int residentStatus,
-                     String dateRecorded, String timeRecorded) {
-
+    public LogsModel(String logId, String residentId, String guardId, String residentFirstname, String residentMiddleName, String residentLastName, String residentContactNumber, String residentRoomNumber, String guardName, int residentStatus, String dateRecorded, String timeRecorded, Map<String, String> serverTimeRecorded) {
         this.logId = logId;
         this.residentId = residentId;
         this.guardId = guardId;
@@ -27,7 +24,7 @@ public class LogsModel {
         this.residentStatus = residentStatus;
         this.dateRecorded = dateRecorded;
         this.timeRecorded = timeRecorded;
-
+        this.serverTimeRecorded = serverTimeRecorded;
     }
 
     public String getLogId() {
@@ -124,5 +121,13 @@ public class LogsModel {
 
     public void setTimeRecorded(String timeRecorded) {
         this.timeRecorded = timeRecorded;
+    }
+
+    public Map<String, String> getServerTimeRecorded() {
+        return serverTimeRecorded;
+    }
+
+    public void setServerTimeRecorded(Map<String, String> serverTimeRecorded) {
+        this.serverTimeRecorded = serverTimeRecorded;
     }
 }

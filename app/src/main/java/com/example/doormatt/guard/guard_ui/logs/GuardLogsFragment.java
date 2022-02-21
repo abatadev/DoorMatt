@@ -78,7 +78,7 @@ public class GuardLogsFragment extends Fragment {
     }
 
     private void loadData(String data) {
-        Query query = logsRef.orderByChild("residentTime").startAt(data).endAt(data + "\uf8ff");
+        Query query = logsRef.orderByChild("TEST").startAt(data).endAt(data + "\uf8ff");
 
         options = new FirebaseRecyclerOptions.Builder<LogsModel>()
                 .setQuery(query, LogsModel.class)
@@ -132,10 +132,5 @@ public class GuardLogsFragment extends Fragment {
     public void onStop() {
         super.onStop();
         adapter.stopListening();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 }
