@@ -1,5 +1,10 @@
 package com.example.doormatt.guard.guard_ui.logs;
 
+import static java.text.DateFormat.getDateTimeInstance;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doormatt.R;
 import com.example.doormatt.common.Common;
+import com.example.doormatt.guard.guard_ui.visitor.GuardNewVisitorActivity;
 import com.example.doormatt.model.LogsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -25,6 +32,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 public class GuardLogsFragment extends Fragment {
     private final String TAG = GuardLogsFragment.class.getSimpleName();
@@ -35,6 +45,7 @@ public class GuardLogsFragment extends Fragment {
     LogsModel logsModel;
     FirebaseRecyclerOptions<LogsModel> options;
     private DatabaseReference logsRef;
+    private DatabaseReference residentRef;
 
     @Nullable
     @Override
@@ -42,6 +53,7 @@ public class GuardLogsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_guard_logs, container, false);
 
         logsRef = FirebaseDatabase.getInstance().getReference(Common.LOGS_REF);
+        residentRef = FirebaseDatabase.getInstance().getReference(Common.RESIDENT_REF);
 
         searchView = view.findViewById(R.id.searchViewGuardLogsEditText);
 
@@ -50,7 +62,6 @@ public class GuardLogsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         logsModel = new LogsModel();
 
-        logsModel = new LogsModel();
         loadData("");
 
         searchView.addTextChangedListener(new TextWatcher() {
@@ -78,7 +89,7 @@ public class GuardLogsFragment extends Fragment {
     }
 
     private void loadData(String data) {
-        Query query = logsRef.orderByChild("TEST").startAt(data).endAt(data + "\uf8ff");
+        Query query = logsRef.orderByChild("logId").startAt(data).endAt(data + "\uf8ff");
 
         options = new FirebaseRecyclerOptions.Builder<LogsModel>()
                 .setQuery(query, LogsModel.class)
@@ -99,14 +110,48 @@ public class GuardLogsFragment extends Fragment {
 
                 try {
                     if(model.getResidentStatus() == Common.CHECKED_OUT) {
-                        holder.residentStatus.setText("Checked Out");
+                        holder.residentStatus.setText(String.format("%s", "Checked out"));
                     } else if (model.getResidentStatus() == Common.CHECKED_IN) {
-                        holder.residentStatus.setText("Checked In");
+                        holder.residentStatus.setText(String.format("%s", "Checked in"));
                     }
                 } catch (NullPointerException e) {
                     Log.d(TAG, "onBindViewHolder: " + e.getMessage());
                     e.printStackTrace();
                 }
+
+
+/*
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setMessage("Set status")
+                                .setPositiveButton("Check In", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        logsRef.child(getRef(position).getKey()).child("residentStatus").setValue(Common.CHECKED_IN);
+                                        Toast.makeText(getContext(), "Checked in.", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setNeutralButton("Check Out", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        logsRef.child(getRef(position).getKey()).child("residentStatus").setValue(Common.CHECKED_OUT);
+                                        Toast.makeText(getContext(), "Checked Out.", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                });*/
             }
 
             @NonNull

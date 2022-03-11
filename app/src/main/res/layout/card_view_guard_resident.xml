@@ -57,8 +57,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Status"/>
+
                 </LinearLayout>
             </LinearLayout>
+
+            <Button
+                android:id="@+id/card_view_guard_check_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Check In" />
+
+            <Button
+                android:id="@+id/card_view_guard_check_out_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Check Out" />
         </LinearLayout>
 
 

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import com.example.doormatt.R;
@@ -37,21 +36,22 @@ public class GuardResidentDetailedActivity extends AppCompatActivity {
         String residentId = getIntent().getStringExtra("residentId");
 
         Log.d(TAG, "onCreate: residentId: " + residentId);
+
+        retrieveFirebaseData(residentId);
+    }
+
+    private void retrieveFirebaseData(String residentId) {
         residentRef.child(residentId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     myResidentId = snapshot.child("residentId").getValue(String.class);
                     Log.d(TAG, "onDataChange: myResidentId : " + myResidentId);
-                    String myFirstName = snapshot.child("firstName").getValue().toString();
 
-                    newVisitorButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(GuardResidentDetailedActivity.this, GuardNewVisitorActivity.class);
-                            intent.putExtra(myResidentId, "residentId");
-                            startActivity(intent);
-                        }
+                    newVisitorButton.setOnClickListener(v -> {
+                        Intent intent = new Intent(GuardResidentDetailedActivity.this, GuardNewVisitorActivity.class);
+                        intent.putExtra(myResidentId, "residentId");
+                        startActivity(intent);
                     });
                 }
             }
@@ -61,8 +61,5 @@ public class GuardResidentDetailedActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 }

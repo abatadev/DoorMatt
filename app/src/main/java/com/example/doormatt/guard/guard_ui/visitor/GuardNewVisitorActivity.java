@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -62,29 +63,16 @@ public class GuardNewVisitorActivity extends AppCompatActivity implements DatePi
 
 
 
-        dateOfBirthImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
+        dateOfBirthImageView.setOnClickListener(v -> showDatePickerDialog());
 
-        newVisitorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveDataToFirebase();
-            }
-        });
+        newVisitorButton.setOnClickListener(v -> saveDataToFirebase());
 
-        timeVisitEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Date currentTime = Calendar.getInstance().getTime();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh.mm.ss aa");
-                String time = simpleDateFormat.format(currentTime);
+        timeVisitEditText.setOnClickListener(v -> {
+            Date currentTime = Calendar.getInstance().getTime();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh.mm.ss aa");
+            String time = simpleDateFormat.format(currentTime);
 
-                timeVisitEditText.setText(time);
-            }
+            timeVisitEditText.setText(time);
         });
 
     }
@@ -122,11 +110,11 @@ public class GuardNewVisitorActivity extends AppCompatActivity implements DatePi
             residentRef.child(residentId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    final String residentFirstName = snapshot.child("firstName").getValue().toString();
-                    final String residentLastName = snapshot.child("lastName").getValue().toString();
-                    final String residentRoomNumber = snapshot.child("roomNumber").getValue().toString();
-                    final String residentContactNumber = snapshot.child("contactNumber").getValue().toString();
-                    final String residentAvatar = snapshot.child("residentAvatar").getValue().toString();
+                    final String residentFirstName = Objects.requireNonNull(snapshot.child("firstName").getValue()).toString();
+                    final String residentLastName = Objects.requireNonNull(snapshot.child("lastName").getValue()).toString();
+                    final String residentRoomNumber = Objects.requireNonNull(snapshot.child("roomNumber").getValue()).toString();
+                    final String residentContactNumber = Objects.requireNonNull(snapshot.child("contactNumber").getValue()).toString();
+                    final String residentAvatar = Objects.requireNonNull(snapshot.child("residentAvatar").getValue()).toString();
 
                     residentFirstNameTextView.setText(residentFirstName);
                     residentLastNameTextView.setText(residentLastName);
@@ -190,7 +178,7 @@ public class GuardNewVisitorActivity extends AppCompatActivity implements DatePi
             .setValue(visitorModel)
             .addOnCompleteListener(task -> {
                 Log.d(TAG, "onComplete: Submitted to Firebase.");
-                newVisitorButton.setText("Submitted");
+                newVisitorButton.setText(String.format("%s", "Checked out"));
                 newVisitorButton.setEnabled(false);
             });
 

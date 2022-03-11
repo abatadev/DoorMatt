@@ -19,7 +19,6 @@ public class GuardLogsViewHolder extends RecyclerView.ViewHolder {
     TextView residentTime;
     TextView residentDate;
 
-
     public GuardLogsViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
         residentName = itemView.findViewById(R.id.residentNameTextViewLogs);
@@ -28,7 +27,6 @@ public class GuardLogsViewHolder extends RecyclerView.ViewHolder {
         residentContactNumber = itemView.findViewById(R.id.visitorPhoneNumberTextViewLogs);
         residentTime = itemView.findViewById(R.id.residentTimeInTextViewLogs);
         residentDate = itemView.findViewById(R.id.residentDateTextViewLogs);
-
     }
 
 }

@@ -58,14 +58,10 @@ public class GuardResidentFragment extends Fragment {
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -108,7 +104,6 @@ public class GuardResidentFragment extends Fragment {
                     if(model.getResidentStatus() == Common.CHECKED_OUT) {
                         holder.residentStatusTextView.setText("Checked Out");
 
-                        
                         Toast.makeText(getContext(), "Cannot add visitor to a checked out resident.", Toast.LENGTH_SHORT).show();
                         model.setResidentStatus(Common.CHECKED_OUT);
 
@@ -130,6 +125,27 @@ public class GuardResidentFragment extends Fragment {
                     e.printStackTrace();
                 }
 
+                holder.checkInButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        residentRef.child(getRef(position).getKey()).child("residentStatus").setValue(Common.CHECKED_IN);
+                        Toast.makeText(getContext(), "Checked in.", Toast.LENGTH_SHORT).show();
+                        holder.residentStatusTextView.setText("Checked In");
+
+                        // TODO Logs Model
+                    }
+                });
+
+                holder.checkOutButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        residentRef.child(getRef(position).getKey()).child("residentStatus").setValue(Common.CHECKED_OUT);
+                        Toast.makeText(getContext(), "Checked out.", Toast.LENGTH_SHORT).show();
+                        holder.residentStatusTextView.setText("Checked Out");
+
+                        // TODO Logs Model
+                    }
+                });
             }
         };
 

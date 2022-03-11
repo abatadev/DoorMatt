@@ -84,7 +84,7 @@ public class AdminLogsFragment extends Fragment {
                 holder.residentNameTextView.setText(model.getResidentFirstname() + " " + model.getResidentMiddleName() + " " + model.getResidentLastName());
                 holder.residentRoomTextView.setText(model.getResidentRoomNumber());
                 holder.residentStatusTextView.setText(" " + model.getResidentStatus());
-
+                holder.guardNameTextView.setText("" + model.getGuardId());
                 holder.dateAndTimeTextView.setText("Date: " + model.getDateRecorded() + "\nTime:  " + model.getTimeRecorded());
                 Log.d(TAG, "onBindViewHolder: Resident Name: " + model.getResidentFirstname());
                 Log.d(TAG, "onBindViewHolder: Resident Status: " + model.getResidentStatus());

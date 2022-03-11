@@ -1,6 +1,7 @@
 package com.example.doormatt.guard.guard_ui.resident;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ public class GuardResidentViewHolder extends RecyclerView.ViewHolder {
 
     TextView residentNameTextView, residentRoomNumberTextView, residentStatusTextView;
     CircleImageView residentAvatar;
+    Button checkInButton, checkOutButton;
 
     public GuardResidentViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
@@ -24,5 +26,8 @@ public class GuardResidentViewHolder extends RecyclerView.ViewHolder {
         residentNameTextView = itemView.findViewById(R.id.card_view_guard_resident_name_textView);
         residentStatusTextView = itemView.findViewById(R.id.card_view_guard_status_textView);
         residentRoomNumberTextView = itemView.findViewById(R.id.card_view_guard_resident_room_number_textView);
+
+        checkInButton = itemView.findViewById(R.id.card_view_guard_check_in_button);
+        checkOutButton = itemView.findViewById(R.id.card_view_guard_check_out_button);
     }
 }

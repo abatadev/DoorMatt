@@ -174,7 +174,6 @@ public class QRScannerFragment extends Fragment {
         residentRef.child(qrCode).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                if(snapshot.child("firstName").getValue().toString() != null) {
                 if(snapshot.child("firstName").exists()) {
                     Log.d(TAG, "onDataChange: ");
                     try {
@@ -241,7 +240,7 @@ public class QRScannerFragment extends Fragment {
 //        logsModel.setGuardName("Admin");
         logsModel.setDateRecorded(date);
         logsModel.setTimeRecorded(time);
-        logsModel.setServerTimeRecorded(ServerValue.TIMESTAMP);
+        //logsModel.setServerTimeRecorded(map);
         logsModel.setResidentStatus(residentStatus);
 
         builder.setTitle("Resident").create();
@@ -300,7 +299,7 @@ public class QRScannerFragment extends Fragment {
             logsModel.setResidentStatus(Common.CHECKED_IN);
             updateData.put("residentStatus", logsModel.getResidentStatus());
 //                updateData.put("residentStatus", Common.CHECKED_IN);
-            updateData.put("serverTimeRecorded", ServerValue.TIMESTAMP);
+            // TODO updateData.put("serverTimeRecorded", ServerValue.TIMESTAMP);
             updateData.put("scannedBy", scannedBy);
             residentRef.child(residentId).updateChildren(updateData);
             Toast.makeText(getContext(), "Checked In.", Toast.LENGTH_SHORT).show();
