@@ -119,9 +119,7 @@ public class GuardLogsFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-
-/*
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
+/*                holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
