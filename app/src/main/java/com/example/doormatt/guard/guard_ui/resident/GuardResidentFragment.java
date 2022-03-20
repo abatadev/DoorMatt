@@ -120,6 +120,7 @@ public class GuardResidentFragment extends Fragment {
             protected void onBindViewHolder(@NonNull @NotNull GuardResidentViewHolder holder, int position, @NonNull @NotNull ResidentModel model) {
                 // residentId = getRef(position).getKey();
 
+                holder.getAdapterPosition();
                 holder.residentNameTextView.setText(model.getFirstName() + " " + model.getLastName());
                 holder.residentRoomNumberTextView.setText(model.getRoomNumber());
                 Log.d(TAG, "onBindViewHolder: " + model.getResidentStatus());
@@ -221,6 +222,8 @@ public class GuardResidentFragment extends Fragment {
 
 
                 });
+
+
             }
         };
 

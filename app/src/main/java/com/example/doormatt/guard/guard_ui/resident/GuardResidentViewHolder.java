@@ -30,4 +30,6 @@ public class GuardResidentViewHolder extends RecyclerView.ViewHolder {
         checkInButton = itemView.findViewById(R.id.card_view_guard_check_in_button);
         checkOutButton = itemView.findViewById(R.id.card_view_guard_check_out_button);
     }
+
+
 }
