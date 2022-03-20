@@ -61,8 +61,6 @@ public class GuardNewVisitorActivity extends AppCompatActivity implements DatePi
         readResidentFromFirebase();
         initializeViews();
 
-
-
         dateOfBirthImageView.setOnClickListener(v -> showDatePickerDialog());
 
         newVisitorButton.setOnClickListener(v -> saveDataToFirebase());
@@ -80,7 +78,7 @@ public class GuardNewVisitorActivity extends AppCompatActivity implements DatePi
     @Override
     public void onBackPressed() {
         ResidentModel residentModel = new ResidentModel();
-//        residentModel.setResidentStatus(Common.CHECKED_OUT);
+        residentModel = null;
         residentId = null;
         super.onBackPressed();
     }
@@ -105,10 +103,12 @@ public class GuardNewVisitorActivity extends AppCompatActivity implements DatePi
     }
 
     private void readResidentFromFirebase() {
-        Bundle extras = getIntent().getExtras();
-        if(extras != null) {
-            residentId = getIntent().getStringExtra("residentId");
-            residentRef.child(residentId).addValueEventListener(new ValueEventListener() {
+        Intent intent = getIntent();
+        residentId = intent.getStringExtra("residentIdKey");
+        Log.d(TAG, "readResidentFromFirebase: residentId: " + residentId);
+
+        if(residentId != null) {
+            residentRef.child(residentId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                     final String residentFirstName = Objects.requireNonNull(snapshot.child("firstName").getValue()).toString();

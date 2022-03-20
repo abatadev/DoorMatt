@@ -118,6 +118,7 @@ public class GuardResidentFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(@NonNull @NotNull GuardResidentViewHolder holder, int position, @NonNull @NotNull ResidentModel model) {
+                // residentId = getRef(position).getKey();
 
                 holder.residentNameTextView.setText(model.getFirstName() + " " + model.getLastName());
                 holder.residentRoomNumberTextView.setText(model.getRoomNumber());
@@ -127,15 +128,6 @@ public class GuardResidentFragment extends Fragment {
                 try {
                     if(model.getResidentStatus() == Common.CHECKED_OUT) {
                         holder.residentStatusTextView.setText("Checked Out");
-
-                        // Create new visitor
-                        holder.itemView.setOnClickListener(v -> {
-                            Intent intent = new Intent(getContext(), GuardNewVisitorActivity.class);
-                            Log.d(TAG, "onBindViewHolder: residentId: " + getRef(position).getKey());
-                            intent.putExtra("residentId", getRef(position).getKey());
-                            startActivity(intent);
-                        });
-
                     } else if (model.getResidentStatus() == Common.CHECKED_IN) {
                         holder.residentStatusTextView.setText("Checked In");
 
@@ -143,11 +135,13 @@ public class GuardResidentFragment extends Fragment {
                         holder.itemView.setOnClickListener(v -> {
                             Intent intent = new Intent(getContext(), GuardNewVisitorActivity.class);
                             Log.d(TAG, "onBindViewHolder: residentId: " + getRef(position).getKey());
-                            intent.putExtra("residentId", getRef(position).getKey());
+                            intent.putExtra("residentIdKey", getRef(position).getKey());
+                            //intent.putExtra("residentId", residentId);
                             startActivity(intent);
                         });
                     }
-                } catch (NullPointerException e) {
+                }
+                catch (NullPointerException e) {
                     Log.d(TAG, "onBindViewHolder: " + e.getMessage());
                     e.printStackTrace();
                 }
