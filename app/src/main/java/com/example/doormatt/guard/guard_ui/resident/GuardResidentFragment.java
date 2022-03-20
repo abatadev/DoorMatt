@@ -21,15 +21,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doormatt.R;
 import com.example.doormatt.common.Common;
 import com.example.doormatt.guard.guard_ui.visitor.GuardNewVisitorActivity;
+import com.example.doormatt.model.LogsModel;
 import com.example.doormatt.model.ResidentModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.PlanarYUVLuminanceSource;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GuardResidentFragment extends Fragment {
     private final String TAG = GuardResidentFragment.class.getSimpleName();
@@ -40,7 +50,18 @@ public class GuardResidentFragment extends Fragment {
     FirebaseRecyclerOptions<ResidentModel> options;
     RecyclerView recyclerView;
     ResidentModel residentModel;
-    private DatabaseReference residentRef, visitorRef;
+    private DatabaseReference residentRef, logsRef, visitorRef;
+    private LogsModel logsModel;
+
+    String logId;
+    String firstName;
+    String middleName;
+    String lastName;
+    String contactNumber;
+    String residentId;
+    String roomNumber;
+    String date;
+    String time;
 
     @Nullable
     @Override
@@ -52,6 +73,8 @@ public class GuardResidentFragment extends Fragment {
         searchEditText = view.findViewById(R.id.guard_resident_search_edit_text);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        logsModel = new LogsModel();
 
         residentModel = new ResidentModel();
         loadData("");
@@ -78,7 +101,7 @@ public class GuardResidentFragment extends Fragment {
     }
 
     private void loadData(String data) {
-        Query query = residentRef.orderByChild("firstName").startAt(data).endAt(data + "\uf8ff");;
+        Query query = residentRef.orderByChild("firstName").startAt(data).endAt(data + "\uf8ff");
 
         options = new FirebaseRecyclerOptions.Builder<ResidentModel>()
                 .setQuery(query, ResidentModel.class)
@@ -95,6 +118,7 @@ public class GuardResidentFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(@NonNull @NotNull GuardResidentViewHolder holder, int position, @NonNull @NotNull ResidentModel model) {
+
                 holder.residentNameTextView.setText(model.getFirstName() + " " + model.getLastName());
                 holder.residentRoomNumberTextView.setText(model.getRoomNumber());
                 Log.d(TAG, "onBindViewHolder: " + model.getResidentStatus());
@@ -104,20 +128,23 @@ public class GuardResidentFragment extends Fragment {
                     if(model.getResidentStatus() == Common.CHECKED_OUT) {
                         holder.residentStatusTextView.setText("Checked Out");
 
-                        Toast.makeText(getContext(), "Cannot add visitor to a checked out resident.", Toast.LENGTH_SHORT).show();
-                        model.setResidentStatus(Common.CHECKED_OUT);
+                        // Create new visitor
+                        holder.itemView.setOnClickListener(v -> {
+                            Intent intent = new Intent(getContext(), GuardNewVisitorActivity.class);
+                            Log.d(TAG, "onBindViewHolder: residentId: " + getRef(position).getKey());
+                            intent.putExtra("residentId", getRef(position).getKey());
+                            startActivity(intent);
+                        });
 
                     } else if (model.getResidentStatus() == Common.CHECKED_IN) {
                         holder.residentStatusTextView.setText("Checked In");
 
                         // Create new visitor
-                        holder.itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(getContext(), GuardNewVisitorActivity.class);
-                                intent.putExtra("residentId", getRef(position).getKey());
-                                startActivity(intent);
-                            }
+                        holder.itemView.setOnClickListener(v -> {
+                            Intent intent = new Intent(getContext(), GuardNewVisitorActivity.class);
+                            Log.d(TAG, "onBindViewHolder: residentId: " + getRef(position).getKey());
+                            intent.putExtra("residentId", getRef(position).getKey());
+                            startActivity(intent);
                         });
                     }
                 } catch (NullPointerException e) {
@@ -125,32 +152,111 @@ public class GuardResidentFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                holder.checkInButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        residentRef.child(getRef(position).getKey()).child("residentStatus").setValue(Common.CHECKED_IN);
-                        Toast.makeText(getContext(), "Checked in.", Toast.LENGTH_SHORT).show();
-                        holder.residentStatusTextView.setText("Checked In");
+                holder.checkInButton.setOnClickListener(v -> {
+                    residentRef.child(getRef(position).getKey()).child("residentStatus").setValue(Common.CHECKED_IN);
+                    Toast.makeText(getContext(), "Checked in.", Toast.LENGTH_SHORT).show();
+                    holder.residentStatusTextView.setText("Checked In");
 
-                        // TODO Logs Model
-                    }
+                    Date dateToTime = new Date();
+                    String strDateFormat = "HH:mm:ss a";
+                    SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+                    time = sdf.format(dateToTime);
+                    date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+
+                    residentRef.child(getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()) {
+                                firstName = snapshot.child("firstName").getValue(String.class);
+                                middleName = snapshot.child("middleName").getValue(String.class);
+                                lastName = snapshot.child("lastName").getValue(String.class);
+                                contactNumber = snapshot.child("contactNumber").getValue(String.class);
+                                residentId = snapshot.child("residentId").getValue(String.class);
+                                roomNumber = snapshot.child("roomNumber").getValue(String.class);
+
+                                CheckOutLogs(firstName, middleName, lastName, contactNumber, residentId, roomNumber, date, time, Common.CHECKED_IN);
+                            } else {
+                                Log.d(TAG, "onDataChange: Does not exist");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    // TODO Logs Model
+
+
                 });
 
-                holder.checkOutButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        residentRef.child(getRef(position).getKey()).child("residentStatus").setValue(Common.CHECKED_OUT);
-                        Toast.makeText(getContext(), "Checked out.", Toast.LENGTH_SHORT).show();
-                        holder.residentStatusTextView.setText("Checked Out");
+                holder.checkOutButton.setOnClickListener(v -> {
+                    residentRef.child(getRef(position).getKey()).child("residentStatus").setValue(Common.CHECKED_OUT);
 
-                        // TODO Logs Model
-                    }
+                    Toast.makeText(getContext(), "Checked out.", Toast.LENGTH_SHORT).show();
+                    holder.residentStatusTextView.setText("Checked Out");
+
+                    Date dateToTime = new Date();
+                    String strDateFormat = "HH:mm:ss a";
+                    SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+                    time = sdf.format(dateToTime);
+                    date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+
+                    residentRef.child(getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()) {
+                                firstName = snapshot.child("firstName").getValue(String.class);
+                                middleName = snapshot.child("middleName").getValue(String.class);
+                                lastName = snapshot.child("lastName").getValue(String.class);
+                                contactNumber = snapshot.child("contactNumber").getValue(String.class);
+                                residentId = snapshot.child("residentId").getValue(String.class);
+                                roomNumber = snapshot.child("roomNumber").getValue(String.class);
+
+                                CheckOutLogs(firstName, middleName, lastName, contactNumber, residentId, roomNumber, date, time, Common.CHECKED_OUT);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    // TODO Logs Model
+
+
+
                 });
             }
         };
 
         adapter.startListening();
         recyclerView.setAdapter(adapter);
+    }
+
+    private void CheckOutLogs(String firstName, String middleName, String lastName,
+                              String contactNumber, String residentId, String roomNumber,
+                              String date, String time, int residentStatus) {
+
+
+
+        logsRef = FirebaseDatabase.getInstance().getReference(Common.LOGS_REF);
+        String logId = logsRef.push().getKey();
+        Log.d(TAG, "CheckOutLogs: " + logId);
+
+        logsModel.setLogId(logId);
+        logsModel.setGuardId("guard");
+        logsModel.setResidentFirstname(firstName);
+        logsModel.setResidentMiddleName(middleName);
+        logsModel.setResidentLastName(lastName);
+        logsModel.setResidentContactNumber(contactNumber);
+        logsModel.setResidentId(residentId);
+        logsModel.setResidentRoomNumber(roomNumber);
+        logsModel.setDateRecorded(date);
+        logsModel.setTimeRecorded(time);
+        logsModel.setResidentStatus(residentStatus);
+        logsRef.child(logId).setValue(logsModel).addOnFailureListener(e ->
+                Log.e(TAG, "onFailure: " + e.getMessage()));
     }
 
 

@@ -80,7 +80,8 @@ public class GuardNewVisitorActivity extends AppCompatActivity implements DatePi
     @Override
     public void onBackPressed() {
         ResidentModel residentModel = new ResidentModel();
-        residentModel.setResidentStatus(Common.CHECKED_OUT);
+//        residentModel.setResidentStatus(Common.CHECKED_OUT);
+        residentId = null;
         super.onBackPressed();
     }
 
